@@ -6,11 +6,11 @@ This checklist records what remains unknown for a D-Claw model of the stage **af
 
 The evidence table identifies a preliminary Jilong Port peak discharge of approximately 3–5 × 10^4 m^3 s^-1, a downstream bulk travel time of approximately 30 min over approximately 15 km, and a reach-average speed of approximately 8.3 m s^-1.  Those three estimates do **not** close any of the following boundary/state specifications.
 
-## Exact unknown source and boundary quantities
+## Remaining and partially constrained source/boundary quantities
 
 | D-Claw source / boundary quantity | Status after extraction | Why it remains a gap |
 |---|---|---|
-| Main-river entry coordinate, source polygon, and boundary orientation | Unknown | No public event-entry cross-section or precisely mapped transition/entry location was found. |
+| Main-river entry coordinate, source polygon, and boundary orientation | Partially constrained — model geometry only | A preferred model-entry point and 1.0 km uncertainty segment are documented in `docs/MODEL_ENTRY_DEFINITION.md`; no public event-entry cross-section or official physical confluence location was found. |
 | Entry-bed elevation and contemporaneous channel geometry | Unknown | No surveyed entry DEM, cross-section, bankline, or effective flow width was released. |
 | Inflow start time at the entry section | Unknown | Published statements do not provide a time pick at a defined entry section. |
 | Inflow duration and end time | Unknown | No entry time series or video/gauge-derived duration was released. |
@@ -31,7 +31,11 @@ The evidence table identifies a preliminary Jilong Port peak discharge of approx
 | Deposition-volume and thickness observations for mass-balance closure | Unknown | No public DEM-of-difference or deposit-thickness dataset was located. |
 | Timestamped arrivals, depths, or velocities at intermediate control sections | Unknown | No public sequence at named, georeferenced downstream sections was found. |
 
-## Minimum evidence needed before defining a defensible source
+## Evidence requirements and inverse-modelling posture
+
+The unavailable quantities above must not be presented as measured event values.  A defensible model geometry can nevertheless be selected under explicit spatial uncertainty.  In a later inverse-modelling stage, unresolved quantities may be treated as uncertain model parameters and constrained by independent event-scale observations; this document does not assign them values.
+
+Useful independent constraints for that later work include:
 
 1. A georeferenced main-river entry cross-section with pre-event geometry/DEM and a clearly defined source polygon or boundary.
 2. At least one event-time discharge/depth/velocity observation at entry, or a defensible inverse reconstruction with timestamps and uncertainty.
@@ -39,4 +43,4 @@ The evidence table identifies a preliminary Jilong Port peak discharge of approx
 4. Material samples or documented event-specific assumptions for grain size, densities, solid fraction, friction, permeability, and pore-pressure/rheology parameters.
 5. Georeferenced downstream arrival-time and inundation/deposition observations suitable for validation, explicitly separated from calibration data.
 
-Until those data are available, the public evidence can support only broad downstream diagnostics (reach length, approximate transit time, reach-average speed, provisional port peak, and mapped impact/scour extent).  It cannot uniquely specify a D-Claw source or boundary condition.
+Until those data are available, the public evidence can support only broad downstream diagnostics (reach length, approximate transit time, reach-average speed, provisional port peak, and mapped impact/scour extent).  It cannot uniquely specify a D-Claw source or boundary condition; it can only define an uncertainty-aware inverse-modelling problem.
