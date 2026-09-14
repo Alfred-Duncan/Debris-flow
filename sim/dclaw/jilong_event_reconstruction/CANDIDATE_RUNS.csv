@@ -1,0 +1,4 @@
+run_id,source_depth_m,initial_speed_ms,reached_port,arrival_time_s,port_peak_discharge_m3s,port_peak_depth_m,port_peak_speed_ms,source_volume_m3,runtime_s,stable
+run_01,6.0,8.0,False,,0.0,0.0,0.0,442368.0,47.558,True
+run_02,10.0,14.0,False,,0.0,0.0,0.0,737280.0,51.61692268401384,True
+run_03,25.0,28.0,False,,0.0,0.0,0.0,1843200.0,75.83978610113263,False
