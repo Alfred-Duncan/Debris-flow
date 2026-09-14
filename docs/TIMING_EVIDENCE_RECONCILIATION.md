@@ -25,9 +25,9 @@ They are not measurements of the same start/end interval.  The later peer-review
 
 ### Recommended downstream timing constraint
 
-**A. 30 min remains the best provisional downstream target.**
+**A. Superseded for Phase 2C.**
 
-The qualification is essential: it is a **soft consistency target**, not a hard calibration target.  It is selected only because [S2] explicitly names the downstream interval “from debris flow entering the main river to Jilong Port.”  The approximately 7 min result does not supersede it for this domain because [S1] explicitly covers the upstream high-elevation initiation, transformation, entrainment, and final port impact as one whole-chain reconstruction.  Until a georeferenced entry observation and timestamped downstream observations are released, neither value can be treated as a hard target.
+The qualification is essential: it is a **soft consistency target**, not a hard calibration target.  Phase 2C uses the later whole-chain reconstruction as the higher-priority event context: approximately 7 min is source-to-port, not model-entry-to-port.  The about-30-min rapid assessment remains historical, lower-confidence context only and is not the primary timing-calibration target.  A potentially useful differential anchor (Seqiong data interruption about 10:55 to port impact about 10:59) cannot be used until the station is independently geolocated; the interruption is not an exact debris-front pick.
 
 ## Sources
 

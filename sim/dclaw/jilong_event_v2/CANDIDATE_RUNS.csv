@@ -1,0 +1,5 @@
+run_id,entrainment_enabled,Q_in_peak,T_in,inflow_volume,reached_seqiong,seqiong_arrival_s,reached_port,port_arrival_s,seqiong_to_port_s,port_peak_discharge_m3s,port_peak_depth_m,port_peak_speed_ms,domain_max_speed_ms,entrained_volume_if_available,runtime_s,stable
+run_01_control_no_entrainment,False,30000.0,60.0,900000.0,,,False,,,0.0,0.0,0.0,48.21865599707922,0.0,37.85718159377575,True
+run_02_entrainment_on,True,30000.0,60.0,900000.0,,,False,,,0.0,0.0,0.0,48.21865599707922,0.0,37.48075691983104,True
+run_03_entrainment_q45k_t90,True,45000.0,90.0,2025000.0,,,False,,,0.0,0.0,0.0,117.56243827430315,0.0,43.071454890072346,False
+run_04_entrainment_q30k_t180,True,30000.0,180.0,2700000.0,,,False,,,0.0,0.0,0.0,88.38782426926434,0.0,44.17215632274747,False
