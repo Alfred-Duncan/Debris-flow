@@ -17,6 +17,7 @@ def setrun(claw_pkg="dclaw"):
     qpeak = float(os.environ["INLET_Q_PEAK"])
     duration = float(os.environ["INLET_DURATION"])
     entrain = int(os.environ["ENTRAINMENT_ENABLED"])
+    entrain_method = int(os.environ.get("ENTRAINMENT_METHOD", "0"))
     r = data.ClawRunData("dclaw", 2)
     c = r.clawdata
     c.lower[:], c.upper[:], c.num_cells[:] = [XL,YL], [XU,YU], [MX,MY]
@@ -50,7 +51,7 @@ def setrun(claw_pkg="dclaw"):
     d.bed_normal, d.theta_input = 0, 0.
     # D-Claw documented standard mechanism.  Values are provisional defaults,
     # not event observations; only the on/off flag varies across the control pair.
-    d.entrainment, d.entrainment_method, d.entrainment_rate, d.me = entrain, 1, .2, .65
+    d.entrainment, d.entrainment_method, d.entrainment_rate, d.me = entrain, entrain_method, .2, .65
     if entrain:
         r.auxinitdclaw_data.auxinitfiles.append([3, 7, "entrainable_thickness.tt3"])
     r.pinitdclaw_data.init_ptype = 0

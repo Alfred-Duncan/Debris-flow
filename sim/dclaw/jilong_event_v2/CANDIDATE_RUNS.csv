@@ -1,5 +1,7 @@
-run_id,entrainment_enabled,Q_in_peak,T_in,inflow_volume,reached_seqiong,seqiong_arrival_s,reached_port,port_arrival_s,seqiong_to_port_s,port_peak_discharge_m3s,port_peak_depth_m,port_peak_speed_ms,domain_max_speed_ms,entrained_volume_if_available,runtime_s,stable
-run_01_control_no_entrainment,False,30000.0,60.0,900000.0,,,False,,,0.0,0.0,0.0,48.21865599707922,0.0,37.85718159377575,True
-run_02_entrainment_on,True,30000.0,60.0,900000.0,,,False,,,0.0,0.0,0.0,48.21865599707922,0.0,37.48075691983104,True
-run_03_entrainment_q45k_t90,True,45000.0,90.0,2025000.0,,,False,,,0.0,0.0,0.0,117.56243827430315,0.0,43.071454890072346,False
-run_04_entrainment_q30k_t180,True,30000.0,180.0,2700000.0,,,False,,,0.0,0.0,0.0,88.38782426926434,0.0,44.17215632274747,False
+run_id,Q_peak,T_in,entrainment_enabled,entrainment_method,inflow_volume_m3,stable,runtime_s,domain_max_speed_ms,max_front_distance_m,final_front_distance_m,remaining_distance_to_port_proxy_m,reached_port_proxy,port_proxy_arrival_s,port_proxy_peak_discharge_m3s,port_proxy_peak_depth_m,port_proxy_peak_speed_ms,entrained_volume_if_reliable
+RUN_A,30000,60,False,0,900000.0,True,31.575757034122944,48.21865599707922,1118.847101617376,1036.7276371843407,16587.27236281566,False,,0.0,0.0,0.0,unavailable
+RUN_B,30000,60,True,0,900000.0,True,41.97701296582818,117.94842289203966,1951.5687469277286,1929.6349731188,15694.3650268812,False,,0.0,0.0,0.0,unavailable
+RUN_C,20000,90,True,0,900000.0,True,31.488315738737583,0.0,70.19529852959417,70.19529852959417,17553.804701470406,False,,0.0,0.0,0.0,unavailable
+RUN_D,30000,90,True,0,1350000.0,True,42.53798710554838,128.62562238340774,1970.108702839156,1970.108702839156,15653.891297160844,False,,0.0,0.0,0.0,unavailable
+RUN_E,20000,120,True,0,1200000.0,True,31.19451419636607,0.0,70.19529852959417,70.19529852959417,17553.804701470406,False,,0.0,0.0,0.0,unavailable
+RUN_F,30000,120,True,0,1800000.0,True,41.24503653496504,137.16860190214663,1970.108702839156,1970.108702839156,15653.891297160844,False,,0.0,0.0,0.0,unavailable
