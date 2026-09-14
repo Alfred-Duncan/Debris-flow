@@ -1,0 +1,4 @@
+scenario_id,source_scale_or_volume,m0,mcrit,kref,pore_pressure_setting,entrainment_setting,runtime_s,max_front_distance_km,arrival_time_s,max_depth_m,bulk_max_speed_ms,p99_speed_ms,affected_area_m2
+B0,1000000.0,0.62,0.64,1e-11,hydrostatic,none (no public erodible-thickness constraint),34.154049437493086,0.42000504954982826,,0.0,6.645427704722825,1.6059503915104774,282624.0
+C_K_LOW,1000000.0,0.62,0.64,1e-12,hydrostatic,none (no public erodible-thickness constraint),39.45875868573785,0.42000504954982826,,0.0,6.822048920669488,2.7312319170508808,278528.0
+C_P15,1000000.0,0.62,0.64,1e-11,1.5 x hydrostatic (official gully example),none (no public erodible-thickness constraint),42.809252716600895,0.42000504954982826,,0.0,7.301449573874163,0.0,331776.0
