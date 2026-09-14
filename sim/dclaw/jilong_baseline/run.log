@@ -1,0 +1,688 @@
+Reading data file: claw.data
+         first 5 lines are comments and will be skipped
+Reading data file: amr.data
+         first 5 lines are comments and will be skipped
+  
+ Running amrclaw ...  
+  
+Reading data file: geoclaw.data
+         first 5 lines are comments and will be skipped
+Reading data file: refinement.data
+         first 5 lines are comments and will be skipped
+Reading data file: dtopo.data
+         first 5 lines are comments and will be skipped
+Reading data file: topo.data
+         first 5 lines are comments and will be skipped
+  
+ Reading topography file  /root/autodl-tmp/Jilong-DebrisFlow/sim/dclaw/jilong_baseline/jilong_dem_primary_64m.tt3                                                               
+Reading data file: auxinit_dclaw.data       
+         first 5 lines are comments and will be skipped
+Reading data file: fgout_grids.data
+         first 5 lines are comments and will be skipped
+Reading data file: regions.data
+         first 5 lines are comments and will be skipped
+Reading data file: flagregions.data
+         first 5 lines are comments and will be skipped
+Reading data file: gauges.data
+         first 5 lines are comments and will be skipped
+Reading data file: fgmax_grids.data
+         first 5 lines are comments and will be skipped
+ +++ fgbb:    331813.90000000002        343013.90000000002        3128115.2000000002        3144755.2000000002     
+ +++ fgll:    331813.90000000002        3128115.2000000002              176         261
+ +++ fg%x(npts), fg%y(1):    343013.90000000002        3128115.2000000002     
+Reading data file: dclaw.data               
+         first 5 lines are comments and will be skipped
+Reading data file: pinit_dclaw.data         
+         first 5 lines are comments and will be skipped
+Reading data file: qinit_dclaw.data         
+         first 5 lines are comments and will be skipped
+  
+ Reading qinit file  /root/autodl-tmp/Jilong-DebrisFlow/sim/dclaw/jilong_baseline/initial_thickness.tt3                                                                    
+Reading data file: flowgrades.data          
+         first 5 lines are comments and will be skipped
+ rnode allocated...
+ node allocated...
+ listOfGrids allocated...
+ Storage allocated...
+ bndList allocated...
+Gridding level   1 at t =  0.000000E+00:     1 grids with       45936 cells
+  max threads set to           12
+  
+ Done reading data, starting computation ...  
+  
+ Total mass at initial time:    221184.00000000000     
+GEOCLAW: Frame    0 output files done at time t =  0.000000D+00
+
+ AMRCLAW: level  1  CFL = .599E-01  dt = 0.5000E+00  final t = 0.500000E+00
+*** WARNING *** Courant number  =  0.5399D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+ AMRCLAW: level  1  CFL = .540E+00  dt = 0.3754E+01  final t = 0.425390E+01
+*** WARNING *** Courant number  =  0.1639D+01  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+ AMRCLAW: level  1  CFL = .164E+01  dt = 0.3129E+01  final t = 0.738300E+01
+ AMRCLAW: level  1  CFL = .447E+00  dt = 0.8590E+00  final t = 0.824199E+01
+ AMRCLAW: level  1  CFL = .423E+00  dt = 0.8648E+00  final t = 0.910677E+01
+ AMRCLAW: level  1  CFL = .426E+00  dt = 0.9197E+00  final t = 0.100265E+02
+ AMRCLAW: level  1  CFL = .470E+00  dt = 0.9711E+00  final t = 0.109977E+02
+ AMRCLAW: level  1  CFL = .409E+00  dt = 0.9291E+00  final t = 0.119268E+02
+ AMRCLAW: level  1  CFL = .346E+00  dt = 0.1023E+01  final t = 0.129493E+02
+ AMRCLAW: level  1  CFL = .465E+00  dt = 0.1331E+01  final t = 0.142798E+02
+ AMRCLAW: level  1  CFL = .451E+00  dt = 0.1288E+01  final t = 0.155679E+02
+ AMRCLAW: level  1  CFL = .428E+00  dt = 0.1285E+01  final t = 0.168531E+02
+ AMRCLAW: level  1  CFL = .423E+00  dt = 0.1350E+01  final t = 0.182029E+02
+ AMRCLAW: level  1  CFL = .367E+00  dt = 0.1437E+01  final t = 0.196402E+02
+ AMRCLAW: level  1  CFL = .442E+00  dt = 0.1761E+01  final t = 0.214011E+02
+ AMRCLAW: level  1  CFL = .379E+00  dt = 0.1792E+01  final t = 0.231929E+02
+ AMRCLAW: level  1  CFL = .493E+00  dt = 0.2125E+01  final t = 0.253182E+02
+ AMRCLAW: level  1  CFL = .380E+00  dt = 0.1941E+01  final t = 0.272592E+02
+ AMRCLAW: level  1  CFL = .423E+00  dt = 0.2296E+01  final t = 0.295548E+02
+ AMRCLAW: level  1  CFL = .390E+00  dt = 0.2440E+01  final t = 0.319945E+02
+ AMRCLAW: level  1  CFL = .406E+00  dt = 0.2815E+01  final t = 0.348092E+02
+ AMRCLAW: level  1  CFL = .392E+00  dt = 0.3118E+01  final t = 0.379272E+02
+ AMRCLAW: level  1  CFL = .429E+00  dt = 0.3576E+01  final t = 0.415034E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.452573E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.490112E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.527651E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.565190E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.602729E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.640268E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.677807E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.715346E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.752885E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.790424E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.827963E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.865502E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.903041E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.940579E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.978118E+02
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.101566E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.105320E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.109074E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.112827E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.116581E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.120335E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.124089E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.127843E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.131597E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.135351E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.139105E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.142859E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.146613E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.150366E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.154120E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.157874E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.161628E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.165382E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.169136E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.172890E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.176644E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.180398E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.184151E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.187905E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.191659E+03
+ AMRCLAW: level  1  CFL = .456E+00  dt = 0.3754E+01  final t = 0.195413E+03
+ AMRCLAW: level  1  CFL = .444E+00  dt = 0.3708E+01  final t = 0.199121E+03
+ AMRCLAW: level  1  CFL = .456E+00  dt = 0.3754E+01  final t = 0.202875E+03
+ AMRCLAW: level  1  CFL = .444E+00  dt = 0.3706E+01  final t = 0.206580E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.210334E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.214088E+03
+ AMRCLAW: level  1  CFL = .475E+00  dt = 0.3754E+01  final t = 0.217842E+03
+ AMRCLAW: level  1  CFL = .473E+00  dt = 0.3556E+01  final t = 0.221398E+03
+ AMRCLAW: level  1  CFL = .406E+00  dt = 0.3384E+01  final t = 0.224782E+03
+ AMRCLAW: level  1  CFL = .461E+00  dt = 0.3754E+01  final t = 0.228536E+03
+ AMRCLAW: level  1  CFL = .439E+00  dt = 0.3664E+01  final t = 0.232200E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.235954E+03
+*** WARNING *** Courant number  =  0.6141D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+ AMRCLAW: level  1  CFL = .614E+00  dt = 0.3754E+01  final t = 0.239708E+03
+ AMRCLAW: level  1  CFL = .330E+00  dt = 0.2751E+01  final t = 0.242459E+03
+ AMRCLAW: level  1  CFL = .465E+00  dt = 0.3754E+01  final t = 0.246213E+03
+ AMRCLAW: level  1  CFL = .436E+00  dt = 0.3633E+01  final t = 0.249846E+03
+*** WARNING *** Courant number  =  0.5084D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+ AMRCLAW: level  1  CFL = .508E+00  dt = 0.3754E+01  final t = 0.253600E+03
+ AMRCLAW: level  1  CFL = .398E+00  dt = 0.3323E+01  final t = 0.256923E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.260677E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.264431E+03
+ AMRCLAW: level  1  CFL = .452E+00  dt = 0.3754E+01  final t = 0.268185E+03
+ AMRCLAW: level  1  CFL = .448E+00  dt = 0.3736E+01  final t = 0.271921E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.275675E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.279429E+03
+*** WARNING *** Courant number  =  0.5248D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+ AMRCLAW: level  1  CFL = .525E+00  dt = 0.3754E+01  final t = 0.283182E+03
+ AMRCLAW: level  1  CFL = .386E+00  dt = 0.3219E+01  final t = 0.286401E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.290155E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.293909E+03
+ AMRCLAW: level  1  CFL = .452E+00  dt = 0.3754E+01  final t = 0.297663E+03
+ AMRCLAW: level  1  CFL = .280E+00  dt = 0.2337E+01  final t = 0.300000E+03
+GEOCLAW: Frame    1 output files done at time t =  0.300000D+03
+
+ AMRCLAW: level  1  CFL = .495E+00  dt = 0.3754E+01  final t = 0.303754E+03
+ AMRCLAW: level  1  CFL = .409E+00  dt = 0.3411E+01  final t = 0.307165E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.310919E+03
+ AMRCLAW: level  1  CFL = .496E+00  dt = 0.3754E+01  final t = 0.314673E+03
+ AMRCLAW: level  1  CFL = .408E+00  dt = 0.3404E+01  final t = 0.318077E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.321831E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.325584E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.329338E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.333092E+03
+*** WARNING *** Courant number  =  0.5046D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+ AMRCLAW: level  1  CFL = .505E+00  dt = 0.3754E+01  final t = 0.336846E+03
+ AMRCLAW: level  1  CFL = .401E+00  dt = 0.3348E+01  final t = 0.340194E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.343948E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.347702E+03
+*** WARNING *** Courant number  =  0.5068D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+ AMRCLAW: level  1  CFL = .507E+00  dt = 0.3754E+01  final t = 0.351456E+03
+ AMRCLAW: level  1  CFL = .400E+00  dt = 0.3333E+01  final t = 0.354788E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.358542E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.362296E+03
+*** WARNING *** Courant number  =  0.5092D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+ AMRCLAW: level  1  CFL = .509E+00  dt = 0.3754E+01  final t = 0.366050E+03
+ AMRCLAW: level  1  CFL = .398E+00  dt = 0.3317E+01  final t = 0.369368E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.373122E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.376875E+03
+*** WARNING *** Courant number  =  0.5094D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+ AMRCLAW: level  1  CFL = .509E+00  dt = 0.3754E+01  final t = 0.380629E+03
+ AMRCLAW: level  1  CFL = .398E+00  dt = 0.3316E+01  final t = 0.383946E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.387700E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.391454E+03
+*** WARNING *** Courant number  =  0.5146D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+ AMRCLAW: level  1  CFL = .515E+00  dt = 0.3754E+01  final t = 0.395207E+03
+ AMRCLAW: level  1  CFL = .394E+00  dt = 0.3283E+01  final t = 0.398490E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.402244E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.405998E+03
+ AMRCLAW: level  1  CFL = .496E+00  dt = 0.3754E+01  final t = 0.409752E+03
+ AMRCLAW: level  1  CFL = .408E+00  dt = 0.3407E+01  final t = 0.413159E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.416913E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.420667E+03
+ AMRCLAW: level  1  CFL = .487E+00  dt = 0.3754E+01  final t = 0.424420E+03
+ AMRCLAW: level  1  CFL = .416E+00  dt = 0.3468E+01  final t = 0.427888E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.431642E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.435396E+03
+ AMRCLAW: level  1  CFL = .466E+00  dt = 0.3754E+01  final t = 0.439150E+03
+ AMRCLAW: level  1  CFL = .435E+00  dt = 0.3627E+01  final t = 0.442777E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.446531E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.450285E+03
+ AMRCLAW: level  1  CFL = .459E+00  dt = 0.3754E+01  final t = 0.454039E+03
+ AMRCLAW: level  1  CFL = .442E+00  dt = 0.3684E+01  final t = 0.457723E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.461477E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.465231E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.468985E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.472739E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.476493E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.480247E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.484000E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.487754E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.491508E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.495262E+03
+ AMRCLAW: level  1  CFL = .488E+00  dt = 0.3754E+01  final t = 0.499016E+03
+ AMRCLAW: level  1  CFL = .415E+00  dt = 0.3462E+01  final t = 0.502478E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.506232E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.509986E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.513740E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.517494E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.521247E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.525001E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.528755E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.532509E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.536263E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.540017E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.543771E+03
+ AMRCLAW: level  1  CFL = .479E+00  dt = 0.3754E+01  final t = 0.547525E+03
+ AMRCLAW: level  1  CFL = .423E+00  dt = 0.3526E+01  final t = 0.551050E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.554804E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.558558E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.562312E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.566066E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.569820E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.573574E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.577328E+03
+ AMRCLAW: level  1  CFL = .480E+00  dt = 0.3754E+01  final t = 0.581081E+03
+ AMRCLAW: level  1  CFL = .422E+00  dt = 0.3517E+01  final t = 0.584598E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.588352E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.592106E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.595860E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.599614E+03
+ AMRCLAW: level  1  CFL = .463E-01  dt = 0.3864E+00  final t = 0.600000E+03
+GEOCLAW: Frame    2 output files done at time t =  0.600000D+03
+
+ AMRCLAW: level  1  CFL = .474E+00  dt = 0.3754E+01  final t = 0.603754E+03
+ AMRCLAW: level  1  CFL = .427E+00  dt = 0.3561E+01  final t = 0.607315E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.611069E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.614822E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.618576E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.622330E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.626084E+03
+ AMRCLAW: level  1  CFL = .466E+00  dt = 0.3754E+01  final t = 0.629838E+03
+ AMRCLAW: level  1  CFL = .434E+00  dt = 0.3622E+01  final t = 0.633460E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.637214E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.640968E+03
+ AMRCLAW: level  1  CFL = .479E+00  dt = 0.3754E+01  final t = 0.644722E+03
+ AMRCLAW: level  1  CFL = .423E+00  dt = 0.3526E+01  final t = 0.648247E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.652001E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.655755E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.659509E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.663263E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.667017E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.670771E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.674525E+03
+ AMRCLAW: level  1  CFL = .465E+00  dt = 0.3754E+01  final t = 0.678279E+03
+ AMRCLAW: level  1  CFL = .435E+00  dt = 0.3631E+01  final t = 0.681909E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.685663E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.689417E+03
+ AMRCLAW: level  1  CFL = .460E+00  dt = 0.3754E+01  final t = 0.693171E+03
+ AMRCLAW: level  1  CFL = .440E+00  dt = 0.3674E+01  final t = 0.696846E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.700599E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.704353E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.708107E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.711861E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.715615E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.719369E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.723123E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.726877E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.730631E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.734385E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.738138E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.741892E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.745646E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.749400E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.753154E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.756908E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.760662E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.764416E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.768170E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.771924E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.775677E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.779431E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.783185E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.786939E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.790693E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.794447E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.798201E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.801955E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.805709E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.809462E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.813216E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.816970E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.820724E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.824478E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.828232E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.831986E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.835740E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.839494E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.843248E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.847001E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.850755E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.854509E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.858263E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.862017E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.865771E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.869525E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.873279E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.877033E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.880787E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.884540E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.888294E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.892048E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.895802E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.899556E+03
+ AMRCLAW: level  1  CFL = .532E-01  dt = 0.4440E+00  final t = 0.900000E+03
+GEOCLAW: Frame    3 output files done at time t =  0.900000D+03
+
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.903754E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.907508E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.911262E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.915016E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.918769E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.922523E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.926277E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.930031E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.3754E+01  final t = 0.933785E+03
+*** WARNING *** Courant number  =  0.6174D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+ AMRCLAW: level  1  CFL = .617E+00  dt = 0.3754E+01  final t = 0.937539E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.940275E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.943011E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.945747E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.948483E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.951218E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.953954E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.956690E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.959426E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.962162E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.964898E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.967634E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.970370E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.973106E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.975842E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.978577E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.981313E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.984049E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.986785E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.989521E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.992257E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.994993E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.997729E+03
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.100046E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.100320E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.100594E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.100867E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.101141E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.101414E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.101688E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.101962E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.102235E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.102509E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.102782E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.103056E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.103330E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.103603E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.103877E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.104150E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.104424E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.104698E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.104971E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.105245E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.105518E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.105792E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.106065E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.106339E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.106613E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.106886E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.107160E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.107433E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.107707E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.107981E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.108254E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.108528E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.108801E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.109075E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.109349E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.109622E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.109896E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.110169E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.110443E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.110716E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.110990E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.111264E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.111537E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.111811E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.112084E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.112358E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.112632E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.112905E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.113179E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.113452E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.113726E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.114000E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.114273E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.114547E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.114820E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.115094E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.115368E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.115641E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.115915E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.116188E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.116462E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.116735E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.117009E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.117283E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.117556E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.117830E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.118103E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.118377E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.118651E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.118924E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.119198E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.119471E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.119745E+04
+ AMRCLAW: level  1  CFL = .419E+00  dt = 0.2550E+01  final t = 0.120000E+04
+GEOCLAW: Frame    4 output files done at time t =  0.120000D+04
+
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.120274E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.120547E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.120821E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.121094E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.121368E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.121642E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.121915E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.122189E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.122462E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.122736E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.123009E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.123283E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.123557E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.123830E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.124104E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.124377E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.124651E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.124925E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.125198E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.125472E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.125745E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.126019E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.126293E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.126566E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.126840E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.127113E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.127387E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.127661E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.127934E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.128208E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.128481E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.128755E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.129028E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.129302E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.129576E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.129849E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.130123E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.130396E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.130670E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.130944E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.131217E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.131491E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.131764E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.132038E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.132312E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.132585E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.132859E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.133132E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.133406E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.133680E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.133953E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.134227E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.134500E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.134774E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.135047E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.135321E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.135595E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.135868E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.136142E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.136415E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.136689E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.136963E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.137236E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.137510E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.137783E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.138057E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.138331E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.138604E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.138878E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.139151E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.139425E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.139698E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.139972E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.140246E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.140519E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.140793E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.141066E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.141340E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.141614E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.141887E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.142161E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.142434E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.142708E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.142982E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.143255E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.143529E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.143802E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.144076E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.144350E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.144623E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.144897E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.145170E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.145444E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.145717E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.145991E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.146265E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.146538E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.146812E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.147085E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.147359E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.147633E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.147906E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.148180E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.148453E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.148727E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.149001E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.149274E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.149548E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.149821E+04
+ AMRCLAW: level  1  CFL = .294E+00  dt = 0.1787E+01  final t = 0.150000E+04
+GEOCLAW: Frame    5 output files done at time t =  0.150000D+04
+
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.150274E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.150547E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.150821E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.151094E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.151368E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.151642E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.151915E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.152189E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.152462E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.152736E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.153009E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.153283E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.153557E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.153830E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.154104E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.154377E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.154651E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.154925E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.155198E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.155472E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.155745E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.156019E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.156293E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.156566E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.156840E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.157113E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.157387E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.157661E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.157934E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.158208E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.158481E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.158755E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.159028E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.159302E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.159576E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.159849E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.160123E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.160396E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.160670E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.160944E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.161217E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.161491E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.161764E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.162038E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.162312E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.162585E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.162859E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.163132E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.163406E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.163680E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.163953E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.164227E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.164500E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.164774E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.165047E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.165321E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.165595E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.165868E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.166142E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.166415E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.166689E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.166963E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.167236E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.167510E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.167783E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.168057E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.168331E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.168604E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.168878E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.169151E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.169425E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.169698E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.169972E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.170246E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.170519E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.170793E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.171066E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.171340E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.171614E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.171887E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.172161E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.172434E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.172708E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.172982E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.173255E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.173529E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.173802E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.174076E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.174350E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.174623E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.174897E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.175170E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.175444E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.175717E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.175991E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.176265E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.176538E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.176812E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.177085E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.177359E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.177633E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.177906E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.178180E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.178453E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.178727E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.179001E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.179274E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.179548E+04
+ AMRCLAW: level  1  CFL = .450E+00  dt = 0.2736E+01  final t = 0.179821E+04
+ AMRCLAW: level  1  CFL = .294E+00  dt = 0.1787E+01  final t = 0.180000E+04
+GEOCLAW: Frame    6 output files done at time t =  0.180000D+04
+
+ Done integrating to time    1800.0000000000000     
+ Writing to file fgmax0001.txt                 
+See fort.amr for more info on this run and memory usage
+
+============================== Timing Data ==============================
+
+Integration Time (stepgrid + BC + overhead)
+Level           Wall Time (seconds)    CPU Time (seconds)   Total Cell Updates
+  1                    22.711                 82.480            0.267E+08
+total                  22.711                 82.480            0.267E+08
+
+All levels:
+stepgrid               22.612                 82.234    
+BC/ghost cells          0.097                  0.232
+Regridding              0.000                  0.000  
+Output (valout)         2.108                  2.736  
+
+Total time:            25.012                 85.697  
+Using 12 thread(s)
+
+Note: The CPU times are summed over all threads.
+      Total time includes more than the subroutines listed above
+Note: timings are also recorded for each output step
+      in the file timing.csv.
+
+=========================================================================
+
+ maximum Courant number seen =    1.63924

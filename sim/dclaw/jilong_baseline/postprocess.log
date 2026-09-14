@@ -1,0 +1,25 @@
+{
+  "completed": true,
+  "simulated_time_s": 1800.0,
+  "frames": [
+    0,
+    3,
+    6
+  ],
+  "initial_centroid_utm_m": [
+    334053.9,
+    3143400.5
+  ],
+  "final_centroid_utm_m": [
+    334140.8,
+    3143384.4
+  ],
+  "centroid_displacement_m": 88.4,
+  "downstream_progress_along_mapped_river_m": 75.5,
+  "mapped_entry_to_port_route_m": 17623.8,
+  "final_wet_cells_depth_gt_0_01m": 66,
+  "final_max_depth_m": 3.0,
+  "final_max_speed_m_s": 4.0261,
+  "port_gauge_max_depth_m": 0.0,
+  "note": "This is a provisional, uncalibrated baseline; no match to event travel time, velocity, or discharge is implied."
+}

@@ -1,0 +1,667 @@
+Gridding level   1 at t =  0.000000E+00:     1 grids with       45936 cells
+  max threads set to           12
+
+ amrclaw parameters:
+
+ error tol            -0.10000E+01
+ spatial error tol     0.50000E-01
+ order of integrator             1
+ error checking interval         3
+ buffer zone size                2
+ nghost                          2
+ volume ratio cutoff   0.70000E+00
+ max. refinement level           1
+ user sub. calling times 999999999
+ cfl # (if var. delt)  0.45000E+00
+
+ xupper(upper corner)  0.34305E+06
+ yupper(upper corner)  0.31448E+07
+ xlower(lower corner)  0.33178E+06
+ ylower(lower corner)  0.31281E+07
+ nx = no. cells in x dir.      176
+ ny = no. cells in y dir.      261
+ refinement ratios       
+ refinement ratios:           1
+ refinement ratios:           1
+ no. auxiliary vars.            10
+       var     1 of type center    
+       var     2 of type center    
+       var     3 of type yleft     
+       var     4 of type center    
+       var     5 of type center    
+       var     6 of type center    
+       var     7 of type center    
+       var     8 of type center    
+       var     9 of type center    
+       var    10 of type center    
+ the subtree is
+ +---------------------------------------------------------------------------+
+ ! grid no:     1                                                            !
+ ! nestlevel=  1, time mult=    0.000000000000000E+00, level ptr =     0     !
+ ! storage locs =          1          0  bndry locs =          0          0  !
+ ! corners of rectangle:                                                     !
+ !           (************, ************)(************, ************)        !
+ !           (************, ************)(************, ************)        !
+ ! integer index space :                                                     !
+ !                   (       0,      260)(     175,      260)                !
+ !                   (       0,        0)(     175,        0)                !
+ ! hrow=     64.00000000000, hcol=     64.00000000000, ktime=     0.500000000!
+ +---------------------------------------------------------------------------+
+
+    1 grids at level     1 go from         0        0 to      175      260
+
+   original total mass ...
+time t =  0.00000E+00,  total mass =  0.221184000000000E+06  diff =  0.0000E+00
+time t =  0.50000E+00,  total mass =  0.221184331187153E+06  diff =  0.3312E+00
+*** WARNING *** Courant number  =  0.5399D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+time t =  0.42539E+01,  total mass =  0.221174477649701E+06  diff = -0.9522E+01
+*** WARNING *** Courant number  =  0.1639D+01  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+time t =  0.73830E+01,  total mass =  0.225855375556238E+06  diff =  0.4671E+04
+time t =  0.82420E+01,  total mass =  0.225852457249717E+06  diff =  0.4668E+04
+time t =  0.91068E+01,  total mass =  0.225849843251851E+06  diff =  0.4666E+04
+time t =  0.10027E+02,  total mass =  0.225839797262552E+06  diff =  0.4656E+04
+time t =  0.10998E+02,  total mass =  0.225829788381125E+06  diff =  0.4646E+04
+time t =  0.11927E+02,  total mass =  0.225824351079039E+06  diff =  0.4640E+04
+time t =  0.12949E+02,  total mass =  0.225815357570864E+06  diff =  0.4631E+04
+time t =  0.14280E+02,  total mass =  0.225809205614735E+06  diff =  0.4625E+04
+time t =  0.15568E+02,  total mass =  0.225804072208417E+06  diff =  0.4620E+04
+time t =  0.16853E+02,  total mass =  0.225801442660722E+06  diff =  0.4617E+04
+time t =  0.18203E+02,  total mass =  0.225793127533061E+06  diff =  0.4609E+04
+time t =  0.19640E+02,  total mass =  0.225786302476334E+06  diff =  0.4602E+04
+time t =  0.21401E+02,  total mass =  0.225790320172883E+06  diff =  0.4606E+04
+time t =  0.23193E+02,  total mass =  0.225792525168832E+06  diff =  0.4609E+04
+time t =  0.25318E+02,  total mass =  0.225799336043769E+06  diff =  0.4615E+04
+time t =  0.27259E+02,  total mass =  0.225799556629945E+06  diff =  0.4616E+04
+time t =  0.29555E+02,  total mass =  0.225803719577057E+06  diff =  0.4620E+04
+time t =  0.31995E+02,  total mass =  0.225800958383865E+06  diff =  0.4617E+04
+time t =  0.34809E+02,  total mass =  0.225804631104374E+06  diff =  0.4621E+04
+time t =  0.37927E+02,  total mass =  0.225801766468437E+06  diff =  0.4618E+04
+time t =  0.41503E+02,  total mass =  0.225809485840033E+06  diff =  0.4625E+04
+time t =  0.45257E+02,  total mass =  0.225812920593372E+06  diff =  0.4629E+04
+time t =  0.49011E+02,  total mass =  0.225817941407969E+06  diff =  0.4634E+04
+time t =  0.52765E+02,  total mass =  0.225819875816311E+06  diff =  0.4636E+04
+time t =  0.56519E+02,  total mass =  0.225820133433086E+06  diff =  0.4636E+04
+time t =  0.60273E+02,  total mass =  0.225821570133965E+06  diff =  0.4638E+04
+time t =  0.64027E+02,  total mass =  0.225820781886893E+06  diff =  0.4637E+04
+time t =  0.67781E+02,  total mass =  0.225819473668304E+06  diff =  0.4635E+04
+time t =  0.71535E+02,  total mass =  0.225815257900076E+06  diff =  0.4631E+04
+time t =  0.75288E+02,  total mass =  0.225813186181104E+06  diff =  0.4629E+04
+time t =  0.79042E+02,  total mass =  0.225808980890385E+06  diff =  0.4625E+04
+time t =  0.82796E+02,  total mass =  0.225943661894502E+06  diff =  0.4760E+04
+time t =  0.86550E+02,  total mass =  0.225938474309988E+06  diff =  0.4754E+04
+time t =  0.90304E+02,  total mass =  0.225936062280020E+06  diff =  0.4752E+04
+time t =  0.94058E+02,  total mass =  0.225930655793962E+06  diff =  0.4747E+04
+time t =  0.97812E+02,  total mass =  0.225925272724139E+06  diff =  0.4741E+04
+time t =  0.10157E+03,  total mass =  0.225915900677245E+06  diff =  0.4732E+04
+time t =  0.10532E+03,  total mass =  0.225909813664927E+06  diff =  0.4726E+04
+time t =  0.10907E+03,  total mass =  0.225898843655454E+06  diff =  0.4715E+04
+time t =  0.11283E+03,  total mass =  0.225889173154810E+06  diff =  0.4705E+04
+time t =  0.11658E+03,  total mass =  0.225876604816343E+06  diff =  0.4693E+04
+time t =  0.12034E+03,  total mass =  0.225866011131007E+06  diff =  0.4682E+04
+time t =  0.12409E+03,  total mass =  0.225855083031969E+06  diff =  0.4671E+04
+time t =  0.12784E+03,  total mass =  0.225840492906616E+06  diff =  0.4656E+04
+time t =  0.13160E+03,  total mass =  0.225829631688028E+06  diff =  0.4646E+04
+time t =  0.13535E+03,  total mass =  0.225812478880507E+06  diff =  0.4628E+04
+time t =  0.13910E+03,  total mass =  0.225798844259823E+06  diff =  0.4615E+04
+time t =  0.14286E+03,  total mass =  0.225789492497969E+06  diff =  0.4605E+04
+time t =  0.14661E+03,  total mass =  0.225773149757099E+06  diff =  0.4589E+04
+time t =  0.15037E+03,  total mass =  0.225760713402261E+06  diff =  0.4577E+04
+time t =  0.15412E+03,  total mass =  0.225747935202629E+06  diff =  0.4564E+04
+time t =  0.15787E+03,  total mass =  0.225735219742341E+06  diff =  0.4551E+04
+time t =  0.16163E+03,  total mass =  0.225725154855981E+06  diff =  0.4541E+04
+time t =  0.16538E+03,  total mass =  0.225713349397986E+06  diff =  0.4529E+04
+time t =  0.16914E+03,  total mass =  0.225702238082127E+06  diff =  0.4518E+04
+time t =  0.17289E+03,  total mass =  0.225690665311965E+06  diff =  0.4507E+04
+time t =  0.17664E+03,  total mass =  0.225680310273530E+06  diff =  0.4496E+04
+time t =  0.18040E+03,  total mass =  0.225667377748588E+06  diff =  0.4483E+04
+time t =  0.18415E+03,  total mass =  0.225656898048785E+06  diff =  0.4473E+04
+time t =  0.18791E+03,  total mass =  0.225644210028688E+06  diff =  0.4460E+04
+time t =  0.19166E+03,  total mass =  0.225633608420834E+06  diff =  0.4450E+04
+time t =  0.19541E+03,  total mass =  0.225622323077855E+06  diff =  0.4438E+04
+time t =  0.19912E+03,  total mass =  0.225611431271170E+06  diff =  0.4427E+04
+time t =  0.20287E+03,  total mass =  0.225602235608936E+06  diff =  0.4418E+04
+time t =  0.20658E+03,  total mass =  0.225592368366967E+06  diff =  0.4408E+04
+time t =  0.21033E+03,  total mass =  0.225581585780276E+06  diff =  0.4398E+04
+time t =  0.21409E+03,  total mass =  0.225570620612239E+06  diff =  0.4387E+04
+time t =  0.21784E+03,  total mass =  0.225559891060108E+06  diff =  0.4376E+04
+time t =  0.22140E+03,  total mass =  0.225551853279515E+06  diff =  0.4368E+04
+time t =  0.22478E+03,  total mass =  0.225547401020489E+06  diff =  0.4363E+04
+time t =  0.22854E+03,  total mass =  0.225539381550790E+06  diff =  0.4355E+04
+time t =  0.23220E+03,  total mass =  0.225521157805763E+06  diff =  0.4337E+04
+time t =  0.23595E+03,  total mass =  0.225513025684984E+06  diff =  0.4329E+04
+*** WARNING *** Courant number  =  0.6141D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+time t =  0.23971E+03,  total mass =  0.225500456754177E+06  diff =  0.4316E+04
+time t =  0.24246E+03,  total mass =  0.225490911579912E+06  diff =  0.4307E+04
+time t =  0.24621E+03,  total mass =  0.225479750793911E+06  diff =  0.4296E+04
+time t =  0.24985E+03,  total mass =  0.225466387152676E+06  diff =  0.4282E+04
+*** WARNING *** Courant number  =  0.5084D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+time t =  0.25360E+03,  total mass =  0.225457477805092E+06  diff =  0.4273E+04
+time t =  0.25692E+03,  total mass =  0.225446769826909E+06  diff =  0.4263E+04
+time t =  0.26068E+03,  total mass =  0.225436280497977E+06  diff =  0.4252E+04
+time t =  0.26443E+03,  total mass =  0.225422455957172E+06  diff =  0.4238E+04
+time t =  0.26818E+03,  total mass =  0.225415245232061E+06  diff =  0.4231E+04
+time t =  0.27192E+03,  total mass =  0.225403485047937E+06  diff =  0.4219E+04
+time t =  0.27567E+03,  total mass =  0.225392490678379E+06  diff =  0.4208E+04
+time t =  0.27943E+03,  total mass =  0.225382692286099E+06  diff =  0.4199E+04
+*** WARNING *** Courant number  =  0.5248D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+time t =  0.28318E+03,  total mass =  0.225367200927035E+06  diff =  0.4183E+04
+time t =  0.28640E+03,  total mass =  0.225359777921310E+06  diff =  0.4176E+04
+time t =  0.29016E+03,  total mass =  0.225354131081304E+06  diff =  0.4170E+04
+time t =  0.29391E+03,  total mass =  0.225345295086637E+06  diff =  0.4161E+04
+time t =  0.29766E+03,  total mass =  0.225334676646978E+06  diff =  0.4151E+04
+time t =  0.30000E+03,  total mass =  0.225326072172402E+06  diff =  0.4142E+04
+time t =  0.30375E+03,  total mass =  0.225533393262983E+06  diff =  0.4349E+04
+time t =  0.30716E+03,  total mass =  0.225516005404469E+06  diff =  0.4332E+04
+time t =  0.31092E+03,  total mass =  0.225504438393672E+06  diff =  0.4320E+04
+time t =  0.31467E+03,  total mass =  0.225492203600149E+06  diff =  0.4308E+04
+time t =  0.31808E+03,  total mass =  0.225486015229592E+06  diff =  0.4302E+04
+time t =  0.32183E+03,  total mass =  0.225479222476615E+06  diff =  0.4295E+04
+time t =  0.32558E+03,  total mass =  0.225466869053193E+06  diff =  0.4283E+04
+time t =  0.32934E+03,  total mass =  0.225460413260448E+06  diff =  0.4276E+04
+time t =  0.33309E+03,  total mass =  0.225455773356394E+06  diff =  0.4272E+04
+*** WARNING *** Courant number  =  0.5046D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+time t =  0.33685E+03,  total mass =  0.225452426426377E+06  diff =  0.4268E+04
+time t =  0.34019E+03,  total mass =  0.225443336896601E+06  diff =  0.4259E+04
+time t =  0.34395E+03,  total mass =  0.225439968128202E+06  diff =  0.4256E+04
+time t =  0.34770E+03,  total mass =  0.225437312881278E+06  diff =  0.4253E+04
+*** WARNING *** Courant number  =  0.5068D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+time t =  0.35146E+03,  total mass =  0.225432279129459E+06  diff =  0.4248E+04
+time t =  0.35479E+03,  total mass =  0.225431223572581E+06  diff =  0.4247E+04
+time t =  0.35854E+03,  total mass =  0.225424594103800E+06  diff =  0.4241E+04
+time t =  0.36230E+03,  total mass =  0.225596418259123E+06  diff =  0.4412E+04
+*** WARNING *** Courant number  =  0.5092D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+time t =  0.36605E+03,  total mass =  0.225594355929015E+06  diff =  0.4410E+04
+time t =  0.36937E+03,  total mass =  0.225590222367328E+06  diff =  0.4406E+04
+time t =  0.37312E+03,  total mass =  0.225590959274474E+06  diff =  0.4407E+04
+time t =  0.37688E+03,  total mass =  0.225586505851321E+06  diff =  0.4403E+04
+*** WARNING *** Courant number  =  0.5094D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+time t =  0.38063E+03,  total mass =  0.225581651849568E+06  diff =  0.4398E+04
+time t =  0.38395E+03,  total mass =  0.225580492946947E+06  diff =  0.4396E+04
+time t =  0.38770E+03,  total mass =  0.225577387586000E+06  diff =  0.4393E+04
+time t =  0.39145E+03,  total mass =  0.225574796686637E+06  diff =  0.4391E+04
+*** WARNING *** Courant number  =  0.5146D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+time t =  0.39521E+03,  total mass =  0.225571666737087E+06  diff =  0.4388E+04
+time t =  0.39849E+03,  total mass =  0.225562092957339E+06  diff =  0.4378E+04
+time t =  0.40224E+03,  total mass =  0.225562707950978E+06  diff =  0.4379E+04
+time t =  0.40600E+03,  total mass =  0.225736458208813E+06  diff =  0.4552E+04
+time t =  0.40975E+03,  total mass =  0.225728629940658E+06  diff =  0.4545E+04
+time t =  0.41316E+03,  total mass =  0.225726759880311E+06  diff =  0.4543E+04
+time t =  0.41691E+03,  total mass =  0.225744595320135E+06  diff =  0.4561E+04
+time t =  0.42067E+03,  total mass =  0.225743501129204E+06  diff =  0.4560E+04
+time t =  0.42442E+03,  total mass =  0.225740375495895E+06  diff =  0.4556E+04
+time t =  0.42789E+03,  total mass =  0.225738760369703E+06  diff =  0.4555E+04
+time t =  0.43164E+03,  total mass =  0.225743045015502E+06  diff =  0.4559E+04
+time t =  0.43540E+03,  total mass =  0.225738030577335E+06  diff =  0.4554E+04
+time t =  0.43915E+03,  total mass =  0.225737151160022E+06  diff =  0.4553E+04
+time t =  0.44278E+03,  total mass =  0.225738817384594E+06  diff =  0.4555E+04
+time t =  0.44653E+03,  total mass =  0.225736224957338E+06  diff =  0.4552E+04
+time t =  0.45029E+03,  total mass =  0.225734739140442E+06  diff =  0.4551E+04
+time t =  0.45404E+03,  total mass =  0.225733452480762E+06  diff =  0.4549E+04
+time t =  0.45772E+03,  total mass =  0.225735451211750E+06  diff =  0.4551E+04
+time t =  0.46148E+03,  total mass =  0.225737131122021E+06  diff =  0.4553E+04
+time t =  0.46523E+03,  total mass =  0.225734265143067E+06  diff =  0.4550E+04
+time t =  0.46898E+03,  total mass =  0.225732689803843E+06  diff =  0.4549E+04
+time t =  0.47274E+03,  total mass =  0.225734083947231E+06  diff =  0.4550E+04
+time t =  0.47649E+03,  total mass =  0.225735711265636E+06  diff =  0.4552E+04
+time t =  0.48025E+03,  total mass =  0.225731567348949E+06  diff =  0.4548E+04
+time t =  0.48400E+03,  total mass =  0.225734081577021E+06  diff =  0.4550E+04
+time t =  0.48775E+03,  total mass =  0.225730085648027E+06  diff =  0.4546E+04
+time t =  0.49151E+03,  total mass =  0.225732568348073E+06  diff =  0.4549E+04
+time t =  0.49526E+03,  total mass =  0.225730464613374E+06  diff =  0.4546E+04
+time t =  0.49902E+03,  total mass =  0.225728346387395E+06  diff =  0.4544E+04
+time t =  0.50248E+03,  total mass =  0.225727439092647E+06  diff =  0.4543E+04
+time t =  0.50623E+03,  total mass =  0.225729253579666E+06  diff =  0.4545E+04
+time t =  0.50999E+03,  total mass =  0.225723950396437E+06  diff =  0.4540E+04
+time t =  0.51374E+03,  total mass =  0.225724669940410E+06  diff =  0.4541E+04
+time t =  0.51749E+03,  total mass =  0.225723601837812E+06  diff =  0.4540E+04
+time t =  0.52125E+03,  total mass =  0.225725384140339E+06  diff =  0.4541E+04
+time t =  0.52500E+03,  total mass =  0.225720680453207E+06  diff =  0.4537E+04
+time t =  0.52876E+03,  total mass =  0.225722616944769E+06  diff =  0.4539E+04
+time t =  0.53251E+03,  total mass =  0.225719935912708E+06  diff =  0.4536E+04
+time t =  0.53626E+03,  total mass =  0.225721631043203E+06  diff =  0.4538E+04
+time t =  0.54002E+03,  total mass =  0.225717068639463E+06  diff =  0.4533E+04
+time t =  0.54377E+03,  total mass =  0.225719774960604E+06  diff =  0.4536E+04
+time t =  0.54752E+03,  total mass =  0.225720386860528E+06  diff =  0.4536E+04
+time t =  0.55105E+03,  total mass =  0.225721226823657E+06  diff =  0.4537E+04
+time t =  0.55480E+03,  total mass =  0.225721679981463E+06  diff =  0.4538E+04
+time t =  0.55856E+03,  total mass =  0.225718508488667E+06  diff =  0.4535E+04
+time t =  0.56231E+03,  total mass =  0.225719561922962E+06  diff =  0.4536E+04
+time t =  0.56607E+03,  total mass =  0.225717857748285E+06  diff =  0.4534E+04
+time t =  0.56982E+03,  total mass =  0.225719033529095E+06  diff =  0.4535E+04
+time t =  0.57357E+03,  total mass =  0.225715038247614E+06  diff =  0.4531E+04
+time t =  0.57733E+03,  total mass =  0.225717067583264E+06  diff =  0.4533E+04
+time t =  0.58108E+03,  total mass =  0.225718258881447E+06  diff =  0.4534E+04
+time t =  0.58460E+03,  total mass =  0.225715500893602E+06  diff =  0.4532E+04
+time t =  0.58835E+03,  total mass =  0.225718546236194E+06  diff =  0.4535E+04
+time t =  0.59211E+03,  total mass =  0.225717234809141E+06  diff =  0.4533E+04
+time t =  0.59586E+03,  total mass =  0.225717362205786E+06  diff =  0.4533E+04
+time t =  0.59961E+03,  total mass =  0.225712715874973E+06  diff =  0.4529E+04
+time t =  0.60000E+03,  total mass =  0.225710982849193E+06  diff =  0.4527E+04
+time t =  0.60375E+03,  total mass =  0.225708512222605E+06  diff =  0.4525E+04
+time t =  0.60731E+03,  total mass =  0.225707451627314E+06  diff =  0.4523E+04
+time t =  0.61107E+03,  total mass =  0.225707471984919E+06  diff =  0.4523E+04
+time t =  0.61482E+03,  total mass =  0.225707109439792E+06  diff =  0.4523E+04
+time t =  0.61858E+03,  total mass =  0.225707820716280E+06  diff =  0.4524E+04
+time t =  0.62233E+03,  total mass =  0.225702460185421E+06  diff =  0.4518E+04
+time t =  0.62608E+03,  total mass =  0.225705044643379E+06  diff =  0.4521E+04
+time t =  0.62984E+03,  total mass =  0.225700625214975E+06  diff =  0.4517E+04
+time t =  0.63346E+03,  total mass =  0.225698304947172E+06  diff =  0.4514E+04
+time t =  0.63721E+03,  total mass =  0.225700442677620E+06  diff =  0.4516E+04
+time t =  0.64097E+03,  total mass =  0.225698648800259E+06  diff =  0.4515E+04
+time t =  0.64472E+03,  total mass =  0.225697023841821E+06  diff =  0.4513E+04
+time t =  0.64825E+03,  total mass =  0.225698453131404E+06  diff =  0.4514E+04
+time t =  0.65200E+03,  total mass =  0.225699363339676E+06  diff =  0.4515E+04
+time t =  0.65576E+03,  total mass =  0.225694240764966E+06  diff =  0.4510E+04
+time t =  0.65951E+03,  total mass =  0.225694430326735E+06  diff =  0.4510E+04
+time t =  0.66326E+03,  total mass =  0.225695817553889E+06  diff =  0.4512E+04
+time t =  0.66702E+03,  total mass =  0.225696488278047E+06  diff =  0.4512E+04
+time t =  0.67077E+03,  total mass =  0.225693288471706E+06  diff =  0.4509E+04
+time t =  0.67452E+03,  total mass =  0.225696311858782E+06  diff =  0.4512E+04
+time t =  0.67828E+03,  total mass =  0.225696342598104E+06  diff =  0.4512E+04
+time t =  0.68191E+03,  total mass =  0.225696934288273E+06  diff =  0.4513E+04
+time t =  0.68566E+03,  total mass =  0.225694771206421E+06  diff =  0.4511E+04
+time t =  0.68942E+03,  total mass =  0.225693927745035E+06  diff =  0.4510E+04
+time t =  0.69317E+03,  total mass =  0.225694391840325E+06  diff =  0.4510E+04
+time t =  0.69685E+03,  total mass =  0.225696246312320E+06  diff =  0.4512E+04
+time t =  0.70060E+03,  total mass =  0.225692239458953E+06  diff =  0.4508E+04
+time t =  0.70435E+03,  total mass =  0.225693746728736E+06  diff =  0.4510E+04
+time t =  0.70811E+03,  total mass =  0.225695351649291E+06  diff =  0.4511E+04
+time t =  0.71186E+03,  total mass =  0.225694324970199E+06  diff =  0.4510E+04
+time t =  0.71562E+03,  total mass =  0.225694878654248E+06  diff =  0.4511E+04
+time t =  0.71937E+03,  total mass =  0.225691627784303E+06  diff =  0.4508E+04
+time t =  0.72312E+03,  total mass =  0.225692281874294E+06  diff =  0.4508E+04
+time t =  0.72688E+03,  total mass =  0.225694788407106E+06  diff =  0.4511E+04
+time t =  0.73063E+03,  total mass =  0.225692462130717E+06  diff =  0.4508E+04
+time t =  0.73438E+03,  total mass =  0.225694373419217E+06  diff =  0.4510E+04
+time t =  0.73814E+03,  total mass =  0.225692988641730E+06  diff =  0.4509E+04
+time t =  0.74189E+03,  total mass =  0.225692633216845E+06  diff =  0.4509E+04
+time t =  0.74565E+03,  total mass =  0.225693314192113E+06  diff =  0.4509E+04
+time t =  0.74940E+03,  total mass =  0.225692755311685E+06  diff =  0.4509E+04
+time t =  0.75315E+03,  total mass =  0.225691810611066E+06  diff =  0.4508E+04
+time t =  0.75691E+03,  total mass =  0.225691311484276E+06  diff =  0.4507E+04
+time t =  0.76066E+03,  total mass =  0.225691104898657E+06  diff =  0.4507E+04
+time t =  0.76442E+03,  total mass =  0.225692194742812E+06  diff =  0.4508E+04
+time t =  0.76817E+03,  total mass =  0.225692741903858E+06  diff =  0.4509E+04
+time t =  0.77192E+03,  total mass =  0.225693098455500E+06  diff =  0.4509E+04
+time t =  0.77568E+03,  total mass =  0.225692118304363E+06  diff =  0.4508E+04
+time t =  0.77943E+03,  total mass =  0.225691685878990E+06  diff =  0.4508E+04
+time t =  0.78319E+03,  total mass =  0.225692184830183E+06  diff =  0.4508E+04
+time t =  0.78694E+03,  total mass =  0.225691562805032E+06  diff =  0.4508E+04
+time t =  0.79069E+03,  total mass =  0.225690138578788E+06  diff =  0.4506E+04
+time t =  0.79445E+03,  total mass =  0.225690968847288E+06  diff =  0.4507E+04
+time t =  0.79820E+03,  total mass =  0.225690360823016E+06  diff =  0.4506E+04
+time t =  0.80195E+03,  total mass =  0.225690490382504E+06  diff =  0.4506E+04
+time t =  0.80571E+03,  total mass =  0.225689579350541E+06  diff =  0.4506E+04
+time t =  0.80946E+03,  total mass =  0.225690017476088E+06  diff =  0.4506E+04
+time t =  0.81322E+03,  total mass =  0.225689628539920E+06  diff =  0.4506E+04
+time t =  0.81697E+03,  total mass =  0.225690054382016E+06  diff =  0.4506E+04
+time t =  0.82072E+03,  total mass =  0.225686058548610E+06  diff =  0.4502E+04
+time t =  0.82448E+03,  total mass =  0.225685821495616E+06  diff =  0.4502E+04
+time t =  0.82823E+03,  total mass =  0.225684758478591E+06  diff =  0.4501E+04
+time t =  0.83199E+03,  total mass =  0.225680543218134E+06  diff =  0.4497E+04
+time t =  0.83574E+03,  total mass =  0.225680272929462E+06  diff =  0.4496E+04
+time t =  0.83949E+03,  total mass =  0.225676038799779E+06  diff =  0.4492E+04
+time t =  0.84325E+03,  total mass =  0.225673804116881E+06  diff =  0.4490E+04
+time t =  0.84700E+03,  total mass =  0.225674330890822E+06  diff =  0.4490E+04
+time t =  0.85076E+03,  total mass =  0.225674326281270E+06  diff =  0.4490E+04
+time t =  0.85451E+03,  total mass =  0.225673128725336E+06  diff =  0.4489E+04
+time t =  0.85826E+03,  total mass =  0.225671220849497E+06  diff =  0.4487E+04
+time t =  0.86202E+03,  total mass =  0.225668443141825E+06  diff =  0.4484E+04
+time t =  0.86577E+03,  total mass =  0.225668565594873E+06  diff =  0.4485E+04
+time t =  0.86952E+03,  total mass =  0.225667599028418E+06  diff =  0.4484E+04
+time t =  0.87328E+03,  total mass =  0.225666791821170E+06  diff =  0.4483E+04
+time t =  0.87703E+03,  total mass =  0.225666334417574E+06  diff =  0.4482E+04
+time t =  0.88079E+03,  total mass =  0.225665735179741E+06  diff =  0.4482E+04
+time t =  0.88454E+03,  total mass =  0.225666950353574E+06  diff =  0.4483E+04
+time t =  0.88829E+03,  total mass =  0.225666099405595E+06  diff =  0.4482E+04
+time t =  0.89205E+03,  total mass =  0.225665572700188E+06  diff =  0.4482E+04
+time t =  0.89580E+03,  total mass =  0.225664451800432E+06  diff =  0.4480E+04
+time t =  0.89956E+03,  total mass =  0.225664993201372E+06  diff =  0.4481E+04
+time t =  0.90000E+03,  total mass =  0.225662687054370E+06  diff =  0.4479E+04
+time t =  0.90375E+03,  total mass =  0.225663905463327E+06  diff =  0.4480E+04
+time t =  0.90751E+03,  total mass =  0.225663552337827E+06  diff =  0.4480E+04
+time t =  0.91126E+03,  total mass =  0.225662032871992E+06  diff =  0.4478E+04
+time t =  0.91502E+03,  total mass =  0.225658822059512E+06  diff =  0.4475E+04
+time t =  0.91877E+03,  total mass =  0.225658986975351E+06  diff =  0.4475E+04
+time t =  0.92252E+03,  total mass =  0.225659488919816E+06  diff =  0.4475E+04
+time t =  0.92628E+03,  total mass =  0.225658515177677E+06  diff =  0.4475E+04
+time t =  0.93003E+03,  total mass =  0.225657376083156E+06  diff =  0.4473E+04
+time t =  0.93379E+03,  total mass =  0.225656571768298E+06  diff =  0.4473E+04
+*** WARNING *** Courant number  =  0.6174D+00  is larger than input cfl_max =   0.5000D+00  on grid   1 level   1
+time t =  0.93754E+03,  total mass =  0.225658058601381E+06  diff =  0.4474E+04
+time t =  0.94027E+03,  total mass =  0.225654189504231E+06  diff =  0.4470E+04
+time t =  0.94301E+03,  total mass =  0.225654961330889E+06  diff =  0.4471E+04
+time t =  0.94575E+03,  total mass =  0.225654731407025E+06  diff =  0.4471E+04
+time t =  0.94848E+03,  total mass =  0.225656382210566E+06  diff =  0.4472E+04
+time t =  0.95122E+03,  total mass =  0.225654421011297E+06  diff =  0.4470E+04
+time t =  0.95395E+03,  total mass =  0.225656143714129E+06  diff =  0.4472E+04
+time t =  0.95669E+03,  total mass =  0.225651457465393E+06  diff =  0.4467E+04
+time t =  0.95943E+03,  total mass =  0.225653198105232E+06  diff =  0.4469E+04
+time t =  0.96216E+03,  total mass =  0.225652665167387E+06  diff =  0.4469E+04
+time t =  0.96490E+03,  total mass =  0.225652878569328E+06  diff =  0.4469E+04
+time t =  0.96763E+03,  total mass =  0.225649290929486E+06  diff =  0.4465E+04
+time t =  0.97037E+03,  total mass =  0.225652836560550E+06  diff =  0.4469E+04
+time t =  0.97311E+03,  total mass =  0.225652060809553E+06  diff =  0.4468E+04
+time t =  0.97584E+03,  total mass =  0.225652754111217E+06  diff =  0.4469E+04
+time t =  0.97858E+03,  total mass =  0.225652395427767E+06  diff =  0.4468E+04
+time t =  0.98131E+03,  total mass =  0.225652031516838E+06  diff =  0.4468E+04
+time t =  0.98405E+03,  total mass =  0.225649629278638E+06  diff =  0.4466E+04
+time t =  0.98679E+03,  total mass =  0.225653202609478E+06  diff =  0.4469E+04
+time t =  0.98952E+03,  total mass =  0.225651777859284E+06  diff =  0.4468E+04
+time t =  0.99226E+03,  total mass =  0.225652691901885E+06  diff =  0.4469E+04
+time t =  0.99499E+03,  total mass =  0.225650981155172E+06  diff =  0.4467E+04
+time t =  0.99773E+03,  total mass =  0.225651912457796E+06  diff =  0.4468E+04
+time t =  0.10005E+04,  total mass =  0.225649998775676E+06  diff =  0.4466E+04
+time t =  0.10032E+04,  total mass =  0.225653476424290E+06  diff =  0.4469E+04
+time t =  0.10059E+04,  total mass =  0.225652338358377E+06  diff =  0.4468E+04
+time t =  0.10087E+04,  total mass =  0.225653279910951E+06  diff =  0.4469E+04
+time t =  0.10114E+04,  total mass =  0.225651272200541E+06  diff =  0.4467E+04
+time t =  0.10141E+04,  total mass =  0.225652526194948E+06  diff =  0.4469E+04
+time t =  0.10169E+04,  total mass =  0.225650525841521E+06  diff =  0.4467E+04
+time t =  0.10196E+04,  total mass =  0.225648822386177E+06  diff =  0.4465E+04
+time t =  0.10224E+04,  total mass =  0.225645632004702E+06  diff =  0.4462E+04
+time t =  0.10251E+04,  total mass =  0.225647174425052E+06  diff =  0.4463E+04
+time t =  0.10278E+04,  total mass =  0.225647727478402E+06  diff =  0.4464E+04
+time t =  0.10306E+04,  total mass =  0.225648063995332E+06  diff =  0.4464E+04
+time t =  0.10333E+04,  total mass =  0.225645547731133E+06  diff =  0.4462E+04
+time t =  0.10360E+04,  total mass =  0.225647438559442E+06  diff =  0.4463E+04
+time t =  0.10388E+04,  total mass =  0.225646335716954E+06  diff =  0.4462E+04
+time t =  0.10415E+04,  total mass =  0.225646908022683E+06  diff =  0.4463E+04
+time t =  0.10442E+04,  total mass =  0.225646322648062E+06  diff =  0.4462E+04
+time t =  0.10470E+04,  total mass =  0.225646279767150E+06  diff =  0.4462E+04
+time t =  0.10497E+04,  total mass =  0.225645096219339E+06  diff =  0.4461E+04
+time t =  0.10524E+04,  total mass =  0.225647139484344E+06  diff =  0.4463E+04
+time t =  0.10552E+04,  total mass =  0.225645084283129E+06  diff =  0.4461E+04
+time t =  0.10579E+04,  total mass =  0.225645303754486E+06  diff =  0.4461E+04
+time t =  0.10607E+04,  total mass =  0.225646179431923E+06  diff =  0.4462E+04
+time t =  0.10634E+04,  total mass =  0.225646875131817E+06  diff =  0.4463E+04
+time t =  0.10661E+04,  total mass =  0.225645442620239E+06  diff =  0.4461E+04
+time t =  0.10689E+04,  total mass =  0.225647846885193E+06  diff =  0.4464E+04
+time t =  0.10716E+04,  total mass =  0.225646411773842E+06  diff =  0.4462E+04
+time t =  0.10743E+04,  total mass =  0.225646462847618E+06  diff =  0.4462E+04
+time t =  0.10771E+04,  total mass =  0.225645659690383E+06  diff =  0.4462E+04
+time t =  0.10798E+04,  total mass =  0.225646858296922E+06  diff =  0.4463E+04
+time t =  0.10825E+04,  total mass =  0.225645935292321E+06  diff =  0.4462E+04
+time t =  0.10853E+04,  total mass =  0.225646240017081E+06  diff =  0.4462E+04
+time t =  0.10880E+04,  total mass =  0.225644714237746E+06  diff =  0.4461E+04
+time t =  0.10907E+04,  total mass =  0.225646420665554E+06  diff =  0.4462E+04
+time t =  0.10935E+04,  total mass =  0.225641155753857E+06  diff =  0.4457E+04
+time t =  0.10962E+04,  total mass =  0.225641665639797E+06  diff =  0.4458E+04
+time t =  0.10990E+04,  total mass =  0.225640285585498E+06  diff =  0.4456E+04
+time t =  0.11017E+04,  total mass =  0.225641936968614E+06  diff =  0.4458E+04
+time t =  0.11044E+04,  total mass =  0.225641279924990E+06  diff =  0.4457E+04
+time t =  0.11072E+04,  total mass =  0.225642379373948E+06  diff =  0.4458E+04
+time t =  0.11099E+04,  total mass =  0.225637464442843E+06  diff =  0.4453E+04
+time t =  0.11126E+04,  total mass =  0.225638842853337E+06  diff =  0.4455E+04
+time t =  0.11154E+04,  total mass =  0.225637137837561E+06  diff =  0.4453E+04
+time t =  0.11181E+04,  total mass =  0.225639006020681E+06  diff =  0.4455E+04
+time t =  0.11208E+04,  total mass =  0.225637654759877E+06  diff =  0.4454E+04
+time t =  0.11236E+04,  total mass =  0.225638330979467E+06  diff =  0.4454E+04
+time t =  0.11263E+04,  total mass =  0.225634115698525E+06  diff =  0.4450E+04
+time t =  0.11291E+04,  total mass =  0.225631341195887E+06  diff =  0.4447E+04
+time t =  0.11318E+04,  total mass =  0.225629131824108E+06  diff =  0.4445E+04
+time t =  0.11345E+04,  total mass =  0.225630040430384E+06  diff =  0.4446E+04
+time t =  0.11373E+04,  total mass =  0.225629414131061E+06  diff =  0.4445E+04
+time t =  0.11400E+04,  total mass =  0.225631753650716E+06  diff =  0.4448E+04
+time t =  0.11427E+04,  total mass =  0.225630460039804E+06  diff =  0.4446E+04
+time t =  0.11455E+04,  total mass =  0.225631640401171E+06  diff =  0.4448E+04
+time t =  0.11482E+04,  total mass =  0.225628403001810E+06  diff =  0.4444E+04
+time t =  0.11509E+04,  total mass =  0.225630521928112E+06  diff =  0.4447E+04
+time t =  0.11537E+04,  total mass =  0.225629199618336E+06  diff =  0.4445E+04
+time t =  0.11564E+04,  total mass =  0.225626426940099E+06  diff =  0.4442E+04
+time t =  0.11591E+04,  total mass =  0.225623790483546E+06  diff =  0.4440E+04
+time t =  0.11619E+04,  total mass =  0.225625896245941E+06  diff =  0.4442E+04
+time t =  0.11646E+04,  total mass =  0.225624785353576E+06  diff =  0.4441E+04
+time t =  0.11674E+04,  total mass =  0.225626016531017E+06  diff =  0.4442E+04
+time t =  0.11701E+04,  total mass =  0.225619130135726E+06  diff =  0.4435E+04
+time t =  0.11728E+04,  total mass =  0.225621656168115E+06  diff =  0.4438E+04
+time t =  0.11756E+04,  total mass =  0.225617418726572E+06  diff =  0.4433E+04
+time t =  0.11783E+04,  total mass =  0.225613822928961E+06  diff =  0.4430E+04
+time t =  0.11810E+04,  total mass =  0.225612502650848E+06  diff =  0.4429E+04
+time t =  0.11838E+04,  total mass =  0.225613515336808E+06  diff =  0.4430E+04
+time t =  0.11865E+04,  total mass =  0.225611575099380E+06  diff =  0.4428E+04
+time t =  0.11892E+04,  total mass =  0.225614317075834E+06  diff =  0.4430E+04
+time t =  0.11920E+04,  total mass =  0.225613882204463E+06  diff =  0.4430E+04
+time t =  0.11947E+04,  total mass =  0.225614106696417E+06  diff =  0.4430E+04
+time t =  0.11974E+04,  total mass =  0.225611499007138E+06  diff =  0.4427E+04
+time t =  0.12000E+04,  total mass =  0.225613670261026E+06  diff =  0.4430E+04
+time t =  0.12027E+04,  total mass =  0.225613113343846E+06  diff =  0.4429E+04
+time t =  0.12055E+04,  total mass =  0.225615260221425E+06  diff =  0.4431E+04
+time t =  0.12082E+04,  total mass =  0.225613196114793E+06  diff =  0.4429E+04
+time t =  0.12109E+04,  total mass =  0.225613825095265E+06  diff =  0.4430E+04
+time t =  0.12137E+04,  total mass =  0.225611774920801E+06  diff =  0.4428E+04
+time t =  0.12164E+04,  total mass =  0.225613781482255E+06  diff =  0.4430E+04
+time t =  0.12192E+04,  total mass =  0.225611870217071E+06  diff =  0.4428E+04
+time t =  0.12219E+04,  total mass =  0.225615465263090E+06  diff =  0.4431E+04
+time t =  0.12246E+04,  total mass =  0.225614142346846E+06  diff =  0.4430E+04
+time t =  0.12274E+04,  total mass =  0.225615306482198E+06  diff =  0.4431E+04
+time t =  0.12301E+04,  total mass =  0.225614031191348E+06  diff =  0.4430E+04
+time t =  0.12328E+04,  total mass =  0.225615391182436E+06  diff =  0.4431E+04
+time t =  0.12356E+04,  total mass =  0.225613370439767E+06  diff =  0.4429E+04
+time t =  0.12383E+04,  total mass =  0.225614834486700E+06  diff =  0.4431E+04
+time t =  0.12410E+04,  total mass =  0.225614012894838E+06  diff =  0.4430E+04
+time t =  0.12438E+04,  total mass =  0.225615179114247E+06  diff =  0.4431E+04
+time t =  0.12465E+04,  total mass =  0.225612284009814E+06  diff =  0.4428E+04
+time t =  0.12492E+04,  total mass =  0.225615260763993E+06  diff =  0.4431E+04
+time t =  0.12520E+04,  total mass =  0.225612715251366E+06  diff =  0.4429E+04
+time t =  0.12547E+04,  total mass =  0.225614296494503E+06  diff =  0.4430E+04
+time t =  0.12575E+04,  total mass =  0.225614352412679E+06  diff =  0.4430E+04
+time t =  0.12602E+04,  total mass =  0.225616252119243E+06  diff =  0.4432E+04
+time t =  0.12629E+04,  total mass =  0.225613991588255E+06  diff =  0.4430E+04
+time t =  0.12657E+04,  total mass =  0.225615545681996E+06  diff =  0.4432E+04
+time t =  0.12684E+04,  total mass =  0.225613213644903E+06  diff =  0.4429E+04
+time t =  0.12711E+04,  total mass =  0.225614941635737E+06  diff =  0.4431E+04
+time t =  0.12739E+04,  total mass =  0.225612934301240E+06  diff =  0.4429E+04
+time t =  0.12766E+04,  total mass =  0.225614454251349E+06  diff =  0.4430E+04
+time t =  0.12793E+04,  total mass =  0.225612586032356E+06  diff =  0.4429E+04
+time t =  0.12821E+04,  total mass =  0.225614428956956E+06  diff =  0.4430E+04
+time t =  0.12848E+04,  total mass =  0.225611961574781E+06  diff =  0.4428E+04
+time t =  0.12875E+04,  total mass =  0.225613967714771E+06  diff =  0.4430E+04
+time t =  0.12903E+04,  total mass =  0.225612211233546E+06  diff =  0.4428E+04
+time t =  0.12930E+04,  total mass =  0.225613906009906E+06  diff =  0.4430E+04
+time t =  0.12958E+04,  total mass =  0.225612235806860E+06  diff =  0.4428E+04
+time t =  0.12985E+04,  total mass =  0.225614624695506E+06  diff =  0.4431E+04
+time t =  0.13012E+04,  total mass =  0.225613490094835E+06  diff =  0.4429E+04
+time t =  0.13040E+04,  total mass =  0.225615444366139E+06  diff =  0.4431E+04
+time t =  0.13067E+04,  total mass =  0.225613549476653E+06  diff =  0.4430E+04
+time t =  0.13094E+04,  total mass =  0.225615315680745E+06  diff =  0.4431E+04
+time t =  0.13122E+04,  total mass =  0.225612707960745E+06  diff =  0.4429E+04
+time t =  0.13149E+04,  total mass =  0.225614545737437E+06  diff =  0.4431E+04
+time t =  0.13176E+04,  total mass =  0.225612633705579E+06  diff =  0.4429E+04
+time t =  0.13204E+04,  total mass =  0.225610319670892E+06  diff =  0.4426E+04
+time t =  0.13231E+04,  total mass =  0.225608312096939E+06  diff =  0.4424E+04
+time t =  0.13259E+04,  total mass =  0.225610071034085E+06  diff =  0.4426E+04
+time t =  0.13286E+04,  total mass =  0.225604028703822E+06  diff =  0.4420E+04
+time t =  0.13313E+04,  total mass =  0.225601387348462E+06  diff =  0.4417E+04
+time t =  0.13341E+04,  total mass =  0.225599960218408E+06  diff =  0.4416E+04
+time t =  0.13368E+04,  total mass =  0.225601999073982E+06  diff =  0.4418E+04
+time t =  0.13395E+04,  total mass =  0.225602275451747E+06  diff =  0.4418E+04
+time t =  0.13423E+04,  total mass =  0.225602895495372E+06  diff =  0.4419E+04
+time t =  0.13450E+04,  total mass =  0.225601186772273E+06  diff =  0.4417E+04
+time t =  0.13477E+04,  total mass =  0.225602848606423E+06  diff =  0.4419E+04
+time t =  0.13505E+04,  total mass =  0.225600386557385E+06  diff =  0.4416E+04
+time t =  0.13532E+04,  total mass =  0.225602064206843E+06  diff =  0.4418E+04
+time t =  0.13559E+04,  total mass =  0.225602180449565E+06  diff =  0.4418E+04
+time t =  0.13587E+04,  total mass =  0.225602379783185E+06  diff =  0.4418E+04
+time t =  0.13614E+04,  total mass =  0.225599799163228E+06  diff =  0.4416E+04
+time t =  0.13642E+04,  total mass =  0.225602510786940E+06  diff =  0.4419E+04
+time t =  0.13669E+04,  total mass =  0.225597623646136E+06  diff =  0.4414E+04
+time t =  0.13696E+04,  total mass =  0.225597036851966E+06  diff =  0.4413E+04
+time t =  0.13724E+04,  total mass =  0.225596151910956E+06  diff =  0.4412E+04
+time t =  0.13751E+04,  total mass =  0.225593813476478E+06  diff =  0.4410E+04
+time t =  0.13778E+04,  total mass =  0.225592478044999E+06  diff =  0.4408E+04
+time t =  0.13806E+04,  total mass =  0.225594844380103E+06  diff =  0.4411E+04
+time t =  0.13833E+04,  total mass =  0.225593128604353E+06  diff =  0.4409E+04
+time t =  0.13860E+04,  total mass =  0.225593340425100E+06  diff =  0.4409E+04
+time t =  0.13888E+04,  total mass =  0.225592312264002E+06  diff =  0.4408E+04
+time t =  0.13915E+04,  total mass =  0.225593829068473E+06  diff =  0.4410E+04
+time t =  0.13942E+04,  total mass =  0.225592003762189E+06  diff =  0.4408E+04
+time t =  0.13970E+04,  total mass =  0.225590769074801E+06  diff =  0.4407E+04
+time t =  0.13997E+04,  total mass =  0.225590307250111E+06  diff =  0.4406E+04
+time t =  0.14025E+04,  total mass =  0.225590509235470E+06  diff =  0.4407E+04
+time t =  0.14052E+04,  total mass =  0.225588932821912E+06  diff =  0.4405E+04
+time t =  0.14079E+04,  total mass =  0.225590664107533E+06  diff =  0.4407E+04
+time t =  0.14107E+04,  total mass =  0.225589999816482E+06  diff =  0.4406E+04
+time t =  0.14134E+04,  total mass =  0.225589733780643E+06  diff =  0.4406E+04
+time t =  0.14161E+04,  total mass =  0.225588590404743E+06  diff =  0.4405E+04
+time t =  0.14189E+04,  total mass =  0.225590077422163E+06  diff =  0.4406E+04
+time t =  0.14216E+04,  total mass =  0.225589775914821E+06  diff =  0.4406E+04
+time t =  0.14243E+04,  total mass =  0.225589700097389E+06  diff =  0.4406E+04
+time t =  0.14271E+04,  total mass =  0.225588361651180E+06  diff =  0.4404E+04
+time t =  0.14298E+04,  total mass =  0.225590081256254E+06  diff =  0.4406E+04
+time t =  0.14326E+04,  total mass =  0.225589331693725E+06  diff =  0.4405E+04
+time t =  0.14353E+04,  total mass =  0.225589948356039E+06  diff =  0.4406E+04
+time t =  0.14380E+04,  total mass =  0.225589333296990E+06  diff =  0.4405E+04
+time t =  0.14408E+04,  total mass =  0.225590509441659E+06  diff =  0.4407E+04
+time t =  0.14435E+04,  total mass =  0.225589426744854E+06  diff =  0.4405E+04
+time t =  0.14462E+04,  total mass =  0.225590477595353E+06  diff =  0.4406E+04
+time t =  0.14490E+04,  total mass =  0.225590280121849E+06  diff =  0.4406E+04
+time t =  0.14517E+04,  total mass =  0.225591131899805E+06  diff =  0.4407E+04
+time t =  0.14544E+04,  total mass =  0.225588897486102E+06  diff =  0.4405E+04
+time t =  0.14572E+04,  total mass =  0.225589781826225E+06  diff =  0.4406E+04
+time t =  0.14599E+04,  total mass =  0.225589699076170E+06  diff =  0.4406E+04
+time t =  0.14626E+04,  total mass =  0.225590426385715E+06  diff =  0.4406E+04
+time t =  0.14654E+04,  total mass =  0.225588208757033E+06  diff =  0.4404E+04
+time t =  0.14681E+04,  total mass =  0.225589514701808E+06  diff =  0.4406E+04
+time t =  0.14709E+04,  total mass =  0.225589584762597E+06  diff =  0.4406E+04
+time t =  0.14736E+04,  total mass =  0.225591225032509E+06  diff =  0.4407E+04
+time t =  0.14763E+04,  total mass =  0.225586555896282E+06  diff =  0.4403E+04
+time t =  0.14791E+04,  total mass =  0.225587730564086E+06  diff =  0.4404E+04
+time t =  0.14818E+04,  total mass =  0.225585972279444E+06  diff =  0.4402E+04
+time t =  0.14845E+04,  total mass =  0.225586346824433E+06  diff =  0.4402E+04
+time t =  0.14873E+04,  total mass =  0.225586049293649E+06  diff =  0.4402E+04
+time t =  0.14900E+04,  total mass =  0.225587752536901E+06  diff =  0.4404E+04
+time t =  0.14927E+04,  total mass =  0.225587017961030E+06  diff =  0.4403E+04
+time t =  0.14955E+04,  total mass =  0.225587287511427E+06  diff =  0.4403E+04
+time t =  0.14982E+04,  total mass =  0.225585770314136E+06  diff =  0.4402E+04
+time t =  0.15000E+04,  total mass =  0.225582950465225E+06  diff =  0.4399E+04
+time t =  0.15027E+04,  total mass =  0.225587725969060E+06  diff =  0.4404E+04
+time t =  0.15055E+04,  total mass =  0.225585628247850E+06  diff =  0.4402E+04
+time t =  0.15082E+04,  total mass =  0.225585068322930E+06  diff =  0.4401E+04
+time t =  0.15109E+04,  total mass =  0.225583621904406E+06  diff =  0.4400E+04
+time t =  0.15137E+04,  total mass =  0.225586885508618E+06  diff =  0.4403E+04
+time t =  0.15164E+04,  total mass =  0.225585525708525E+06  diff =  0.4402E+04
+time t =  0.15192E+04,  total mass =  0.225585156233435E+06  diff =  0.4401E+04
+time t =  0.15219E+04,  total mass =  0.225579946242186E+06  diff =  0.4396E+04
+time t =  0.15246E+04,  total mass =  0.225576646174279E+06  diff =  0.4393E+04
+time t =  0.15274E+04,  total mass =  0.225574110072190E+06  diff =  0.4390E+04
+time t =  0.15301E+04,  total mass =  0.225575128235717E+06  diff =  0.4391E+04
+time t =  0.15328E+04,  total mass =  0.225574471920365E+06  diff =  0.4390E+04
+time t =  0.15356E+04,  total mass =  0.225575180340618E+06  diff =  0.4391E+04
+time t =  0.15383E+04,  total mass =  0.225574723025536E+06  diff =  0.4391E+04
+time t =  0.15410E+04,  total mass =  0.225577034903592E+06  diff =  0.4393E+04
+time t =  0.15438E+04,  total mass =  0.225575478719025E+06  diff =  0.4391E+04
+time t =  0.15465E+04,  total mass =  0.225576012687191E+06  diff =  0.4392E+04
+time t =  0.15492E+04,  total mass =  0.225570844814641E+06  diff =  0.4387E+04
+time t =  0.15520E+04,  total mass =  0.225573105751403E+06  diff =  0.4389E+04
+time t =  0.15547E+04,  total mass =  0.225572454770367E+06  diff =  0.4388E+04
+time t =  0.15575E+04,  total mass =  0.225572637450431E+06  diff =  0.4389E+04
+time t =  0.15602E+04,  total mass =  0.225570383587082E+06  diff =  0.4386E+04
+time t =  0.15629E+04,  total mass =  0.225572681368714E+06  diff =  0.4389E+04
+time t =  0.15657E+04,  total mass =  0.225572127549501E+06  diff =  0.4388E+04
+time t =  0.15684E+04,  total mass =  0.225572271477352E+06  diff =  0.4388E+04
+time t =  0.15711E+04,  total mass =  0.225570466114221E+06  diff =  0.4386E+04
+time t =  0.15739E+04,  total mass =  0.225572742620260E+06  diff =  0.4389E+04
+time t =  0.15766E+04,  total mass =  0.225572607620903E+06  diff =  0.4389E+04
+time t =  0.15793E+04,  total mass =  0.225573956082217E+06  diff =  0.4390E+04
+time t =  0.15821E+04,  total mass =  0.225571480302544E+06  diff =  0.4387E+04
+time t =  0.15848E+04,  total mass =  0.225573225488958E+06  diff =  0.4389E+04
+time t =  0.15875E+04,  total mass =  0.225571573387128E+06  diff =  0.4388E+04
+time t =  0.15903E+04,  total mass =  0.225572781945011E+06  diff =  0.4389E+04
+time t =  0.15930E+04,  total mass =  0.225570418315790E+06  diff =  0.4386E+04
+time t =  0.15958E+04,  total mass =  0.225572155417086E+06  diff =  0.4388E+04
+time t =  0.15985E+04,  total mass =  0.225570974544672E+06  diff =  0.4387E+04
+time t =  0.16012E+04,  total mass =  0.225572742317787E+06  diff =  0.4389E+04
+time t =  0.16040E+04,  total mass =  0.225567356689287E+06  diff =  0.4383E+04
+time t =  0.16067E+04,  total mass =  0.225569135056106E+06  diff =  0.4385E+04
+time t =  0.16094E+04,  total mass =  0.225567486411148E+06  diff =  0.4383E+04
+time t =  0.16122E+04,  total mass =  0.225568709636540E+06  diff =  0.4385E+04
+time t =  0.16149E+04,  total mass =  0.225566733562337E+06  diff =  0.4383E+04
+time t =  0.16176E+04,  total mass =  0.225568498731854E+06  diff =  0.4384E+04
+time t =  0.16204E+04,  total mass =  0.225567355593832E+06  diff =  0.4383E+04
+time t =  0.16231E+04,  total mass =  0.225569170581754E+06  diff =  0.4385E+04
+time t =  0.16259E+04,  total mass =  0.225568065312302E+06  diff =  0.4384E+04
+time t =  0.16286E+04,  total mass =  0.225565220370856E+06  diff =  0.4381E+04
+time t =  0.16313E+04,  total mass =  0.225562669722780E+06  diff =  0.4379E+04
+time t =  0.16341E+04,  total mass =  0.225564382349275E+06  diff =  0.4380E+04
+time t =  0.16368E+04,  total mass =  0.225563179760702E+06  diff =  0.4379E+04
+time t =  0.16395E+04,  total mass =  0.225564469282469E+06  diff =  0.4380E+04
+time t =  0.16423E+04,  total mass =  0.225562860469611E+06  diff =  0.4379E+04
+time t =  0.16450E+04,  total mass =  0.225561021579227E+06  diff =  0.4377E+04
+time t =  0.16477E+04,  total mass =  0.225561318376578E+06  diff =  0.4377E+04
+time t =  0.16505E+04,  total mass =  0.225561942507608E+06  diff =  0.4378E+04
+time t =  0.16532E+04,  total mass =  0.225560334383107E+06  diff =  0.4376E+04
+time t =  0.16559E+04,  total mass =  0.225561377818328E+06  diff =  0.4377E+04
+time t =  0.16587E+04,  total mass =  0.225556612966287E+06  diff =  0.4373E+04
+time t =  0.16614E+04,  total mass =  0.225556188691444E+06  diff =  0.4372E+04
+time t =  0.16642E+04,  total mass =  0.225555416460196E+06  diff =  0.4371E+04
+time t =  0.16669E+04,  total mass =  0.225555932867318E+06  diff =  0.4372E+04
+time t =  0.16696E+04,  total mass =  0.225554963013436E+06  diff =  0.4371E+04
+time t =  0.16724E+04,  total mass =  0.225555517458834E+06  diff =  0.4372E+04
+time t =  0.16751E+04,  total mass =  0.225554756332749E+06  diff =  0.4371E+04
+time t =  0.16778E+04,  total mass =  0.225555343906595E+06  diff =  0.4371E+04
+time t =  0.16806E+04,  total mass =  0.225554687577108E+06  diff =  0.4371E+04
+time t =  0.16833E+04,  total mass =  0.225555225736555E+06  diff =  0.4371E+04
+time t =  0.16860E+04,  total mass =  0.225554684684258E+06  diff =  0.4371E+04
+time t =  0.16888E+04,  total mass =  0.225555240037004E+06  diff =  0.4371E+04
+time t =  0.16915E+04,  total mass =  0.225554440829459E+06  diff =  0.4370E+04
+time t =  0.16942E+04,  total mass =  0.225554976620891E+06  diff =  0.4371E+04
+time t =  0.16970E+04,  total mass =  0.225554885588596E+06  diff =  0.4371E+04
+time t =  0.16997E+04,  total mass =  0.225555997004655E+06  diff =  0.4372E+04
+time t =  0.17025E+04,  total mass =  0.225556026734090E+06  diff =  0.4372E+04
+time t =  0.17052E+04,  total mass =  0.225556057415246E+06  diff =  0.4372E+04
+time t =  0.17079E+04,  total mass =  0.225554483900068E+06  diff =  0.4370E+04
+time t =  0.17107E+04,  total mass =  0.225547363033234E+06  diff =  0.4363E+04
+time t =  0.17134E+04,  total mass =  0.225547369970508E+06  diff =  0.4363E+04
+time t =  0.17161E+04,  total mass =  0.225547427383745E+06  diff =  0.4363E+04
+time t =  0.17189E+04,  total mass =  0.225546344568079E+06  diff =  0.4362E+04
+time t =  0.17216E+04,  total mass =  0.225543290806685E+06  diff =  0.4359E+04
+time t =  0.17243E+04,  total mass =  0.225543287095107E+06  diff =  0.4359E+04
+time t =  0.17271E+04,  total mass =  0.225543306132236E+06  diff =  0.4359E+04
+time t =  0.17298E+04,  total mass =  0.225541820644851E+06  diff =  0.4358E+04
+time t =  0.17326E+04,  total mass =  0.225542837092720E+06  diff =  0.4359E+04
+time t =  0.17353E+04,  total mass =  0.225542835997802E+06  diff =  0.4359E+04
+time t =  0.17380E+04,  total mass =  0.225542874105046E+06  diff =  0.4359E+04
+time t =  0.17408E+04,  total mass =  0.225541631204662E+06  diff =  0.4358E+04
+time t =  0.17435E+04,  total mass =  0.225542647083283E+06  diff =  0.4359E+04
+time t =  0.17462E+04,  total mass =  0.225542435629058E+06  diff =  0.4358E+04
+time t =  0.17490E+04,  total mass =  0.225542578561200E+06  diff =  0.4359E+04
+time t =  0.17517E+04,  total mass =  0.225541411949434E+06  diff =  0.4357E+04
+time t =  0.17544E+04,  total mass =  0.225542447475476E+06  diff =  0.4358E+04
+time t =  0.17572E+04,  total mass =  0.225543210129055E+06  diff =  0.4359E+04
+time t =  0.17599E+04,  total mass =  0.225544309398208E+06  diff =  0.4360E+04
+time t =  0.17626E+04,  total mass =  0.225544316901535E+06  diff =  0.4360E+04
+time t =  0.17654E+04,  total mass =  0.225544326470802E+06  diff =  0.4360E+04
+time t =  0.17681E+04,  total mass =  0.225542310880542E+06  diff =  0.4358E+04
+time t =  0.17709E+04,  total mass =  0.225543323440926E+06  diff =  0.4359E+04
+time t =  0.17736E+04,  total mass =  0.225543369016825E+06  diff =  0.4359E+04
+time t =  0.17763E+04,  total mass =  0.225543947173354E+06  diff =  0.4360E+04
+time t =  0.17791E+04,  total mass =  0.225543170003181E+06  diff =  0.4359E+04
+time t =  0.17818E+04,  total mass =  0.225543685538346E+06  diff =  0.4360E+04
+time t =  0.17845E+04,  total mass =  0.225542640889314E+06  diff =  0.4359E+04
+time t =  0.17873E+04,  total mass =  0.225543156886459E+06  diff =  0.4359E+04
+time t =  0.17900E+04,  total mass =  0.225542382152998E+06  diff =  0.4358E+04
+time t =  0.17927E+04,  total mass =  0.225542933490345E+06  diff =  0.4359E+04
+time t =  0.17955E+04,  total mass =  0.225542356900159E+06  diff =  0.4358E+04
+time t =  0.17982E+04,  total mass =  0.225542869975888E+06  diff =  0.4359E+04
+time t =  0.18000E+04,  total mass =  0.225542228334407E+06  diff =  0.4358E+04
+
+
+for level   1 average num. grids =       1.00 over          1 regridding steps
+for level   1  current num. grids =       1
+
+
+alloc array statistics:
+    current alloc usage =       810900
+    maximum alloc usage =       810900
+required alloc memsize >=       810901
+
+number of cells advanced for time integration =      26734752.000000
+   # cells advanced on level    1 =          26734752.00
+number of cells advanced for error estimation =             0.000000
+
+ percentage of cells advanced in time  =     100.00
+ maximum Courant number seen =    1.63924
+
+
+ ------  end of AMRCLAW integration --------  

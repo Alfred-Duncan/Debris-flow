@@ -1,0 +1,35 @@
+  
+ --------------------------------------------
+ SETDIG:
+ ---------
+     rho_s:   2700.0000000000000     
+     rho_f:   1000.0000000000000     
+     m_crit:  0.64000000000000001     
+     m0:  0.63000000000000000     
+     mref:  0.59999999999999998     
+     kref:   1.0000000000000000E-010
+     phi:   32.000000000000000     
+     delta:   1.0000000000000000E-003
+     mu:   5.0000000000000001E-003
+     alpha_c:   1.0000000000000000E-002
+     c1:   1.0000000000000000     
+     sigma_0:   1000.0000000000000     
+     dd_manning: F
+     manning_max:   5.9999999999999998E-002
+     src2method:           2
+     alphamethod:           1
+     rarecorrectortest: F
+     bed_normal:           0
+     theta_input:   0.0000000000000000     
+     entrainment:           0
+     entrainment_method:           1
+     entrainment_rate:   0.0000000000000000     
+     me:  0.59999999999999998     
+     segregation:           0
+     beta_seg:   0.0000000000000000     
+     chi0:  0.50000000000000000     
+     chie:  0.50000000000000000     
+     delta_kr_order:   2.0000000000000000     
+     mom_autostop: F
+     momlevel:           1
+     curvature:           0

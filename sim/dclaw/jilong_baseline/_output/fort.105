@@ -1,0 +1,7 @@
+  
+ --------------------------------------------
+ SETAUXINIT:
+ ---------
+    mauxinitfiles = 0
+    no initial perturbation = 0
+    h will be set max(0-b,0)   

@@ -1,0 +1,32 @@
+{
+  "crs": "EPSG:32645",
+  "domain_utm_m": {
+    "xlower": 331781.9,
+    "xupper": 343045.9,
+    "ylower": 3128083.2,
+    "yupper": 3144787.2
+  },
+  "grid": {
+    "dx_m": 64.0,
+    "mx": 176,
+    "my": 261
+  },
+  "dem": {
+    "primary": "data/extracted/dem_8m/\u897f\u85cf\u65e5\u5580\u5219\u5e02\u5409\u9686\u53bf\u6ce5\u77f3\u6d41\u707e\u5bb3\uff0820260826\uff09DEM8m\u6570\u636e/DongLinZangBu_basin_HMA8mDEM_fillAW3D30.tif",
+    "fallback_for_8m_voids": "data/extracted/dem_12_5m/DEM 12.5m.tif",
+    "8m_valid_topo_points_percent": 55.53
+  },
+  "source": {
+    "representation": "D-Claw qinit thickness field; stationary elliptical initial mass at main-river entry",
+    "center_utm_m": [
+      334051.5,
+      3143392.2
+    ],
+    "semi_axes_m": [
+      192.0,
+      128.0
+    ],
+    "depth_m": 3.0,
+    "grid_volume_m3": 221184.0
+  }
+}
