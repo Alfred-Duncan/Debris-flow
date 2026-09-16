@@ -1,0 +1,10 @@
+﻿dataset_role,official_dataset_name,selected_source_path,source_type,zip_or_folder,file_size,duplicate_count,selected_reason,status
+jilong_port,jilong_port,E:\Alfred\Downloads\吉隆口岸地理位置.zip,zip,zip,1308,1,latest complete valid official-name ZIP,FOUND
+dem_12p5m,dem_12p5m,E:\Alfred\Downloads\西藏日喀则市吉隆县泥石流灾害（20260826）DEM12.5m数据.zip,zip,zip,73685223,1,latest complete valid official-name ZIP,FOUND
+dem_8m,dem_8m,E:\Alfred\Downloads\西藏日喀则市吉隆县泥石流灾害（20260826）DEM8m数据.zip,zip,zip,59780017,1,latest complete valid official-name ZIP,FOUND
+core_area,core_area,E:\Alfred\Downloads\西藏日喀则市吉隆县泥石流灾害（20260826）核心区范围.zip,zip,zip,2232,1,latest complete valid official-name ZIP,FOUND
+basic_geography,basic_geography,E:\Alfred\Downloads\西藏日喀则市吉隆县泥石流灾害（20260826）基础地理数据.zip,zip,zip,85993,1,latest complete valid official-name ZIP,FOUND
+hydrology,hydrology,E:\Alfred\Downloads\西藏日喀则市吉隆县泥石流灾害（20260826）水文数据.zip,zip,zip,434651,1,latest complete valid official-name ZIP,FOUND
+terrain_factors,terrain_factors,E:\Alfred\Downloads\西藏日喀则市吉隆县泥石流灾害（20260826）地形因子.zip,zip,zip,216675362,1,latest complete valid official-name ZIP,FOUND
+pre_event_0p5m,pre_event_0p5m,E:\Alfred\Downloads\西藏日喀则市吉隆县泥石流灾害（20260826）0.5m数字正射影像图 _before\西藏日喀则市吉隆县泥石流灾害（20260826）0.5m数字正射影像图 _before\05m.tif,extracted file,folder,2769645404,1,discovered georeferenced imagery file,FOUND
+post_event_planet_3m,post_event_planet_3m,E:\Alfred\Downloads\西藏日喀则市吉隆县泥石流灾害（20260826）Planet scope 卫星3m DOM数据_after\西藏日喀则市吉隆县泥石流灾害（20260826）Planet scope 卫星3m DOM数据_after\20260828_psscene_analytic_8b_udm2\2026-08-28_strip_8985177_composite.tif,extracted file,folder,626103217,1,discovered georeferenced imagery file,FOUND

@@ -1,0 +1,34 @@
+{
+  "gate_a": "HUMAN_IMAGE_REVIEW_REQUIRED",
+  "all_core_datasets_found": true,
+  "analysis_crs": "EPSG:32645",
+  "port_coordinate": [
+    340837.89194740437,
+    3129051.745594877
+  ],
+  "actual_vector_gap_m": 525.5297039262372,
+  "gap_resolved": true,
+  "candidate_gap_bridge": "corridor/candidate_gap_bridge.geojson",
+  "s0_resolved": false,
+  "s0_coordinate": null,
+  "corridor_established": false,
+  "corridor_length_km": null,
+  "s4_hydraulic_section_resolved": false,
+  "control_sections_created": false,
+  "aoi_crop_overlap": {
+    "dem_12p5m/full_reach": true,
+    "dem_12p5m/vector_gap": true,
+    "dem_12p5m/port": true,
+    "dem_12p5m/diagnostic_entry": true,
+    "pre_event_0p5m/full_reach": true,
+    "post_event_planet_3m/full_reach": true,
+    "pre_event_0p5m/vector_gap": true,
+    "post_event_planet_3m/vector_gap": true,
+    "pre_event_0p5m/port": true,
+    "post_event_planet_3m/port": true,
+    "pre_event_0p5m/diagnostic_entry": true,
+    "post_event_planet_3m/diagnostic_entry": false
+  },
+  "imagery_review_required": true,
+  "primary_blocker": "The event-specific main-river entry (S0) is not established by the available mapped evidence and imagery; no canonical corridor or control sections were created."
+}

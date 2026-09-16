@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "official_port",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32645" } },
+"features": [
+{"type":"Feature","properties":{"Id":0},"geometry":{"type":"Point","coordinates":[340837.891947404365055,3129051.745594876818359]}}
+]
+}

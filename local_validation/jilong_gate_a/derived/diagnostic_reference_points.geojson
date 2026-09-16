@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "diagnostic_reference_points",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32645" } },
+"features": [
+{"type":"Feature","properties":{"name":"OLD_PROVISIONAL_ENTRY_NOT_TRUTH","note":"DIAGNOSTIC ONLY - NOT OBSERVATIONAL TRUTH"},"geometry":{"type":"Point","coordinates":[334051.799999999988358,3143392.5]}},
+{"type":"Feature","properties":{"name":"OLD_GAP_ENDPOINT_A_DIAGNOSTIC","note":"DIAGNOSTIC ONLY - NOT OBSERVATIONAL TRUTH"},"geometry":{"type":"Point","coordinates":[337809.799999999988358,3131780.1]}},
+{"type":"Feature","properties":{"name":"OLD_GAP_ENDPOINT_B_DIAGNOSTIC","note":"DIAGNOSTIC ONLY - NOT OBSERVATIONAL TRUTH"},"geometry":{"type":"Point","coordinates":[338031.599999999976717,3131303.700000000186265]}}
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "candidate_gap_bridge",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32645" } },
+"features": [
+{"type":"Feature","properties":{"status":"CANDIDATE_IMAGERY_SUPPORTED","source":"pre-event 0.5 m DOM; post-event PlanetScope 3 m DOM","constraint":"Not official original; do not use as a hydraulic centreline or calibrated corridor.","gap_m":525.52970392623718},"geometry":{"type":"LineString","coordinates":[[337809.771803705021739,3131780.103208087850362],[337920.0,3131765.0],[338002.0,3131680.0],[338030.0,3131510.0],[338031.562195415725,3131303.66801642626524]]}}
+]
+}
