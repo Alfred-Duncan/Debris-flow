@@ -1,6 +1,8 @@
-Resolved: the 0.5 m DOM supports a candidate connection across the official vector gap; see candidate_gap_bridge.geojson.
+Final review figures are stored once under `../figures/` to avoid duplicated binaries:
+- ../figures/08_S0_candidate_A.png
+- ../figures/10_S4_port_section.png
+- ../figures/02_gap_pre_event_0p5m.png
+- ../figures/03_gap_post_event_3m.png
+- ../figures/04_gap_multievidence_overlay.png
 
-Review only these remaining questions:
-1. Where does the mapped event path visibly enter the downstream main river?
-2. Does a candidate S0 correspond to a real confluence or transition?
-3. Is an event-specific S0 coordinate defensible from the available evidence?
+Read S0_FINAL_REVIEW_README.txt for the remaining, bounded review questions.

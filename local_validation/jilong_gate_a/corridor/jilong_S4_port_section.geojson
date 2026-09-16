@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "jilong_S4_port_section",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32645" } },
+"features": [
+{"type":"Feature","properties":{"section_id":"S4","official_port_offset_m":646.33420156820648,"channel_basis":"nearest point on official fourth-order river; pre/post imagery inspected","orientation_deg":179.9770054012447,"confidence":"MODERATE","notes":"Hydraulic inspection section, not the port facility point; 180 m span is an inspection extent, not a surveyed channel width."},"geometry":{"type":"LineString","coordinates":[[340481.825784968212247,3129640.812013984192163],[340661.825770472176373,3129640.73977432353422]]}}
+]
+}

@@ -1,0 +1,23 @@
+{
+  "gate_a": "HUMAN_IMAGE_REVIEW_REQUIRED",
+  "analysis_crs": "EPSG:32645",
+  "official_port_coordinate": [
+    340837.89194740437,
+    3129051.745594877
+  ],
+  "endpoint_gap_straight_m": 525.5297039262372,
+  "candidate_gap_trace_length_m": 607.9923225566369,
+  "gap_resolved": true,
+  "s0_resolved": false,
+  "s0_coordinate": null,
+  "s0_event_evidence_class": "UNSUPPORTED",
+  "s4_resolved": true,
+  "s4_port_offset_m": 646.3342015682065,
+  "canonical_corridor_established": false,
+  "canonical_corridor_length_km": null,
+  "control_sections_created": false,
+  "pre_event_old_entry_point_covered": true,
+  "post_event_old_entry_point_covered": false,
+  "human_image_review_required": true,
+  "primary_blocker": "NO_EVENT_SPECIFIC_SPATIAL_EVIDENCE: no published or mapped event-path/scour evidence establishes the effective debris-flow entry S0; post-event imagery does not cover the only diagnostic main-channel candidate."
+}
