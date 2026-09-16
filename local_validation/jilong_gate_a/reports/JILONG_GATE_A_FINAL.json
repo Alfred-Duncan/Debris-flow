@@ -1,27 +1,31 @@
 {
   "gate_a": "HUMAN_IMAGE_REVIEW_REQUIRED",
   "analysis_crs": "EPSG:32645",
-  "official_port_coordinate": [
-    340837.89194740437,
-    3129051.745594877
-  ],
-  "s0_resolved": true,
   "s0_coordinate": [
     334051.79369854234,
     3143392.492568097
   ],
-  "s0_evidence_class": "DIRECT_SPATIAL_CONFLUENCE_EVIDENCE + DOCUMENTARY_PATHWAY_CONSISTENCY",
   "s0_confidence": "MODERATE",
-  "old_provisional_entry_to_S0_offset_m": 0.009743795435915163,
   "s4_coordinate": [
     340571.8257777202,
     3129640.775894154
   ],
-  "s4_status": "previously validated section retained; not incorporated into a final corridor",
-  "diagnostic_candidate_length_km": 18.231797481382515,
+  "s4_port_offset_m": 646.3342015682065,
+  "old_vector_gap_straight_m": 525.5297039262372,
+  "old_gap_trace_length_m": 607.9923225566369,
+  "downstream_anomaly_resolved": false,
+  "downstream_anomaly_coordinate": [
+    338381.25484703685,
+    3130703.5358936233
+  ],
+  "official_wrong_segment_max_adverse_rise_m": 200.0,
+  "corrected_segment_max_adverse_rise_m": null,
   "canonical_corridor_established": false,
-  "control_sections_created": false,
+  "canonical_corridor_length_km": null,
+  "s1_s3_created": false,
   "profile_created": false,
+  "maximum_final_corridor_adverse_rise_250m_m": null,
   "human_image_review_required": true,
-  "primary_blocker": "The official downstream line leaves the visible channel around 15.50--15.75 km from S0 and climbs 194 m over 250 m in both 12.5 m and 8 m DEM checks; a physically continuous downstream trace requires human image review."
+  "primary_blocker": "No single continuous imagery-supported P0-to-S4 channel trace can be accepted from the current AOI evidence; human image review or a mapped channel product is required.",
+  "cgs_documentary_url": "https://www.cgs.gov.cn/ywdt/ddyw/202608/t20260828_867531.html"
 }

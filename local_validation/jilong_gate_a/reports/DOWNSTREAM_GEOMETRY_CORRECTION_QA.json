@@ -1,0 +1,35 @@
+{
+  "analysis_crs": "EPSG:32645",
+  "status": "HUMAN_IMAGE_REVIEW_REQUIRED",
+  "official_wrong_segment_start": [
+    338031.5621954157,
+    3131303.6680164263
+  ],
+  "official_wrong_segment_end": [
+    339430.4921983012,
+    3130169.9150038627
+  ],
+  "official_wrong_segment_length_m": 1878.6568643568885,
+  "corrected_candidate_accepted": false,
+  "corrected_candidate_length_m": null,
+  "maximum_lateral_offset_m": null,
+  "mean_lateral_offset_m": null,
+  "maximum_dem_elevation_difference_m": null,
+  "official_wrong_segment_max_adverse_rise_250m_m": 200.0,
+  "official_wrong_segment_max_local_adverse_rise_m": 25.0,
+  "corrected_segment_max_adverse_rise_250m_m": null,
+  "dem12_valid_sample_fraction": 1.0,
+  "dem8_valid_sample_fraction": 1.0,
+  "rejection_basis": [
+    "The official P0--P2 line leaves the image-visible valley/channel near the documented anomaly.",
+    "The native 12.5 m profile contains the documented large 250 m adverse rise.",
+    "The supplied 8 m DEM supports an uphill trend at the anomaly where valid.",
+    "Existing pre-event and post-event imagery do not establish one unambiguous physical P0-to-S4 continuation suitable for publication as a corrected channel."
+  ],
+  "review_figures": [
+    "15_downstream_geometry_QA_failure_v2.png",
+    "16_anomaly_pre_event_0p5m.png",
+    "17_anomaly_post_event_3m.png",
+    "18_anomaly_multievidence_overlay.png"
+  ]
+}

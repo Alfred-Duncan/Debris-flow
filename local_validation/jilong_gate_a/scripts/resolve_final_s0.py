@@ -21,7 +21,7 @@ from finalize_gate_a import (ROOT, RAW, CORRIDOR, REPORT, FIG, REVIEW, DOWNLOADS
                              section_at)
 
 
-DOC_CGS = "https://www.cgs.gov.cn/ywdt/ddyw/202609/t20260828_867531.html"
+DOC_CGS = "https://www.cgs.gov.cn/ywdt/ddyw/202608/t20260828_867531.html"
 DOC_TREATY = "https://www.fmprc.gov.cn/wjb_673085/zfxxgk_674865/gknrlb/tywj/tyqk/200710/t20071015_9866472.shtml"
 
 
