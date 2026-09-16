@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "jilong_S0",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32645" } },
+"features": [
+{"type":"Feature","properties":{"section_id":"S0","status":"FINAL_EVENT_CONSTRAINED","x":334051.79369854234,"y":3143392.4925680971,"physical_feature":"Guobaxiaqu-Donglinzangbu confluence","event_basis":"CGS pathway describes Guobaxiaqu entering Donglinzangbu before Jilong Port","spatial_basis":"official fourth-order river, 0.5 m DOM confluence, 12.5 m DEM valley","name_basis":"SPATIALLY IDENTIFIED CONFLUENCE CONSISTENT WITH DOCUMENTARY NAMING","confidence":"MODERATE","old_provisional_entry_offset_m":0.0097437954359151629,"notes":"The old diagnostic entry was independently checked; it coincides with this mapped confluence and was not selected by distance-to-port."},"geometry":{"type":"Point","coordinates":[334051.793698542343918,3143392.49256809707731]}}
+]
+}

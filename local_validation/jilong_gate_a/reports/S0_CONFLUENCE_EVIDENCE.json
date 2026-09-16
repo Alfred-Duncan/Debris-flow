@@ -1,0 +1,189 @@
+{
+  "candidate_confluence_coordinate": [
+    334051.79369854234,
+    3143392.492568097
+  ],
+  "tributary_approach_direction_deg": 332.7143195015721,
+  "main_channel_downstream_direction_deg": 323.96687937220395,
+  "local_elevation_m": 2809.0,
+  "old_entry_offset_m": 0.009743795435915163,
+  "name_encoding_attempts": [
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\║■▓┤.shp",
+      "encoding": "GBK",
+      "name_or_code_values": [],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\║■▓┤.shp",
+      "encoding": "CP936",
+      "name_or_code_values": [],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\║■▓┤.shp",
+      "encoding": "UTF-8",
+      "name_or_code_values": [],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╥╗╝╢║╙┴≈.shp",
+      "encoding": "GBK",
+      "name_or_code_values": [
+        "娼鲁",
+        "娼鲁"
+      ],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╥╗╝╢║╙┴≈.shp",
+      "encoding": "CP936",
+      "name_or_code_values": [
+        "娼",
+        "娼"
+      ],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╥╗╝╢║╙┴≈.shp",
+      "encoding": "UTF-8",
+      "name_or_code_values": [
+        "潭³",
+        "潭³"
+      ],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╦─╝╢║╙┴≈.shp",
+      "encoding": "GBK",
+      "name_or_code_values": [
+        "0囟",
+        "JD3404"
+      ],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╦─╝╢║╙┴≈.shp",
+      "encoding": "CP936",
+      "name_or_code_values": [
+        "0囟",
+        "JD3404"
+      ],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╦─╝╢║╙┴≈.shp",
+      "encoding": "UTF-8",
+      "name_or_code_values": [
+        "0ض",
+        "JD3404"
+      ],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╧╪╡└.shp",
+      "encoding": "GBK",
+      "name_or_code_values": [
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬"
+      ],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╧╪╡└.shp",
+      "encoding": "CP936",
+      "name_or_code_values": [
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬",
+        "锛掞紤锛栧幙閬"
+      ],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╧╪╡└.shp",
+      "encoding": "UTF-8",
+      "name_or_code_values": [
+        "２１６县道",
+        "２１６县道",
+        "２１６县道",
+        "２１６县道",
+        "２１６县道",
+        "２１６县道",
+        "２１６县道",
+        "２１６县道",
+        "２１６县道",
+        "２１６县道",
+        "２１６县道",
+        "２１６县道"
+      ],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╬σ╝╢║╙┴≈.shp",
+      "encoding": "GBK",
+      "name_or_code_values": [
+        "3",
+        "JD3415"
+      ],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╬σ╝╢║╙┴≈.shp",
+      "encoding": "CP936",
+      "name_or_code_values": [
+        "3",
+        "JD3415"
+      ],
+      "target_matches": []
+    },
+    {
+      "layer": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\basic_geography\\╬≈▓╪╚╒┐ª╘≥╩╨╝¬┬í╧╪─α╩»┴≈╘╓║ªú¿20260826ú⌐╗∙┤í╡╪└φ╩²╛▌\\╬σ╝╢║╙┴≈.shp",
+      "encoding": "UTF-8",
+      "name_or_code_values": [
+        "3",
+        "JD3415"
+      ],
+      "target_matches": []
+    }
+  ],
+  "name_basis": "SPATIALLY IDENTIFIED CONFLUENCE CONSISTENT WITH DOCUMENTARY NAMING",
+  "event_basis": {
+    "CGS_pathway": "https://www.cgs.gov.cn/ywdt/ddyw/202609/t20260828_867531.html",
+    "treaty_confluence_naming": "https://www.fmprc.gov.cn/wjb_673085/zfxxgk_674865/gknrlb/tywj/tyqk/200710/t20071015_9866472.shtml"
+  },
+  "no_competing_equally_plausible_confluence": true,
+  "downstream_geometry_qa": {
+    "result": "HUMAN_IMAGE_REVIEW_REQUIRED",
+    "reason": "official downstream part departs the visible channel and has a large adverse terrain rise",
+    "adverse_rise_250m_m": 194.0,
+    "anomaly_start_distance_from_S0_m": 15500.0,
+    "anomaly_end_distance_from_S0_m": 15750.0,
+    "anomaly_midpoint_epsg32645": [
+      338381.25484703685,
+      3130703.5358936233
+    ],
+    "native_12p5m_elevation_start_m": 2163.0,
+    "native_12p5m_elevation_end_m": 2357.0,
+    "independent_8m_elevation_start_m": 2240.0,
+    "independent_8m_elevation_end_m": 2379.0
+  }
+}

@@ -4,20 +4,12 @@
 
 `GATE_A = HUMAN_IMAGE_REVIEW_REQUIRED`.
 
-The official two-component fourth-order river has a straight endpoint discontinuity of **525.53 m**. The existing candidate channel trace is **607.99 m** long. It is supported as a connectivity trace by the 0.5 m pre-event DOM, is not contradicted by the 3 m post-event DOM, and is compatible with the 12.5 m DEM valley. It remains explicitly non-official and non-hydraulic.
+S0 is resolved at the mapped **Guobaxiaqu--Donglinzangbu confluence**: `(334051.794, 3143392.493)` EPSG:32645. The 0.5 m DOM shows the tributary entering the official main channel here. The former provisional entry is 0.01 m from the independently snapped confluence; that agreement is a check, not the selection rule.
 
-## S0
+The local vector attributes did not recover reliable names after GBK, CP936 and UTF-8 attempts. Naming therefore rests on **SPATIALLY IDENTIFIED CONFLUENCE CONSISTENT WITH DOCUMENTARY NAMING**. The CGS pathway description (https://www.cgs.gov.cn/ywdt/ddyw/202609/t20260828_867531.html) and treaty confluence naming reference (https://www.fmprc.gov.cn/wjb_673085/zfxxgk_674865/gknrlb/tywj/tyqk/200710/t20071015_9866472.shtml) provide documentary pathway/naming context only, not coordinates.
 
-One physically mapped main-channel candidate was assessed: the historical diagnostic location at `(334051.8, 3143392.5)`. It is rejected as S0. A normal mapped channel, core-area containment, and pre-event visibility do not establish the 26 August event transition into the downstream stage. No mapped event path/scour evidence identifies this location, and the post-event image does not cover it.
+## Why the final S0--S4 corridor is withheld
 
-## S4
+The previously accepted 607.99 m imagery bridge remains a connectivity observation, and S4 remains the pre-existing real main-channel section. But the supplied official downstream part cannot be accepted as the final route: near 15.50--15.75 km from S0 it leaves the image-visible channel and rises from 2163 m to 2357 m over 250 m in the native 12.5 m DEM (maximum adverse rise 194 m). The independent 8 m DEM at the same samples rises from 2240 m to 2379 m.
 
-S4 is resolved as a spatially defensible inspection section on the nearest official downstream main-channel geometry, **646.33 m** from the official port point, rather than at the port facility point itself. See `corridor/jilong_S4_port_section.geojson`.
-
-## Consequence
-
-No canonical corridor, S0/S1/S2/S3 sections, or longitudinal profile was created. This prevents an unsupported entry assumption from becoming D-Claw geometry.
-
-## Precise review request
-
-The remaining requirement is an event-specific, georeferenced indication of where the already-formed debris flow entered the modeled main-river stage. The open questions are in `review_package/S0_FINAL_REVIEW_README.txt`.
+No canonical S0--S4 corridor, S1--S3 sections, or final profile has been published. No terrain was modified and no D-Claw simulation was created or run. A human must review and approve a continuous image-supported downstream channel trace before those deliverables can exist.

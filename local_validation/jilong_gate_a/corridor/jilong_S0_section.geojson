@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "jilong_S0_section",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32645" } },
+"features": [
+{"type":"Feature","properties":{"section_id":"S0","orientation_deg":53.966879372203948,"width_m":160.0,"confidence":"MODERATE","notes":"Approximate downstream-Donglinzangbu inspection section; geometry span is not a surveyed hydraulic width."},"geometry":{"type":"LineString","coordinates":[[334004.733473129221238,3143327.798401558771729],[334098.853923955466598,3143457.186734635382891]]}}
+]
+}
