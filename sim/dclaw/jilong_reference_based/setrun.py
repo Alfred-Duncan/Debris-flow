@@ -18,7 +18,11 @@ def setrun(claw_pkg="dclaw"):
     c.lower[:], c.upper[:], c.num_cells[:] = [XL, YL], [XU, YU], [MX, MY]
     c.num_eqn, c.num_aux, c.capa_index = 7, 10, 0
     c.t0, c.restart = 0.0, False
-    c.output_style, c.num_output_times, c.tfinal, c.output_t0 = 1, 60, 600.0, True
+    # Defaults are the accepted 600-s / 10-s production configuration. The
+    # batch runner may request a zero-time native-qinit preflight only.
+    tfinal = float(os.environ.get("DCLAW_TFINAL", "600.0"))
+    nout = int(os.environ.get("DCLAW_NUM_OUTPUT", "60"))
+    c.output_style, c.num_output_times, c.tfinal, c.output_t0 = 1, nout, tfinal, True
     c.output_format, c.output_q_components, c.output_aux_components, c.output_aux_onlyonce = "ascii", "all", "none", True
     c.verbosity, c.dt_variable, c.dt_initial, c.dt_max = 1, True, 0.1, 1e99
     c.cfl_desired, c.cfl_max, c.steps_max = 0.45, 0.5, 50000
@@ -44,7 +48,9 @@ def setrun(claw_pkg="dclaw"):
 
     qi = rundata.qinitdclaw_data
     qi.qinitfiles.append([3, 1, "initial_thickness.tt3"])
-    qi.qinitfiles.append([3, 4, "initial_solid_volume.tt3"])
+    qi.qinitfiles.append([3, 2, "initial_u.tt3"])
+    qi.qinitfiles.append([3, 3, "initial_v.tt3"])
+    qi.qinitfiles.append([3, 4, "initial_solid_fraction.tt3"])
 
     d = rundata.dclaw_data
     # Mount Baker USGS 2025 central material configuration (kref is the middle 10^-12--10^-10 case).
