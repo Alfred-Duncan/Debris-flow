@@ -1,34 +1,141 @@
 {
-  "gate_a": "HUMAN_IMAGE_REVIEW_REQUIRED",
+  "gate_a": "PASS",
   "analysis_crs": "EPSG:32645",
-  "human_image_review": "APPROVED_FOR_LOCAL_CHANNEL_CORRECTION",
+  "complete_human_route_review": true,
+  "review_tile_count": 16,
+  "human_tile_classification": {
+    "T01": "B",
+    "T02": "B",
+    "T03": "B",
+    "T04": "B",
+    "T05": "B",
+    "T06": "B",
+    "T07": "B",
+    "T08": "B",
+    "T09": "B",
+    "T10": "B",
+    "T11": "B",
+    "T12": "B",
+    "T13": "A",
+    "T14": "A",
+    "T15": "A",
+    "T16": "A"
+  },
   "s0_coordinate": [
     334051.79369854234,
     3143392.492568097
   ],
-  "s0_confidence": "MODERATE",
   "s4_coordinate": [
     340571.8257777202,
     3129640.775894154
   ],
-  "s4_port_offset_m": 646.3342015682065,
-  "old_vector_gap_straight_m": 525.5297039262372,
-  "old_gap_trace_length_m": 607.9923225566369,
-  "official_P0_P2_rejected": true,
-  "corrected_anomaly_segment_accepted": true,
-  "corrected_anomaly_segment_length_m": 3684.4634709093284,
-  "downstream_tie_in_coordinate": [
-    340571.8257777202,
-    3129640.775894154
+  "official_vector_role": "REFERENCE_ONLY",
+  "t01_t12_reconstructed": true,
+  "accepted_gap_trace_retained": true,
+  "accepted_gap_trace_length_m": 607.9923225566369,
+  "accepted_downstream_correction_retained": true,
+  "canonical_corridor_established": true,
+  "canonical_corridor_length_m": 19524.750688517423,
+  "canonical_corridor_length_km": 19.524750688517422,
+  "difference_from_15km_km": 4.524750688517422,
+  "relative_difference_percent": 30.165004590116144,
+  "control_sections_created": true,
+  "profile_created": true,
+  "dem12_max_adverse_rise_250m_m": 268.0,
+  "dem8_max_adverse_rise_250m_m": 115.0,
+  "dem_uncertainty_intervals": [
+    {
+      "classification": "TYPE_2_DEM_DATA_UNCERTAINTY",
+      "start_distance_m": 6675.0,
+      "end_distance_m": 6737.5,
+      "coordinate_start": [
+        338471.34563133295,
+        3138878.7913083173
+      ],
+      "coordinate_end": [
+        338532.74179173436,
+        3138867.0968015743
+      ],
+      "description": "one DEM has a substantial 250 m adverse rise while the other does not",
+      "max_abs_dem_difference_m": 37.0,
+      "max_rise_250m_dem12_m": 77.0,
+      "max_rise_250m_dem8_m": 115.0,
+      "geometry_action": "Reported as uncertainty; completed human valley review controls geometry."
+    },
+    {
+      "classification": "MULTI_DEM_DISAGREEMENT",
+      "start_distance_m": 16562.5,
+      "end_distance_m": 16675.0,
+      "coordinate_start": [
+        337969.1587791705,
+        3130623.364883318
+      ],
+      "coordinate_end": [
+        337963.182136311,
+        3130516.9312614556
+      ],
+      "description": "raw colocated DEM elevations differ by more than 120 m",
+      "max_abs_dem_difference_m": 209.0,
+      "max_rise_250m_dem12_m": -115.0,
+      "max_rise_250m_dem8_m": 78.0,
+      "geometry_action": "Reported as uncertainty; completed human valley review controls geometry."
+    },
+    {
+      "classification": "TYPE_2_DEM_DATA_UNCERTAINTY",
+      "start_distance_m": 17762.5,
+      "end_distance_m": 17825.0,
+      "coordinate_start": [
+        338891.1615223167,
+        3130065.8838477684
+      ],
+      "coordinate_end": [
+        338953.3513467048,
+        3130059.6648653294
+      ],
+      "description": "one DEM has a substantial 250 m adverse rise while the other does not",
+      "max_abs_dem_difference_m": 18.0,
+      "max_rise_250m_dem12_m": 148.0,
+      "max_rise_250m_dem8_m": 56.0,
+      "geometry_action": "Reported as uncertainty; completed human valley review controls geometry."
+    },
+    {
+      "classification": "TYPE_2_DEM_DATA_UNCERTAINTY",
+      "start_distance_m": 18300.0,
+      "end_distance_m": 18412.5,
+      "coordinate_start": [
+        339427.12200452876,
+        3130026.7158496603
+      ],
+      "coordinate_end": [
+        339537.37341502163,
+        3130005.3409816204
+      ],
+      "description": "one DEM has a substantial 250 m adverse rise while the other does not",
+      "max_abs_dem_difference_m": 61.0,
+      "max_rise_250m_dem12_m": 268.0,
+      "max_rise_250m_dem8_m": -59.0,
+      "geometry_action": "Reported as uncertainty; completed human valley review controls geometry."
+    },
+    {
+      "classification": "MULTI_DEM_DISAGREEMENT",
+      "start_distance_m": 18537.5,
+      "end_distance_m": 18662.5,
+      "coordinate_start": [
+        339659.2350323777,
+        3129977.537324699
+      ],
+      "coordinate_end": [
+        339780.01439982787,
+        3129945.329493379
+      ],
+      "description": "raw colocated DEM elevations differ by more than 120 m",
+      "max_abs_dem_difference_m": 277.0,
+      "max_rise_250m_dem12_m": null,
+      "max_rise_250m_dem8_m": 31.0,
+      "geometry_action": "Reported as uncertainty; completed human valley review controls geometry."
+    }
   ],
-  "official_max_adverse_rise_250m_m": 200.0,
-  "corrected_max_adverse_rise_250m_m": 148.0,
-  "canonical_corridor_established": false,
-  "canonical_corridor_length_km": null,
-  "s1_s3_created": false,
-  "profile_created": false,
-  "final_max_adverse_rise_250m_m": 161.0,
-  "human_image_review_required": true,
-  "primary_blocker": "NEW_UPSTREAM_GEOMETRY_CONTRADICTION: existing official upstream line crosses slope and rises 161 m over 250 m; it needs separate human image review before a final corridor can be published.",
-  "cgs_documentary_url": "https://www.cgs.gov.cn/ywdt/ddyw/202608/t20260828_867531.html"
+  "human_image_review_required": false,
+  "primary_blocker": null,
+  "spatial_gate_closed": true
 }

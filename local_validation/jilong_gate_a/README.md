@@ -12,9 +12,11 @@ This folder records the local, read-only GIS validation of the 2026-08-26 Jilong
 
 ## Key result
 
-The official fourth-order river vector has a 525.53 m straight endpoint discontinuity. The imagery-supported candidate trace is 607.99 m long; it is not an official original line, hydraulic centreline, or canonical D-Claw corridor.
+**THE SPATIAL GATE IS CLOSED.** `GATE_A = PASS` after incorporation of the completed external human review of all 16 S0--S4 tiles. The official river vector is now **REFERENCE ONLY**.
 
-S0 is resolved at the image-visible Guobaxiaqu--Donglinzangbu confluence, `(334051.794, 3143392.493)` EPSG:32645, with moderate confidence; it is 0.01 m from the old provisional entry only as an independent check. The approved human review has produced `downstream_anomaly_channel_corrected.geojson`, replacing the rejected P0--P2 line and continuing to S4 without forcing a P2 tie-in. Gate A nevertheless remains `HUMAN_IMAGE_REVIEW_REQUIRED`: full-corridor QA found a separate upstream official-vector contradiction at `(337303.842, 3139798.399)`, where the line crosses slope/bare terrain and rises 161 m over 250 m in both DEMs. The S4 inspection section remains resolved on the nearby actual official main-channel geometry, 646.33 m from the official port point. No canonical corridor, S1/S2/S3 sections, profile, calibration, or simulation result is included here. Start with [the final Gate report](reports/JILONG_GATE_A_FINAL.md).
+The final geometry is [corridor/jilong_canonical_corridor.geojson](corridor/jilong_canonical_corridor.geojson): a continuous S0--S4 human-reviewed event-constrained engineering corridor axis, not a surveyed thalweg or exact historical hydraulic centreline. T01--T12 are reconstructed in [jilong_T01_T12_human_reviewed_corridor.geojson](corridor/jilong_T01_T12_human_reviewed_corridor.geojson); the accepted 607.99 m former-vector-gap trace and the T13--T16 downstream human-review correction are retained. Final inspection sections, a raw two-DEM profile, topology QA, and final maps are included. Raw DEM disagreements remain explicitly reported as uncertainty rather than being hidden or used to relocate an image-confirmed valley axis.
+
+No D-Claw run, hydrograph construction, material calibration, entrainment activation, scenario generation, or FNO work is included. Start with [the final Gate report](reports/JILONG_GATE_A_FINAL.md).
 
 ## Deliberately excluded
 

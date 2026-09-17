@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "jilong_control_sections",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32645" } },
+"features": [
+{"type":"Feature","properties":{"section_id":"S0","distance_from_S0_m":0.0,"fraction":0.0,"orientation_deg":37.345211615389047,"inspection_span_m":160.0,"confidence":"MODERATE_TO_HIGH","geometry_basis":"perpendicular to local final-corridor tangent","notes":"Inspection extent only; not a surveyed hydraulic width."},"geometry":{"type":"LineString","coordinates":[[333988.194094308535568,3143343.963295062072575],[334115.393302776152268,3143441.021841132082045]]}},
+{"type":"Feature","properties":{"section_id":"S1","distance_from_S0_m":4881.1876721293556,"fraction":0.25,"orientation_deg":168.69006752609425,"inspection_span_m":160.0,"confidence":"MODERATE_TO_HIGH","geometry_basis":"perpendicular to local final-corridor tangent","notes":"Inspection extent only; not a surveyed hydraulic width."},"geometry":{"type":"LineString","coordinates":[[337011.159221711859573,3139713.717669646721333],[337168.052129822492134,3139682.339088025037199]]}},
+{"type":"Feature","properties":{"section_id":"S2","distance_from_S0_m":9762.3753442587113,"fraction":0.5,"orientation_deg":135.00000000023581,"inspection_span_m":160.0,"confidence":"MODERATE_TO_HIGH","geometry_basis":"perpendicular to local final-corridor tangent","notes":"Inspection extent only; not a surveyed hydraulic width."},"geometry":{"type":"LineString","coordinates":[[338366.66644314333098,3136479.803528133314103],[338479.803528133605141,3136366.666443143505603]]}},
+{"type":"Feature","properties":{"section_id":"S3","distance_from_S0_m":14643.563016388067,"fraction":0.75,"orientation_deg":0.0,"inspection_span_m":160.0,"confidence":"MODERATE_TO_HIGH","geometry_basis":"perpendicular to local final-corridor tangent","notes":"Inspection extent only; not a surveyed hydraulic width."},"geometry":{"type":"LineString","coordinates":[[337720.0,3132297.255971953738481],[337880.0,3132297.255971953738481]]}},
+{"type":"Feature","properties":{"section_id":"S4","distance_from_S0_m":19524.750688517423,"fraction":1.0,"orientation_deg":72.153058435986821,"inspection_span_m":160.0,"confidence":"MODERATE_TO_HIGH","geometry_basis":"perpendicular to local final-corridor tangent","notes":"Inspection extent only; not a surveyed hydraulic width."},"geometry":{"type":"LineString","coordinates":[[340547.307756322959904,3129564.625604418572038],[340596.343799117428716,3129716.926183889154345]]}}
+]
+}

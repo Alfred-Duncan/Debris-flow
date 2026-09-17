@@ -1,1 +1,1 @@
-Current status: HUMAN_IMAGE_REVIEW_REQUIRED. The downstream correction was approved; Figure 21 documents a separate upstream geometry contradiction that must be resolved before publishing a canonical corridor.
+Historical review material. The earlier `HUMAN_IMAGE_REVIEW_REQUIRED` state was resolved by the completed 16-tile external human review. The authoritative status is now `GATE_A = PASS`; see `../reports/JILONG_GATE_A_FINAL.md` and `../corridor/jilong_canonical_corridor.geojson`. Figure 21 and related review figures remain provenance only.
