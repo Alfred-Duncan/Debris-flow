@@ -1,0 +1,10 @@
+Authoritative terrain source: Copernicus GLO-30 (specified single file)
+Base: E:\Alfred\Jilong_GateA\computational_terrain\jilong_copernicus_glo30_utm45_v1.tif
+32 m: E:\Alfred\Jilong_GateA\computational_terrain\jilong_copernicus_32m_v1.tif
+64 m: E:\Alfred\Jilong_GateA\computational_terrain\jilong_copernicus_64m_v1.tif
+CRS: EPSG:32645
+Base SHA256: b74f07535e790d88fe1a64467a43475ee091df989ca609a9d4c791f0bf1b685e
+32 m SHA256: d4929b6a85b3ed2a8115980c162209795535f578a15c5e5d48f46e4a0c024feb
+64 m SHA256: 53a7f882464eb0757bf24e45069f370c2f8198e145d0b281eacfccf660e55cfd
+Gate A: PASS
+Gate B: PASS

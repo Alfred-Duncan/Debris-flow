@@ -1,0 +1,264 @@
+{
+  "gate_a": "PASS",
+  "gate_b": "PASS",
+  "terrain_source": "Copernicus GLO-30",
+  "single_source_terrain": true,
+  "analysis_crs": "EPSG:32645",
+  "canonical_corridor_length_km": 19.524750688517422,
+  "domain_buffer_m": 2000.0,
+  "source_resolution": [
+    0.0002777777777777778,
+    0.0002777777777777778
+  ],
+  "projected_base_path": "E:\\Alfred\\Jilong_GateA\\computational_terrain\\jilong_copernicus_glo30_utm45_v1.tif",
+  "terrain_32m_path": "E:\\Alfred\\Jilong_GateA\\computational_terrain\\jilong_copernicus_32m_v1.tif",
+  "terrain_64m_path": "E:\\Alfred\\Jilong_GateA\\computational_terrain\\jilong_copernicus_64m_v1.tif",
+  "projected_base_sha256": "b74f07535e790d88fe1a64467a43475ee091df989ca609a9d4c791f0bf1b685e",
+  "terrain_32m_sha256": "d4929b6a85b3ed2a8115980c162209795535f578a15c5e5d48f46e4a0c024feb",
+  "terrain_64m_sha256": "53a7f882464eb0757bf24e45069f370c2f8198e145d0b281eacfccf660e55cfd",
+  "coverage_corridor_percent": 100.0,
+  "coverage_band250_percent": 100.0,
+  "coverage_band500_percent": 100.0,
+  "coverage_band1000_percent": 100.0,
+  "coverage_domain2000_percent": 100.0,
+  "s0_robust_floor_elevation_m": 2777.070068359375,
+  "s4_robust_floor_elevation_m": 1814.6754150390625,
+  "total_floor_drop_m": 962.3946533203125,
+  "mean_robust_floor_slope": -0.04929100856003761,
+  "max_rise_250m_native_glo30": 83.6982421875,
+  "max_rise_500m_native_glo30": 122.420166015625,
+  "candidate_barrier_count": 4,
+  "high_barrier_count": 0,
+  "32m_area_mean_barrier_count": 4,
+  "32m_bilinear_barrier_count": 4,
+  "64m_area_mean_barrier_count": 3,
+  "64m_bilinear_barrier_count": 2,
+  "remaining_high_blocking_barriers": [],
+  "computational_terrain_simulation_ready": true,
+  "gate_a_reopened": false,
+  "methods": {
+    "base_projection": "bilinear reprojection of specified source only",
+    "32m_64m_products": "area-weighted/average resampling",
+    "independent_diagnostics": "bilinear/cell-centre profiles",
+    "terrain_manipulation": "none",
+    "robust_floor": "median of lowest five valid cross-section samples at approximately native projected-grid spacing"
+  },
+  "qa": {
+    "native_rises": {
+      "50": 69.827392578125,
+      "100": 81.54296875,
+      "250": 83.6982421875,
+      "500": 122.420166015625,
+      "1000": 134.826904296875
+    },
+    "area32_rises": {
+      "50": 60.353759765625,
+      "100": 67.08984375,
+      "250": 80.984619140625,
+      "500": 120.717041015625,
+      "1000": 133.777099609375
+    },
+    "area64_rises": {
+      "50": 51.34326171875,
+      "100": 56.73291015625,
+      "250": 71.744140625,
+      "500": 112.738525390625,
+      "1000": 134.098388671875
+    },
+    "bil32_rises": {
+      "50": 60.0615234375,
+      "100": 67.315673828125,
+      "250": 81.23876953125,
+      "500": 121.045654296875,
+      "1000": 133.70166015625
+    },
+    "bil64_rises": {
+      "50": 49.42529296875,
+      "100": 49.952880859375,
+      "250": 70.81591796875,
+      "500": 111.960693359375,
+      "1000": 132.69140625
+    },
+    "native_barriers": [
+      {
+        "start_station_m": 3050.0,
+        "crest_station_m": 3250.0,
+        "end_station_m": 3700.0,
+        "barrier_height_m": 68.517333984375,
+        "barrier_length_m": 650.0,
+        "severity": "LOW",
+        "x": 336213.0467615925,
+        "y": 3140986.9532384076
+      },
+      {
+        "start_station_m": 3300.0,
+        "crest_station_m": 3550.0,
+        "end_station_m": 3650.0,
+        "barrier_height_m": 64.0322265625,
+        "barrier_length_m": 350.0,
+        "severity": "LOW",
+        "x": 336417.9792895822,
+        "y": 3140768.1292436416
+      },
+      {
+        "start_station_m": 5100.0,
+        "crest_station_m": 5150.0,
+        "end_station_m": 5300.0,
+        "barrier_height_m": 70.291748046875,
+        "barrier_length_m": 200.0,
+        "severity": "LOW",
+        "x": 337093.2539811398,
+        "y": 3139436.9364641244
+      },
+      {
+        "start_station_m": 13200.0,
+        "crest_station_m": 13400.0,
+        "end_station_m": 13650.0,
+        "barrier_height_m": 79.902099609375,
+        "barrier_length_m": 450.0,
+        "severity": "LOW",
+        "x": 337500.0,
+        "y": 3133416.55491963
+      }
+    ],
+    "barriers32_area_mean": [
+      {
+        "start_station_m": 3050.0,
+        "crest_station_m": 3250.0,
+        "end_station_m": 3700.0,
+        "barrier_height_m": 62.8994140625,
+        "barrier_length_m": 650.0,
+        "severity": "LOW",
+        "x": 336213.0467615925,
+        "y": 3140986.9532384076
+      },
+      {
+        "start_station_m": 3300.0,
+        "crest_station_m": 3550.0,
+        "end_station_m": 3650.0,
+        "barrier_height_m": 61.0146484375,
+        "barrier_length_m": 350.0,
+        "severity": "LOW",
+        "x": 336417.9792895822,
+        "y": 3140768.1292436416
+      },
+      {
+        "start_station_m": 5100.0,
+        "crest_station_m": 5150.0,
+        "end_station_m": 5300.0,
+        "barrier_height_m": 66.576416015625,
+        "barrier_length_m": 200.0,
+        "severity": "LOW",
+        "x": 337093.2539811398,
+        "y": 3139436.9364641244
+      },
+      {
+        "start_station_m": 13200.0,
+        "crest_station_m": 13350.0,
+        "end_station_m": 13600.0,
+        "barrier_height_m": 60.393798828125,
+        "barrier_length_m": 400.0,
+        "severity": "LOW",
+        "x": 337500.0,
+        "y": 3133466.55491963
+      }
+    ],
+    "barriers64_area_mean": [
+      {
+        "start_station_m": 3000.0,
+        "crest_station_m": 3300.0,
+        "end_station_m": 3700.0,
+        "barrier_height_m": 89.52783203125,
+        "barrier_length_m": 700.0,
+        "severity": "LOW",
+        "x": 336248.4021006518,
+        "y": 3140951.597899348
+      },
+      {
+        "start_station_m": 5100.0,
+        "crest_station_m": 5200.0,
+        "end_station_m": 5300.0,
+        "barrier_height_m": 61.098388671875,
+        "barrier_length_m": 200.0,
+        "severity": "LOW",
+        "x": 337107.3622973394,
+        "y": 3139388.9681890463
+      },
+      {
+        "start_station_m": 13200.0,
+        "crest_station_m": 13400.0,
+        "end_station_m": 13800.0,
+        "barrier_height_m": 76.7681884765625,
+        "barrier_length_m": 600.0,
+        "severity": "LOW",
+        "x": 337500.0,
+        "y": 3133416.55491963
+      }
+    ],
+    "barriers32_bilinear": [
+      {
+        "start_station_m": 3050.0,
+        "crest_station_m": 3250.0,
+        "end_station_m": 3700.0,
+        "barrier_height_m": 62.70458984375,
+        "barrier_length_m": 650.0,
+        "severity": "LOW",
+        "x": 336213.0467615925,
+        "y": 3140986.9532384076
+      },
+      {
+        "start_station_m": 3300.0,
+        "crest_station_m": 3550.0,
+        "end_station_m": 3650.0,
+        "barrier_height_m": 61.052490234375,
+        "barrier_length_m": 350.0,
+        "severity": "LOW",
+        "x": 336417.9792895822,
+        "y": 3140768.1292436416
+      },
+      {
+        "start_station_m": 5100.0,
+        "crest_station_m": 5150.0,
+        "end_station_m": 5300.0,
+        "barrier_height_m": 67.196533203125,
+        "barrier_length_m": 200.0,
+        "severity": "LOW",
+        "x": 337093.2539811398,
+        "y": 3139436.9364641244
+      },
+      {
+        "start_station_m": 13200.0,
+        "crest_station_m": 13350.0,
+        "end_station_m": 13600.0,
+        "barrier_height_m": 60.93115234375,
+        "barrier_length_m": 400.0,
+        "severity": "LOW",
+        "x": 337500.0,
+        "y": 3133466.55491963
+      }
+    ],
+    "barriers64_bilinear": [
+      {
+        "start_station_m": 3050.0,
+        "crest_station_m": 3300.0,
+        "end_station_m": 3700.0,
+        "barrier_height_m": 88.841064453125,
+        "barrier_length_m": 650.0,
+        "severity": "LOW",
+        "x": 336248.4021006518,
+        "y": 3140951.597899348
+      },
+      {
+        "start_station_m": 13200.0,
+        "crest_station_m": 13400.0,
+        "end_station_m": 13750.0,
+        "barrier_height_m": 76.4637451171875,
+        "barrier_length_m": 550.0,
+        "severity": "LOW",
+        "x": 337500.0,
+        "y": 3133416.55491963
+      }
+    ]
+  },
+  "recommended_next_step": "Proceed to D-Claw source/boundary-condition design and six initial 64 m historical-reconstruction runs. Do not modify the accepted terrain unless a solver-level defect is demonstrated."
+}
