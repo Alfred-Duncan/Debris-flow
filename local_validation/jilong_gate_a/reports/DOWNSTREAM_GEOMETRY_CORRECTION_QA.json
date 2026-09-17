@@ -1,35 +1,53 @@
 {
-  "analysis_crs": "EPSG:32645",
-  "status": "HUMAN_IMAGE_REVIEW_REQUIRED",
-  "official_wrong_segment_start": [
-    338031.5621954157,
-    3131303.6680164263
-  ],
-  "official_wrong_segment_end": [
-    339430.4921983012,
-    3130169.9150038627
-  ],
+  "human_review_status": "APPROVED_FOR_LOCAL_CHANNEL_CORRECTION",
+  "correction_accepted": true,
   "official_wrong_segment_length_m": 1878.6568643568885,
-  "corrected_candidate_accepted": false,
-  "corrected_candidate_length_m": null,
-  "maximum_lateral_offset_m": null,
-  "mean_lateral_offset_m": null,
-  "maximum_dem_elevation_difference_m": null,
-  "official_wrong_segment_max_adverse_rise_250m_m": 200.0,
-  "official_wrong_segment_max_local_adverse_rise_m": 25.0,
-  "corrected_segment_max_adverse_rise_250m_m": null,
-  "dem12_valid_sample_fraction": 1.0,
-  "dem8_valid_sample_fraction": 1.0,
-  "rejection_basis": [
-    "The official P0--P2 line leaves the image-visible valley/channel near the documented anomaly.",
-    "The native 12.5 m profile contains the documented large 250 m adverse rise.",
-    "The supplied 8 m DEM supports an uphill trend at the anomaly where valid.",
-    "Existing pre-event and post-event imagery do not establish one unambiguous physical P0-to-S4 continuation suitable for publication as a corrected channel."
+  "corrected_segment_length_m": 3684.4634709093284,
+  "official_max_adverse_rise_250m_m": 200.0,
+  "corrected_max_adverse_rise_250m_m": 148.0,
+  "corrected_max_adverse_rise_250m_8m_dem_m": 86.0,
+  "official_max_local_adverse_rise_m": 25.0,
+  "corrected_max_local_adverse_rise_m": 31.0,
+  "maximum_lateral_offset_m": 1258.0264452438425,
+  "mean_lateral_offset_m": 443.40355833927526,
+  "downstream_tie_in_coordinate": [
+    340571.8257777202,
+    3129640.775894154
   ],
-  "review_figures": [
-    "15_downstream_geometry_QA_failure_v2.png",
-    "16_anomaly_pre_event_0p5m.png",
-    "17_anomaly_post_event_3m.png",
-    "18_anomaly_multievidence_overlay.png"
-  ]
+  "distance_from_P0_m": 3684.4634709093284,
+  "distance_to_S4_m": 0.0,
+  "official_geometry_offset_at_tie_in_m": 0.0,
+  "tie_in_confidence": "MODERATE",
+  "tie_in_basis": "Human-approved pre-event imagery and both DEM products support continuing in the physical trunk valley to S4; P2 was not retained as a tie-in.",
+  "dem12_raw_valid_fraction": 0.5743243243243243,
+  "dem12_qa_valid_fraction": 0.5,
+  "dem8_valid_fraction": 1.0,
+  "dem12_outlier_rule": "Raw 12.5 m values differing by >120 m from colocated valid 8 m elevation retained in profile but excluded from slope QA; no DEM values changed.",
+  "official_stats": {
+    "max_adverse_rise_localm": 25.0,
+    "max_adverse_rise_50m": 63.0,
+    "max_adverse_rise_100m": 106.0,
+    "max_adverse_rise_250m": 200.0,
+    "start_elevation_m": 1869.0,
+    "end_elevation_m": 2037.0,
+    "total_elevation_change_m": 168.0
+  },
+  "corrected_stats_dem12_qa": {
+    "max_adverse_rise_localm": 31.0,
+    "max_adverse_rise_50m": 78.0,
+    "max_adverse_rise_100m": 111.0,
+    "max_adverse_rise_250m": 148.0,
+    "start_elevation_m": 1869.0,
+    "end_elevation_m": 1907.0,
+    "total_elevation_change_m": 38.0
+  },
+  "corrected_stats_dem8": {
+    "max_adverse_rise_localm": 19.0,
+    "max_adverse_rise_50m": 39.0,
+    "max_adverse_rise_100m": 60.0,
+    "max_adverse_rise_250m": 86.0,
+    "start_elevation_m": 1907.0,
+    "end_elevation_m": 1815.0,
+    "total_elevation_change_m": -92.0
+  }
 }

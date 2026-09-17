@@ -7,14 +7,14 @@ This folder records the local, read-only GIS validation of the 2026-08-26 Jilong
 - `scripts/`: reproducible preparation and finalization scripts;
 - `inventory/`: source and spatial-file inventories;
 - `derived/`: official port point and explicitly diagnostic-only reference points;
-- `corridor/`: an imagery-supported **candidate** bridge, resolved S0 confluence point/inspection section, and a defensible S4 port-channel inspection section;
+- `corridor/`: an imagery-supported **candidate** bridge, resolved S0 confluence point/inspection section, an approved local downstream correction, and a defensible S4 port-channel inspection section;
 - `reports/`, `figures/`, and `review_package/`: the evidence audit and review materials.
 
 ## Key result
 
 The official fourth-order river vector has a 525.53 m straight endpoint discontinuity. The imagery-supported candidate trace is 607.99 m long; it is not an official original line, hydraulic centreline, or canonical D-Claw corridor.
 
-S0 is resolved at the image-visible Guobaxiaqu--Donglinzangbu confluence, `(334051.794, 3143392.493)` EPSG:32645, with moderate confidence; it is 0.01 m from the old provisional entry only as an independent check. Gate A nevertheless remains `HUMAN_IMAGE_REVIEW_REQUIRED`: the local official P0--P2 segment leaves the visible valley/channel and has an approximately 200 m adverse rise over 250 m in native 12.5 m terrain. The current pre-event/post-event review images do not establish one unique continuous P0-to-S4 correction, so no corrected GeoJSON is published. The S4 inspection section remains resolved on the nearby actual official main-channel geometry, 646.33 m from the official port point. No canonical corridor, S1/S2/S3 sections, profile, calibration, or simulation result is included here. Start with [the final Gate report](reports/JILONG_GATE_A_FINAL.md).
+S0 is resolved at the image-visible Guobaxiaqu--Donglinzangbu confluence, `(334051.794, 3143392.493)` EPSG:32645, with moderate confidence; it is 0.01 m from the old provisional entry only as an independent check. The approved human review has produced `downstream_anomaly_channel_corrected.geojson`, replacing the rejected P0--P2 line and continuing to S4 without forcing a P2 tie-in. Gate A nevertheless remains `HUMAN_IMAGE_REVIEW_REQUIRED`: full-corridor QA found a separate upstream official-vector contradiction at `(337303.842, 3139798.399)`, where the line crosses slope/bare terrain and rises 161 m over 250 m in both DEMs. The S4 inspection section remains resolved on the nearby actual official main-channel geometry, 646.33 m from the official port point. No canonical corridor, S1/S2/S3 sections, profile, calibration, or simulation result is included here. Start with [the final Gate report](reports/JILONG_GATE_A_FINAL.md).
 
 ## Deliberately excluded
 

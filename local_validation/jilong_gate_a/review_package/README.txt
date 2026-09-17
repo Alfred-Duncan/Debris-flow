@@ -1,1 +1,1 @@
-Gate A remains HUMAN_IMAGE_REVIEW_REQUIRED. `15_downstream_geometry_QA_failure.png` is historical; use `15_downstream_geometry_QA_failure_v2.png`, `16_anomaly_pre_event_0p5m.png`, `17_anomaly_post_event_3m.png`, and `18_anomaly_multievidence_overlay.png` for the current bounded review. No corrected channel or canonical corridor is included.
+Current status: HUMAN_IMAGE_REVIEW_REQUIRED. The downstream correction was approved; Figure 21 documents a separate upstream geometry contradiction that must be resolved before publishing a canonical corridor.

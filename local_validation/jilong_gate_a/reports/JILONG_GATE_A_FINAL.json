@@ -1,6 +1,7 @@
 {
   "gate_a": "HUMAN_IMAGE_REVIEW_REQUIRED",
   "analysis_crs": "EPSG:32645",
+  "human_image_review": "APPROVED_FOR_LOCAL_CHANNEL_CORRECTION",
   "s0_coordinate": [
     334051.79369854234,
     3143392.492568097
@@ -13,19 +14,21 @@
   "s4_port_offset_m": 646.3342015682065,
   "old_vector_gap_straight_m": 525.5297039262372,
   "old_gap_trace_length_m": 607.9923225566369,
-  "downstream_anomaly_resolved": false,
-  "downstream_anomaly_coordinate": [
-    338381.25484703685,
-    3130703.5358936233
+  "official_P0_P2_rejected": true,
+  "corrected_anomaly_segment_accepted": true,
+  "corrected_anomaly_segment_length_m": 3684.4634709093284,
+  "downstream_tie_in_coordinate": [
+    340571.8257777202,
+    3129640.775894154
   ],
-  "official_wrong_segment_max_adverse_rise_m": 200.0,
-  "corrected_segment_max_adverse_rise_m": null,
+  "official_max_adverse_rise_250m_m": 200.0,
+  "corrected_max_adverse_rise_250m_m": 148.0,
   "canonical_corridor_established": false,
   "canonical_corridor_length_km": null,
   "s1_s3_created": false,
   "profile_created": false,
-  "maximum_final_corridor_adverse_rise_250m_m": null,
+  "final_max_adverse_rise_250m_m": 161.0,
   "human_image_review_required": true,
-  "primary_blocker": "No single continuous imagery-supported P0-to-S4 channel trace can be accepted from the current AOI evidence; human image review or a mapped channel product is required.",
+  "primary_blocker": "NEW_UPSTREAM_GEOMETRY_CONTRADICTION: existing official upstream line crosses slope and rises 161 m over 250 m; it needs separate human image review before a final corridor can be published.",
   "cgs_documentary_url": "https://www.cgs.gov.cn/ywdt/ddyw/202608/t20260828_867531.html"
 }

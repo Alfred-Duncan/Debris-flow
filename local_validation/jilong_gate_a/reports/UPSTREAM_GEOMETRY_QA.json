@@ -1,0 +1,15 @@
+{
+  "status": "HUMAN_IMAGE_REVIEW_REQUIRED",
+  "coordinate": [
+    337303.8418827355,
+    3139798.3985810857
+  ],
+  "distance_from_S0_m": 4875.0,
+  "adverse_rise_250m_m": 161.0,
+  "native_12p5_elevation_start_m": 2436.0,
+  "native_12p5_elevation_end_m": 2597.0,
+  "independent_8m_elevation_start_m": 2503.0,
+  "independent_8m_elevation_end_m": 2635.0,
+  "image_result": "Official upstream line crosses slope/bare terrain rather than the visible channel in Figure 21.",
+  "consequence": "Approved downstream correction retained, but final S0-S4 canonical corridor withheld."
+}
