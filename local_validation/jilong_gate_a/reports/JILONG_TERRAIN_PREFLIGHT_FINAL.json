@@ -1,0 +1,20 @@
+{
+  "gate_a": "PASS",
+  "gate_b": "FAIL",
+  "native_12p5_simulation_ready": false,
+  "computational_mosaic_simulation_ready": false,
+  "b01_status": "INSUFFICIENT_EVIDENCE",
+  "b02_status": "INSUFFICIENT_EVIDENCE",
+  "b03_status": "INSUFFICIENT_EVIDENCE",
+  "b04_status": "INSUFFICIENT_EVIDENCE",
+  "b05_status": "INSUFFICIENT_EVIDENCE",
+  "b06_status": "INSUFFICIENT_EVIDENCE",
+  "32m_area_mean_barrier_count": null,
+  "32m_bilinear_barrier_count": null,
+  "64m_area_mean_barrier_count": null,
+  "64m_bilinear_barrier_count": null,
+  "remaining_high_severity_artificial_barriers": [
+    "B04 and B05 remain unresolved because the proposed secondary source cannot be vertically reconciled with the primary DEM by a defensible constant correction."
+  ],
+  "recommended_next_step": "Obtain or validate a spatially compatible authoritative terrain source for B04/B05; do not apply an ad hoc, spatially varying correction."
+}

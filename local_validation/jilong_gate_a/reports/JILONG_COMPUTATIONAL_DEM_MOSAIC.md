@@ -1,0 +1,172 @@
+# Jilong computational DEM mosaic
+
+`PATCH_FEASIBILITY = FAIL`; no computational DEM was created. Source-union coverage passed the required corridor/±250 m gate, but the requested compatibility test reached Case C: independent overlap-anchor medians are spatially inconsistent. No vertical correction, artifact replacement, transition, source-provenance raster, or derived TIFF was made.
+
+{
+  "coverage": {
+    "corridor": {
+      "dem12_coverage_percent": 89.48926720947446,
+      "dem8_coverage_percent": 81.19911176905995,
+      "union_coverage_percent": 100.0,
+      "cells": 1351
+    },
+    "band250": {
+      "dem12_coverage_percent": 89.65610014718217,
+      "dem8_coverage_percent": 77.76283096206498,
+      "union_coverage_percent": 100.0,
+      "cells": 63187
+    },
+    "band500": {
+      "dem12_coverage_percent": 88.5755134885974,
+      "dem8_coverage_percent": 76.25413095619429,
+      "union_coverage_percent": 100.0,
+      "cells": 127997
+    },
+    "band750": {
+      "dem12_coverage_percent": 87.8235055443419,
+      "dem8_coverage_percent": 74.45750707487815,
+      "union_coverage_percent": 100.0,
+      "cells": 194703
+    }
+  },
+  "compatibility": {
+    "primary_dem": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\dem_12p5m\\DEM 12.5m.tif",
+    "secondary_dem": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\dem_8m\\\u256c\u2248\u2593\u256a\u255a\u2552\u2510\u00aa\u2558\u2265\u2569\u2568\u255d\u00ac\u252c\u00ed\u2567\u256a\u2500\u03b1\u2569\u00bb\u2534\u2248\u2558\u2553\u2551\u00aa\u00fa\u00bf20260826\u00fa\u2310DEM8m\u2569\u00b2\u255b\u258c\\DongLinZangBu_basin_HMA8mDEM_fillAW3D30.tif",
+    "target_grid": "native 12.5 m snapped local \u00b1750 m computational domain",
+    "anchor_zones": {
+      "A_upstream_B04": {
+        "n_samples": 1198,
+        "median_dem12_minus_dem8_m": -41.9967041015625,
+        "mean_dem12_minus_dem8_m": -39.496769008732,
+        "NMAD_m": 15.698511547851561,
+        "P05_m": -72.05889892578125,
+        "P25_m": -51.347747802734375,
+        "P50_m": -41.9967041015625,
+        "P75_m": -28.70849609375,
+        "P95_m": 2.3622375488280962,
+        "RMSE_m": 45.02395740450741,
+        "raw_overlap_samples": 1267
+      },
+      "B_downstream_B04": {
+        "n_samples": 1716,
+        "median_dem12_minus_dem8_m": -19.229736328125,
+        "mean_dem12_minus_dem8_m": -17.269585384911313,
+        "NMAD_m": 16.430129040527344,
+        "P05_m": -49.446533203125,
+        "P25_m": -28.871185302734375,
+        "P50_m": -19.229736328125,
+        "P75_m": -6.173919677734375,
+        "P95_m": 19.310791015625,
+        "RMSE_m": 26.43035875252533,
+        "raw_overlap_samples": 1802
+      },
+      "C_upstream_B05": {
+        "n_samples": 1773,
+        "median_dem12_minus_dem8_m": -6.0662841796875,
+        "mean_dem12_minus_dem8_m": -2.3977638756697686,
+        "NMAD_m": 28.09356877441406,
+        "P05_m": -57.43837890625,
+        "P25_m": -25.0328369140625,
+        "P50_m": -6.0662841796875,
+        "P75_m": 12.861083984375,
+        "P95_m": 72.04340820312494,
+        "RMSE_m": 37.01945417145756,
+        "raw_overlap_samples": 1793
+      },
+      "D_downstream_B05": {
+        "n_samples": 979,
+        "median_dem12_minus_dem8_m": 57.322021484375,
+        "mean_dem12_minus_dem8_m": 82.02815347891662,
+        "NMAD_m": 68.31868579101562,
+        "P05_m": -16.80810546875,
+        "P25_m": 23.744384765625,
+        "P50_m": 57.322021484375,
+        "P75_m": 129.4788818359375,
+        "P95_m": 242.94179687499988,
+        "RMSE_m": 114.74074476173939,
+        "raw_overlap_samples": 979
+      },
+      "E_stable_midreach": {
+        "n_samples": 4599,
+        "median_dem12_minus_dem8_m": -22.65966796875,
+        "mean_dem12_minus_dem8_m": -23.06786180377188,
+        "NMAD_m": 43.13403178710937,
+        "P05_m": -73.5375732421875,
+        "P25_m": -54.23681640625,
+        "P50_m": -22.65966796875,
+        "P75_m": 3.1036376953125,
+        "P95_m": 38.77985839843743,
+        "RMSE_m": 42.616594651560376,
+        "raw_overlap_samples": 4599
+      }
+    },
+    "robust_valley_floor_differences": {
+      "A_upstream_B04": {
+        "n_samples": 14,
+        "median_dem12_minus_dem8_m": -23.2987060546875,
+        "mean_dem12_minus_dem8_m": -17.945704868861608,
+        "NMAD_m": 17.722789013671875,
+        "P05_m": -56.5622314453125,
+        "P25_m": -29.478607177734375,
+        "P50_m": -23.2987060546875,
+        "P75_m": -1.61322021484375,
+        "P95_m": 19.047924804687497,
+        "RMSE_m": 30.693875227992507
+      },
+      "B_downstream_B04": {
+        "n_samples": 14,
+        "median_dem12_minus_dem8_m": -11.984619140625,
+        "mean_dem12_minus_dem8_m": -12.041782924107142,
+        "NMAD_m": 8.105887463378906,
+        "P05_m": -24.33193359375,
+        "P25_m": -17.7607421875,
+        "P50_m": -11.984619140625,
+        "P75_m": -7.904144287109375,
+        "P95_m": 0.8198852539062498,
+        "RMSE_m": 14.706450751262482
+      },
+      "C_upstream_B05": {
+        "n_samples": 14,
+        "median_dem12_minus_dem8_m": -0.0042724609375,
+        "mean_dem12_minus_dem8_m": 4.821725027901786,
+        "NMAD_m": 8.93252021484375,
+        "P05_m": -8.967523193359375,
+        "P25_m": -6.10406494140625,
+        "P50_m": -0.0042724609375,
+        "P75_m": 3.43853759765625,
+        "P95_m": 40.776550292968736,
+        "RMSE_m": 18.683183099496116
+      },
+      "D_downstream_B05": {
+        "n_samples": 12,
+        "median_dem12_minus_dem8_m": 120.30438232421875,
+        "mean_dem12_minus_dem8_m": 116.60923258463542,
+        "NMAD_m": 61.22520853271484,
+        "P05_m": 46.5855712890625,
+        "P25_m": 73.01547241210938,
+        "P50_m": 120.30438232421875,
+        "P75_m": 146.76144409179688,
+        "P95_m": 187.83336181640624,
+        "RMSE_m": 126.19611174827985
+      },
+      "E_stable_midreach": {
+        "n_samples": 31,
+        "median_dem12_minus_dem8_m": -22.591796875,
+        "mean_dem12_minus_dem8_m": -17.803955078125,
+        "NMAD_m": 5.886964453125,
+        "P05_m": -31.8515625,
+        "P25_m": -27.0477294921875,
+        "P50_m": -22.591796875,
+        "P75_m": -19.6317138671875,
+        "P95_m": 16.3353271484375,
+        "RMSE_m": 23.539038500962434
+      }
+    },
+    "dem12_dem8_vertical_bias_m": null,
+    "zone_median_spread_m": 99.3187255859375,
+    "compatibility_nmad_m": null,
+    "patch_feasibility": "FAIL",
+    "vertical_bias_applied_m": null,
+    "policy": "No mosaic: overlap bias is spatially inconsistent."
+  }
+}

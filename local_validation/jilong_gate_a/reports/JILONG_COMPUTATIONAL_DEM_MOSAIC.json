@@ -1,0 +1,48 @@
+{
+  "primary_dem": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\dem_12p5m\\DEM 12.5m.tif",
+  "secondary_dem": "E:\\Alfred\\Jilong_GateA\\raw_extracted\\dem_8m\\\u256c\u2248\u2593\u256a\u255a\u2552\u2510\u00aa\u2558\u2265\u2569\u2568\u255d\u00ac\u252c\u00ed\u2567\u256a\u2500\u03b1\u2569\u00bb\u2534\u2248\u2558\u2553\u2551\u00aa\u00fa\u00bf20260826\u00fa\u2310DEM8m\u2569\u00b2\u255b\u258c\\DongLinZangBu_basin_HMA8mDEM_fillAW3D30.tif",
+  "patch_feasibility": "FAIL",
+  "dem12_dem8_vertical_bias_m": null,
+  "vertical_bias_applied_m": null,
+  "compatibility_nmad_m": null,
+  "source_union_coverage_corridor_percent": 100.0,
+  "source_union_coverage_band250_percent": 100.0,
+  "source_union_coverage_band500_percent": 100.0,
+  "source_coverage": {
+    "corridor": {
+      "dem12_coverage_percent": 89.48926720947446,
+      "dem8_coverage_percent": 81.19911176905995,
+      "union_coverage_percent": 100.0,
+      "cells": 1351
+    },
+    "band250": {
+      "dem12_coverage_percent": 89.65610014718217,
+      "dem8_coverage_percent": 77.76283096206498,
+      "union_coverage_percent": 100.0,
+      "cells": 63187
+    },
+    "band500": {
+      "dem12_coverage_percent": 88.5755134885974,
+      "dem8_coverage_percent": 76.25413095619429,
+      "union_coverage_percent": 100.0,
+      "cells": 127997
+    },
+    "band750": {
+      "dem12_coverage_percent": 87.8235055443419,
+      "dem8_coverage_percent": 74.45750707487815,
+      "union_coverage_percent": 100.0,
+      "cells": 194703
+    }
+  },
+  "computational_dem_coverage_corridor_percent": null,
+  "computational_dem_coverage_band250_percent": null,
+  "b04_replaced": false,
+  "b05_replaced": false,
+  "nodata_cells_filled": 0,
+  "artifact_cells_replaced": 0,
+  "transition_cells": 0,
+  "derived_dem_sha256": null,
+  "derived_dem_local_path": null,
+  "source_provenance_summary": null,
+  "stop_reason": "Case C: DEM12--DEM8 overlap bias is spatially inconsistent across independent anchors; a single vertical correction is not defensible."
+}
