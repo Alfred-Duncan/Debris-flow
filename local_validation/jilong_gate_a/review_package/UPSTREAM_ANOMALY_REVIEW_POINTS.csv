@@ -1,0 +1,6 @@
+point_id,x,y,role,description
+ANOMALY,337303.8418827355,3139798.3985810857,ANOMALY,documented upstream vector/terrain contradiction
+RISE_START,337303.8418827355,3139798.3985810857,RISE_START,start of sampled 250 m adverse-rise interval
+RISE_END,337483.8394483303,3139624.915977693,RISE_END,end of sampled 250 m adverse-rise interval
+UPSTREAM_SEGMENT_END,336549.66174882825,3140504.402889073,UPSTREAM_SEGMENT_END,official vertex bracketing suspicious segment upstream
+DOWNSTREAM_SEGMENT_START,337803.01642512286,3139314.119489264,DOWNSTREAM_SEGMENT_START,official vertex bracketing suspicious segment downstream
