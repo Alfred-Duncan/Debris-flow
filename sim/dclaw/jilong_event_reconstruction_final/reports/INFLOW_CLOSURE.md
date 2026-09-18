@@ -17,8 +17,11 @@ discretization.
 
 ## State closure
 
-For Q(t)>0: q=Q/W_eff; h=(q^2/g)^(1/3); U=q/h; Fr=U/sqrt(g h)=1.
-Velocity is U times the fixed corridor tangent. Q values yielding h <= the
+This is a fixed supercritical-normal computational inflow closure used
+to make the truncated upstream boundary fully incoming; it is not observed.
+For Q(t)>0: U_n=1.2 sqrt(g h) and
+h=[Q/(B_actual Fr_n sqrt(g))]^(2/3). Total U=U_n/alpha and velocity
+follows the fixed corridor tangent. Q values yielding h <= the
 D-Claw dry tolerance (0.001 m) are dry/no-inflow.
 
 D-Claw source relation: dclaw/src/2d/dig/qinit.f90 sets hm=m0*h when

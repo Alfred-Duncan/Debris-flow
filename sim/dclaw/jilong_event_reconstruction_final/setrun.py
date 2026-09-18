@@ -56,7 +56,7 @@ def setrun(claw_pkg="dclaw"):
     with (CASE / "inflow.data").open("w") as f:
         f.write(f"{QPEAK:.16g}\n{T:.16g}\n{GEO['t_hat'][0]:.16g}\n{GEO['t_hat'][1]:.16g}\n")
         f.write(f"{GEO['cell_centers_x_m'][0]:.16g}\n{GEO['cell_centers_x_m'][-1]:.16g}\n")
-        f.write("0.62\n1100.0\n9.81\n0.001\n")
+        f.write("0.62\n1100.0\n9.81\n0.001\n1.20\n")
     return r
 
 if __name__ == "__main__":

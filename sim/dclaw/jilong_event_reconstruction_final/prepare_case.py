@@ -12,6 +12,7 @@ CORRIDOR = HANDOFF / "geometry/jilong_canonical_corridor.geojson"
 SECTIONS = HANDOFF / "geometry/jilong_control_sections.geojson"
 DX = 64.0
 G = 9.81
+FR_NORMAL = 1.20
 DRY = 1.0e-3
 RHO_F, M0, CHI0 = 1100.0, 0.62, 0.5
 CASES = {"C1": (1.0e6, 90.0), "C2": (1.0e6, 180.0),
@@ -93,7 +94,9 @@ def main() -> None:
         "cell_columns_zero_based": list(range(first_col, last_col + 1)),
         "cell_centers_x_m": centers.tolist(), "B_actual_m": b_actual, "W_eff_m": w_eff,
         "ground_elevation_m": ground, "dry_tolerance_m": DRY,
-        "dry_q_threshold_m2s": float(np.sqrt(G * DRY ** 3)),
+        "closure": "fixed supercritical-normal computational inflow closure",
+        "Fr_normal": FR_NORMAL,
+        "dry_Q_threshold_m3s": float(b_actual * FR_NORMAL * np.sqrt(G) * DRY ** 1.5),
     }
     (CASE / "inlet_geometry.json").write_text(json.dumps(geom, indent=2) + "\n")
     report = [
@@ -111,8 +114,11 @@ def main() -> None:
         f"- Inlet cells (0-based raster columns): {geom['cell_columns_zero_based']}",
         f"- B_actual: {b_actual:.1f} m; W_eff: {w_eff:.6f} m", "",
         "## State closure", "",
-        "For Q(t)>0: q=Q/W_eff; h=(q^2/g)^(1/3); U=q/h; Fr=U/sqrt(g h)=1.",
-        "Velocity is U times the fixed corridor tangent. Q values yielding h <= the",
+        "This is a fixed supercritical-normal computational inflow closure used",
+        "to make the truncated upstream boundary fully incoming; it is not observed.",
+        f"For Q(t)>0: U_n={FR_NORMAL:g} sqrt(g h) and",
+        "h=[Q/(B_actual Fr_n sqrt(g))]^(2/3). Total U=U_n/alpha and velocity",
+        "follows the fixed corridor tangent. Q values yielding h <= the",
         f"D-Claw dry tolerance ({DRY:g} m) are dry/no-inflow.",
         "",
         "D-Claw source relation: dclaw/src/2d/dig/qinit.f90 sets hm=m0*h when",
@@ -121,14 +127,16 @@ def main() -> None:
         "case (segregation=0) uses hchi=0. bdif remains its initialized zero.",
     ]
     (CASE / "reports/INFLOW_CLOSURE.md").write_text("\n".join(report) + "\n")
-    preflight = {"closure": geom, "gravity_ms2": G, "Fr": 1.0, "cases": {}}
+    preflight = {"closure": geom, "gravity_ms2": G, "Fr_normal": FR_NORMAL, "cases": {}}
     for name, (volume, duration) in CASES.items():
         qpeak = np.pi * volume / (2.0 * duration)
         t = np.linspace(0.0, duration, 200001)
-        q = qpeak * np.sin(np.pi * t / duration) / w_eff
-        h = (q * q / G) ** (1.0 / 3.0)
-        u = np.divide(q, h, out=np.zeros_like(q), where=h > 0)
-        normal_flux = b_actual * h * u * alpha
+        q = qpeak * np.sin(np.pi * t / duration)
+        h = (q / (b_actual * FR_NORMAL * np.sqrt(G))) ** (2.0 / 3.0)
+        un = FR_NORMAL * np.sqrt(G * h)
+        utotal = un / alpha
+        ux, vy = utotal * tangent[0], utotal * tangent[1]
+        normal_flux = b_actual * h * (-vy)
         integrated = float(np.trapz(normal_flux, t))
         peak_flux = float(normal_flux.max())
         entry = {
@@ -136,25 +144,27 @@ def main() -> None:
             "relative_volume_error": (integrated - volume) / volume,
             "analytic_Q_peak_m3s": qpeak, "implemented_peak_normal_flux_m3s": peak_flux,
             "relative_peak_flux_error": (peak_flux - qpeak) / qpeak,
-            "peak_h_m": float(h.max()), "peak_U_ms": float(u.max()),
-            "peak_normal_velocity_ms": float(u.max() * alpha),
-            "peak_tangential_velocity_ms": float(u.max() * np.sqrt(max(0.0, 1-alpha*alpha))),
+            "peak_h_m": float(h.max()), "peak_U_normal_ms": float(un.max()),
+            "peak_U_total_ms": float(utotal.max()), "peak_u_ms": float(ux.max()),
+            "peak_v_ms": float(vy.min()),
+            "Fr_normal_min": float(np.min(np.divide(un, np.sqrt(G*h), out=np.zeros_like(un), where=h > 0)[h > 0])),
+            "Fr_normal_max": float(np.max(np.divide(un, np.sqrt(G*h), out=np.zeros_like(un), where=h > 0)[h > 0])),
             "Q_at_0": float(q[0]), "Q_at_T": float(q[-1]), "source_after_T": 0.0,
-            "finite": bool(np.isfinite(np.r_[q, h, u, normal_flux]).all()),
+            "finite": bool(np.isfinite(np.r_[q, h, un, utotal, ux, vy, normal_flux]).all()),
             "pass": bool(abs((integrated-volume)/volume) <= .05 and abs((peak_flux-qpeak)/qpeak) <= .05
-                         and h.max() <= 50.0 and u.max() <= 40.0),
+                         and h.max() <= 50.0 and utotal.max() <= 40.0),
         }
         if not entry["pass"]:
             raise RuntimeError(f"preflight guardrail failed for {name}: {entry}")
         preflight["cases"][name] = entry
         cfg = {"case_id": name, "V_m3": volume, "T_s": duration, "Q_peak_m3s": qpeak,
-               "tfinal_s": 900.0, "output_interval_s": 30.0, "closure": "unit-Froude"}
+               "tfinal_s": 900.0, "output_interval_s": 30.0, "closure": "fixed-normal-Froude"}
         (CASE / f"case_config/{name}.json").write_text(json.dumps(cfg, indent=2) + "\n")
     (CASE / "reports/INFLOW_PREFLIGHT.json").write_text(json.dumps(preflight, indent=2) + "\n")
-    rows = ["# Inflow preflight", "", "| Case | target V (m3) | integrated V (m3) | volume error | Qpeak (m3/s) | flux error | hpeak (m) | Upeak (m/s) | pass |",
-            "|---|---:|---:|---:|---:|---:|---:|---:|---|"]
+    rows = ["# Inflow preflight", "", "| Case | target V (m3) | integrated V (m3) | volume error | Qpeak (m3/s) | flux error | hpeak (m) | Un peak (m/s) | U total peak (m/s) | pass |",
+            "|---|---:|---:|---:|---:|---:|---:|---:|---:|---|"]
     for name, x in preflight["cases"].items():
-        rows.append(f"| {name} | {x['target_volume_m3']:.3f} | {x['integrated_boundary_volume_m3']:.3f} | {x['relative_volume_error']:.3e} | {x['analytic_Q_peak_m3s']:.3f} | {x['relative_peak_flux_error']:.3e} | {x['peak_h_m']:.3f} | {x['peak_U_ms']:.3f} | {x['pass']} |")
+        rows.append(f"| {name} | {x['target_volume_m3']:.3f} | {x['integrated_boundary_volume_m3']:.3f} | {x['relative_volume_error']:.3e} | {x['analytic_Q_peak_m3s']:.3f} | {x['relative_peak_flux_error']:.3e} | {x['peak_h_m']:.3f} | {x['peak_U_normal_ms']:.3f} | {x['peak_U_total_ms']:.3f} | {x['pass']} |")
     rows += ["", "All rows use the actual N, B_actual, W_eff and alpha recorded in inlet_geometry.json.",
              "The normal-flux integration is numerical (200001 uniformly spaced samples)."]
     (CASE / "reports/INFLOW_PREFLIGHT.md").write_text("\n".join(rows) + "\n")

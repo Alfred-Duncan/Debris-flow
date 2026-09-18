@@ -1,17 +1,17 @@
 # Jilong final 64 m source-only reconstruction
 
-Status: **STOPPED AFTER FINAL C3 SMOKE MASS-CONSISTENCY FAILURE**.
+Status: **EXTERNAL-BOUNDARY METHOD REJECTED AFTER FINAL C3 MASS-BUDGET TEST**.
 
 This case uses the approved unit-Froude computational inflow closure at the
 north external boundary nearest S0. It is not an observed or calibrated inlet
 state. The six-case design varies only mixture volume and pulse duration.
 
-The numerical inflow preflight passes all prescribed volume and peak-flux
-tolerances. The final C3 smoke test reads the accepted 64 m terrain, reaches
-120 s, and propagates downstream, but retains only 0.734e6 m3 at t=90 s for a
-2.0e6 m3 prescribed source. The north-boundary Riemann flux is therefore not
-broadly consistent with the closure's prescribed discharge. No C1--C6 sweep
-was run; changing physics or closure parameters is outside this task.
+The final authorized fixed-supercritical-normal C3 smoke test passes the
+local D-Claw characteristic check and reaches 120 s, but fails the prescribed
+mass budget: retained domain volumes at 30, 60, and 90 s are 1,825, 751,498,
+and 856,547 m3 versus targets of 500,000, 1,500,000, and 2,000,000 m3.
+No C1--C6 sweep was run. The next method is conservative fixed-S0 source-zone
+injection; no further ghost-state external-boundary variants are permitted.
 
 See reports/INFLOW_CLOSURE.md, reports/INFLOW_PREFLIGHT.md, and
 reports/SMOKE_TEST.md.

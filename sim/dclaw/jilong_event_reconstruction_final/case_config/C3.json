@@ -5,5 +5,5 @@
   "Q_peak_m3s": 34906.58503988659,
   "tfinal_s": 900.0,
   "output_interval_s": 30.0,
-  "closure": "unit-Froude"
+  "closure": "fixed-normal-Froude"
 }

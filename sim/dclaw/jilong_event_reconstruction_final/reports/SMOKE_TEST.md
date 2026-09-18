@@ -1,34 +1,36 @@
-# Final C3 smoke test
+# Final supercritical-normal C3 smoke test
 
-Status: **FAIL -- OTHER (boundary-flux consistency)**.
+Status: **FAIL -- EXTERNAL_BOUNDARY_METHOD_REJECTED**.
 
-The final authorized C3 smoke test used V=2.0e6 m3, T=90 s, a 120 s end time,
-and outputs at 0, 30, 60, 90, and 120 s. The generated inflow.data passed a
-strict local format check: ten separate finite numeric lines and no literal
-backslash-n token.
+This final permitted external-boundary test retains the accepted terrain,
+S0 geometry, three 64 m inlet cells, B_actual=192 m, material state,
+entrainment-off setting, pulse, and V/T case. It supersedes only the prior
+total-speed Fr closure with the authorized fixed supercritical-normal
+computational inflow closure, Fr_n=1.20.
 
-The solver completed normally and all five frames parsed with finite values.
-The 64 m terrain loaded unchanged; wet cells first occurred at the north S0
-support, and the flow advanced in the accepted downstream corridor direction.
-No artificial 30 m/s cap is present; the smoke maximum speed was 15.579 m/s.
+The local D-Claw characteristic check passes: kappa=1 and bed_normal=0 imply
+c=sqrt(g*h); prescribed v_n=-1.20*c produces -2.20*c and -0.20*c gravity
+characteristics, both inward. The non-inlet north boundary is reflective.
 
-| t (s) | max depth (m) | max speed (m/s) | P99 wet speed (m/s) | wet cells | domain h-volume (m3) | max corridor chainage (m) |
-|---:|---:|---:|---:|---:|---:|---:|
-| 0 | 0.000 | 0.000 | 0.000 | 0 | 0 | 0.0 |
-| 30 | 0.177 | 0.000 | 0.000 | 3 | 2,178 | 54.6 |
-| 60 | 37.167 | 8.031 | 7.908 | 8 | 694,135 | 142.1 |
-| 90 | 32.105 | 15.579 | 14.964 | 20 | 733,817 | 509.5 |
-| 120 | 33.952 | 12.769 | 12.086 | 24 | 730,303 | 689.9 |
+The solver reaches t=120 s normally with finite fields and downstream flow.
+Maximum depth, speed, P99 wet speed, and chainage are 34.938 m, 20.818 m/s,
+20.527 m/s, and 965.622 m, respectively. No 30 m/s artificial cap, terrain
+change, source-sign reversal, or numerical instability occurred.
 
-The prescribed cumulative volume is 2.0e6 m3 by t=90 s. At that time the
-model contains 0.734e6 m3 (36.7 percent of the prescribed volume). The front
-is only 0.509 km from S0, so this shortfall is not plausibly explained by
-downstream domain exit. The actual numerical external-boundary flux is thus
-not broadly consistent with the unit-Froude preflight flux, despite the
-analytical ghost-state flux check.
+## Required mass-budget test
 
-This is not a terrain, Gate A/B, material, entrainment, or source-sign failure:
-the flow direction is downstream and the solver remains finite. It is a
-boundary-flux consistency issue in the Riemann solution and is classified
-OTHER under the authorized smoke taxonomy. The task requires stopping here;
-there is no C1--C6 full run and no physical retuning.
+| t (s) | domain h-volume (m3) | analytic target (m3) | relative discrepancy |
+|---:|---:|---:|---:|
+| 30 | 1,824.657 | 500,000 | -99.635% |
+| 60 | 751,498.397 | 1,500,000 | -49.900% |
+| 90 | 856,546.826 | 2,000,000 | -57.173% |
+
+All discrepancies exceed the required 10 percent tolerance. The downstream
+front is only 0.649 km at t=90 s, so the missing volume is not explained by
+far-boundary exit. The analytical ghost-state preflight is not the numerical
+Riemann boundary flux.
+
+Per the hard decision rule, EXTERNAL_BOUNDARY_METHOD is **REJECTED**. No
+additional normal Froude number, discharge multiplier, width, terrain,
+friction, material, or hydrograph variant was run. The next method is
+CONSERVATIVE_FIXED_S0_SOURCE_ZONE.

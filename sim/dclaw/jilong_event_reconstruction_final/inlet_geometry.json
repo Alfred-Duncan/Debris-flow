@@ -49,5 +49,7 @@
     2862.87890625
   ],
   "dry_tolerance_m": 0.001,
-  "dry_q_threshold_m2s": 9.904544411531508e-05
+  "closure": "fixed supercritical-normal computational inflow closure",
+  "Fr_normal": 1.2,
+  "dry_Q_threshold_m3s": 0.022820070324168593
 }
