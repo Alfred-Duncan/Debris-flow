@@ -1,4 +1,5 @@
 _output/
+.output/
 runs/
 xdclaw
 *.o
@@ -11,3 +12,6 @@ inflow.data
 active_run.json
 __pycache__/
 smoke_run*.log
+*.pyc
+pyclaw.log
+smoke_metrics.json

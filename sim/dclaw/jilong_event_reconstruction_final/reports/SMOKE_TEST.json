@@ -4,19 +4,19 @@
   "T_s": 90.0,
   "tfinal_s": 120.0,
   "outputs_s": [0, 30, 60, 90, 120],
-  "status": "FAIL",
-  "corrected_rerun_used": true,
-  "first_attempt": {
-    "solver_started": false,
-    "failure": "make invoked setrun.py without shell-only run variables"
-  },
-  "corrected_attempt": {
-    "solver_started": true,
-    "terrain_read": true,
-    "frame_0_written": true,
-    "failure": "Fortran list-directed read rejected literal backslash-n separators in inflow.data",
-    "source_file": "bc2amr.f90",
-    "source_line": 15
-  },
-  "post_failure_code_correction": "setrun.py now writes real line terminators; not rerun under the one-corrected-rerun limit"
+  "inflow_format_check": "PASS",
+  "solver_completed": true,
+  "reached_t120": true,
+  "finite": true,
+  "classification": "OTHER: boundary-flux consistency",
+  "max_chainage_m": 689.9060210001961,
+  "max_depth_m": 37.1671748553164,
+  "max_speed_ms": 15.579164304598308,
+  "p99_wet_speed_ms": 14.964270680766225,
+  "volume_at_t90_m3": 733817.0700467583,
+  "prescribed_volume_m3": 2000000.0,
+  "retained_fraction_at_t90": 0.36690853502337915,
+  "full_sweep_started": false,
+  "terrain_changed": false,
+  "physical_retuning_performed": false
 }
