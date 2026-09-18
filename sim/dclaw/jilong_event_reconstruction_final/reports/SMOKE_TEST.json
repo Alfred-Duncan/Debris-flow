@@ -1,0 +1,22 @@
+{
+  "case_id": "C3",
+  "V_m3": 2000000.0,
+  "T_s": 90.0,
+  "tfinal_s": 120.0,
+  "outputs_s": [0, 30, 60, 90, 120],
+  "status": "FAIL",
+  "corrected_rerun_used": true,
+  "first_attempt": {
+    "solver_started": false,
+    "failure": "make invoked setrun.py without shell-only run variables"
+  },
+  "corrected_attempt": {
+    "solver_started": true,
+    "terrain_read": true,
+    "frame_0_written": true,
+    "failure": "Fortran list-directed read rejected literal backslash-n separators in inflow.data",
+    "source_file": "bc2amr.f90",
+    "source_line": 15
+  },
+  "post_failure_code_correction": "setrun.py now writes real line terminators; not rerun under the one-corrected-rerun limit"
+}

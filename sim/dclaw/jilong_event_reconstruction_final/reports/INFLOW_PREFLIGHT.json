@@ -1,0 +1,161 @@
+{
+  "closure": {
+    "terrain": "/root/autodl-tmp/Jilong_DClaw_Handoff/terrain/final/jilong_copernicus_64m_v1.tif",
+    "terrain_sha256": "53a7f882464eb0757bf24e45069f370c2f8198e145d0b281eacfccf660e55cfd",
+    "crs": "EPSG:32645",
+    "tangent_distance_m": 160.0,
+    "s0_xy_m": [
+      334051.79369854234,
+      3143392.492568097
+    ],
+    "tangent_endpoint_xy_m": [
+      334152.67235912103,
+      3143268.744663324
+    ],
+    "t_hat": [
+      0.6318499853816194,
+      -0.775090701771894
+    ],
+    "selected_boundary": "NORTH",
+    "n_in": [
+      0.0,
+      -1.0
+    ],
+    "alpha": 0.775090701771894,
+    "xlower": 331950.0,
+    "xupper": 342702.0,
+    "ylower": 3127516.0,
+    "yupper": 3143388.0,
+    "mx": 168,
+    "my": 248,
+    "s0_to_boundary_offset_m": 4.49256809707731,
+    "L_ref_m": 160.0,
+    "B_target_m": 206.4274537602276,
+    "N": 3,
+    "cell_columns_zero_based": [
+      31,
+      32,
+      33
+    ],
+    "cell_centers_x_m": [
+      333966.0,
+      334030.0,
+      334094.0
+    ],
+    "B_actual_m": 192.0,
+    "W_eff_m": 148.81741474020365,
+    "ground_elevation_m": [
+      2773.6123046875,
+      2809.203857421875,
+      2862.87890625
+    ],
+    "dry_tolerance_m": 0.001,
+    "dry_q_threshold_m2s": 9.904544411531508e-05
+  },
+  "gravity_ms2": 9.81,
+  "Fr": 1.0,
+  "cases": {
+    "C1": {
+      "target_volume_m3": 1000000.0,
+      "integrated_boundary_volume_m3": 999999.9999794384,
+      "relative_volume_error": -2.0561623387038708e-11,
+      "analytic_Q_peak_m3s": 17453.292519943294,
+      "implemented_peak_normal_flux_m3s": 17453.292519943294,
+      "relative_peak_flux_error": 0.0,
+      "peak_h_m": 11.192473431573422,
+      "peak_U_ms": 10.47846192738874,
+      "peak_normal_velocity_ms": 8.12175840878981,
+      "peak_tangential_velocity_ms": 6.620816015642433,
+      "Q_at_0": 0.0,
+      "Q_at_T": 1.4362646237635984e-14,
+      "source_after_T": 0.0,
+      "finite": true,
+      "pass": true
+    },
+    "C2": {
+      "target_volume_m3": 1000000.0,
+      "integrated_boundary_volume_m3": 999999.9999794384,
+      "relative_volume_error": -2.0561623387038708e-11,
+      "analytic_Q_peak_m3s": 8726.646259971647,
+      "implemented_peak_normal_flux_m3s": 8726.646259971647,
+      "relative_peak_flux_error": 0.0,
+      "peak_h_m": 7.0508164384142304,
+      "peak_U_ms": 8.316760743272805,
+      "peak_normal_velocity_ms": 6.4462439209722575,
+      "peak_tangential_velocity_ms": 5.25494515405935,
+      "Q_at_0": 0.0,
+      "Q_at_T": 7.181323118817992e-15,
+      "source_after_T": 0.0,
+      "finite": true,
+      "pass": true
+    },
+    "C3": {
+      "target_volume_m3": 2000000.0,
+      "integrated_boundary_volume_m3": 1999999.9999588768,
+      "relative_volume_error": -2.0561623387038708e-11,
+      "analytic_Q_peak_m3s": 34906.58503988659,
+      "implemented_peak_normal_flux_m3s": 34906.58503988659,
+      "relative_peak_flux_error": 0.0,
+      "peak_h_m": 17.766944099405773,
+      "peak_U_ms": 13.202034752839076,
+      "peak_normal_velocity_ms": 10.232774381394972,
+      "peak_tangential_velocity_ms": 8.341705465589005,
+      "Q_at_0": 0.0,
+      "Q_at_T": 2.872529247527197e-14,
+      "source_after_T": 0.0,
+      "finite": true,
+      "pass": true
+    },
+    "C4": {
+      "target_volume_m3": 2000000.0,
+      "integrated_boundary_volume_m3": 1999999.9999588768,
+      "relative_volume_error": -2.0561623387038708e-11,
+      "analytic_Q_peak_m3s": 17453.292519943294,
+      "implemented_peak_normal_flux_m3s": 17453.292519943294,
+      "relative_peak_flux_error": 0.0,
+      "peak_h_m": 11.192473431573422,
+      "peak_U_ms": 10.47846192738874,
+      "peak_normal_velocity_ms": 8.12175840878981,
+      "peak_tangential_velocity_ms": 6.620816015642433,
+      "Q_at_0": 0.0,
+      "Q_at_T": 1.4362646237635984e-14,
+      "source_after_T": 0.0,
+      "finite": true,
+      "pass": true
+    },
+    "C5": {
+      "target_volume_m3": 3000000.0,
+      "integrated_boundary_volume_m3": 2999999.9999383157,
+      "relative_volume_error": -2.056142936150233e-11,
+      "analytic_Q_peak_m3s": 52359.87755982989,
+      "implemented_peak_normal_flux_m3s": 52359.87755982988,
+      "relative_peak_flux_error": -1.3896055440292868e-16,
+      "peak_h_m": 23.28128292495411,
+      "peak_U_ms": 15.112557212258947,
+      "peak_normal_velocity_ms": 11.713602575217685,
+      "peak_tangential_velocity_ms": 9.548869053644706,
+      "Q_at_0": 0.0,
+      "Q_at_T": 4.308793871290796e-14,
+      "source_after_T": 0.0,
+      "finite": true,
+      "pass": true
+    },
+    "C6": {
+      "target_volume_m3": 3000000.0,
+      "integrated_boundary_volume_m3": 2999999.9999383157,
+      "relative_volume_error": -2.056142936150233e-11,
+      "analytic_Q_peak_m3s": 26179.938779914944,
+      "implemented_peak_normal_flux_m3s": 26179.93877991494,
+      "relative_peak_flux_error": -1.3896055440292868e-16,
+      "peak_h_m": 14.666289212853883,
+      "peak_U_ms": 11.994844608334727,
+      "peak_normal_velocity_ms": 9.297092525118982,
+      "peak_tangential_velocity_ms": 7.578942390431096,
+      "Q_at_0": 0.0,
+      "Q_at_T": 2.154396935645398e-14,
+      "source_after_T": 0.0,
+      "finite": true,
+      "pass": true
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "terrain": "/root/autodl-tmp/Jilong_DClaw_Handoff/terrain/final/jilong_copernicus_64m_v1.tif",
+  "terrain_sha256": "53a7f882464eb0757bf24e45069f370c2f8198e145d0b281eacfccf660e55cfd",
+  "crs": "EPSG:32645",
+  "tangent_distance_m": 160.0,
+  "s0_xy_m": [
+    334051.79369854234,
+    3143392.492568097
+  ],
+  "tangent_endpoint_xy_m": [
+    334152.67235912103,
+    3143268.744663324
+  ],
+  "t_hat": [
+    0.6318499853816194,
+    -0.775090701771894
+  ],
+  "selected_boundary": "NORTH",
+  "n_in": [
+    0.0,
+    -1.0
+  ],
+  "alpha": 0.775090701771894,
+  "xlower": 331950.0,
+  "xupper": 342702.0,
+  "ylower": 3127516.0,
+  "yupper": 3143388.0,
+  "mx": 168,
+  "my": 248,
+  "s0_to_boundary_offset_m": 4.49256809707731,
+  "L_ref_m": 160.0,
+  "B_target_m": 206.4274537602276,
+  "N": 3,
+  "cell_columns_zero_based": [
+    31,
+    32,
+    33
+  ],
+  "cell_centers_x_m": [
+    333966.0,
+    334030.0,
+    334094.0
+  ],
+  "B_actual_m": 192.0,
+  "W_eff_m": 148.81741474020365,
+  "ground_elevation_m": [
+    2773.6123046875,
+    2809.203857421875,
+    2862.87890625
+  ],
+  "dry_tolerance_m": 0.001,
+  "dry_q_threshold_m2s": 9.904544411531508e-05
+}
