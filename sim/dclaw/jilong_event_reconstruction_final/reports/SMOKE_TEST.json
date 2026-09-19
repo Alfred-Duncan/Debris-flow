@@ -1,25 +1,23 @@
 {
-  "case_id": "C3",
-  "closure": "fixed supercritical-normal computational inflow closure",
-  "Fr_normal": 1.2,
-  "V_m3": 2000000.0,
+  "architecture": "CONSERVATIVE_FIXED_S0_SOURCE_ZONE",
+  "case": "C3",
+  "V_target_m3": 2000000.0,
   "T_s": 90.0,
   "tfinal_s": 120.0,
-  "solver_completed": true,
+  "outputs_s": [0, 30, 60, 90, 120],
+  "implementation_debug_reruns_used": 3,
+  "accepted_run": "runs/C3_conservative_debug3/_output",
+  "max_courant": 0.41516,
+  "mass_budget": [
+    {"time_s": 30, "model_volume_m3": 500212.94389718596, "target_volume_m3": 500000.0, "relative_error": 0.00042588779437192713},
+    {"time_s": 60, "model_volume_m3": 1500097.0778925645, "target_volume_m3": 1500000.0, "relative_error": 0.00006471859504297996},
+    {"time_s": 90, "model_volume_m3": 2000003.3340602978, "target_volume_m3": 2000000.0, "relative_error": 0.0000016670301489066333},
+    {"time_s": 120, "model_volume_m3": 1999935.7799293569, "target_volume_m3": 2000000.0, "relative_error": -0.000032110035321558825}
+  ],
   "finite": true,
-  "characteristic_check": "PASS",
-  "external_boundary_method": "REJECTED",
-  "max_depth_m": 34.93846532206185,
-  "max_speed_ms": 20.81808222308001,
-  "p99_wet_speed_ms": 20.52748306945803,
-  "max_chainage_m": 965.6224991339952,
-  "mass_budget": {
-    "30": {"domain_volume_m3": 1824.6574181513306, "target_m3": 500000.0, "relative_error": -0.9963506851636973},
-    "60": {"domain_volume_m3": 751498.3969012601, "target_m3": 1500000.0, "relative_error": -0.49900106873249325},
-    "90": {"domain_volume_m3": 856546.8255660068, "target_m3": 2000000.0, "relative_error": -0.5717265872169966}
-  },
-  "next_method": "CONSERVATIVE_FIXED_S0_SOURCE_ZONE",
-  "full_sweep_started": false,
-  "physical_retuning_performed": false,
-  "terrain_changed": false
+  "source_initially_fixed_three_cells": true,
+  "entrainment": false,
+  "north_boundary": "wall",
+  "artificial_speed_cap": false,
+  "conservative_source_gate": "PASS"
 }

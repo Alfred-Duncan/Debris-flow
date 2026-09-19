@@ -6,9 +6,7 @@ OUTDIR = _output
 FC = gfortran
 FFLAGS ?= -O -gno-strict-dwarf -fbounds-check -fopenmp -std=legacy -ffpe-trap='invalid,overflow,zero'
 DIGLIB = $(CLAW)/dclaw/src/2d/dig
-AMRLIB = $(CLAW)/amrclaw/src/2d
-GEOLIB = $(CLAW)/geoclaw/src/2d/shallow
-EXCLUDE_SOURCES = $(GEOLIB)/bc2amr.f90
-SOURCES = bc2amr.f90
+EXCLUDE_SOURCES = $(DIGLIB)/src2.f90
+SOURCES = src2.f90
 include $(DIGLIB)/Makefile.dclaw
 include $(CLAWMAKE)
