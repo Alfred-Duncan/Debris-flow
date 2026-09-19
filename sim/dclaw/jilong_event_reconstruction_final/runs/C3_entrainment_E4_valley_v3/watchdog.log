@@ -1,0 +1,5 @@
+2026-09-19T20:49:45+08:00 START pid=9840 log=/root/autodl-tmp/Debris-flow-jilong-final/sim/dclaw/jilong_event_reconstruction_final/runs/C3_entrainment_E4_valley_v3/run.log
+2026-09-19T20:50:45+08:00 HEARTBEAT elapsed_s=60 pid=9840 ps=[S 0.0 0.0] frames=27 newest_output=1789822244 fatal_matches=0
+2026-09-19T20:51:45+08:00 HEARTBEAT elapsed_s=120 pid=9840 ps=[] frames=31 newest_output=1789822253 fatal_matches=1
+2026-09-19T20:51:45+08:00 RUNTIME_FAILURE fatal-pattern
+2026-09-19T20:51:45+08:00 EXIT rc=0 frames=31
