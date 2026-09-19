@@ -1,0 +1,135 @@
+# E4 front minimax audit
+
+{
+  "exact_front_xy": [
+    335758.0,
+    3141052.0
+  ],
+  "front_samples": {
+    "native": 2676.365234375,
+    "32m": 2677.519775390625,
+    "64m": 2678.3759765625
+  },
+  "paths": {
+    "native": {
+      "start_i": 127,
+      "start_j": 149,
+      "start_x": 335745.0,
+      "start_y": 3141045.0,
+      "start_z": 2676.365234375,
+      "start_distance_m": 14.7648230602334,
+      "target_candidate_count": 6,
+      "target_z": 2487.4765625,
+      "highest_path_z": 2773.445556640625,
+      "minimum_saddle_above_start": 97.080322265625,
+      "maximum_adverse_rise": 97.080322265625,
+      "path_length": 1845.8073580374357,
+      "straight_line_displacement": 1213.7956994486347,
+      "tortuosity": 1.520690309642629,
+      "min_distance": 162.35391311413898,
+      "median_distance": 556.1025085359713,
+      "max_distance": 737.0549504616328,
+      "min_chainage": 2931.6869892674604,
+      "max_chainage": 4078.6764551651268,
+      "saddle": {
+        "x": 335835.0,
+        "y": 3140385.0,
+        "z": 2773.445556640625,
+        "chainage": 3458.91417886609,
+        "distance": 691.6330259635527
+      },
+      "max_adverse_start": {
+        "x": 335745.0,
+        "y": 3141045.0
+      },
+      "max_adverse_end": {
+        "x": 335835.0,
+        "y": 3140385.0
+      },
+      "neighborhood": "OPEN_DOWNSTREAM_GRADIENT"
+    },
+    "32m": {
+      "start_i": 119,
+      "start_j": 139,
+      "start_x": 335742.0,
+      "start_y": 3141068.0,
+      "start_z": 2680.25,
+      "start_distance_m": 22.627416997969522,
+      "target_candidate_count": 6,
+      "target_z": 2491.053466796875,
+      "highest_path_z": 2775.18359375,
+      "minimum_saddle_above_start": 94.93359375,
+      "maximum_adverse_rise": 98.2783203125,
+      "path_length": 1755.8418459228417,
+      "straight_line_displacement": 1225.2281420209054,
+      "tortuosity": 1.43307338911326,
+      "min_distance": 163.43350435208293,
+      "median_distance": 559.9892822248853,
+      "max_distance": 683.593446428504,
+      "min_chainage": 2911.166678819575,
+      "max_chainage": 4072.9463170552185,
+      "saddle": {
+        "x": 335838.0,
+        "y": 3140396.0,
+        "z": 2775.18359375,
+        "chainage": 3452.549985391667,
+        "distance": 682.1727383663622
+      },
+      "max_adverse_start": {
+        "x": 335742.0,
+        "y": 3141036.0
+      },
+      "max_adverse_end": {
+        "x": 335838.0,
+        "y": 3140396.0
+      },
+      "neighborhood": "OPEN_DOWNSTREAM_GRADIENT"
+    },
+    "64m": {
+      "start_i": 60,
+      "start_j": 70,
+      "start_x": 335758.0,
+      "start_y": 3141052.0,
+      "start_z": 2678.3759765625,
+      "start_distance_m": 0.0,
+      "target_candidate_count": 4,
+      "target_z": 2505.96728515625,
+      "highest_path_z": 2775.650390625,
+      "minimum_saddle_above_start": 97.2744140625,
+      "maximum_adverse_rise": 97.2744140625,
+      "path_length": 1763.606347910659,
+      "straight_line_displacement": 1180.1016905334895,
+      "tortuosity": 1.494452861188076,
+      "min_distance": 162.10477667442308,
+      "median_distance": 547.8069043872622,
+      "max_distance": 683.0783264018849,
+      "min_chainage": 2933.4650957933895,
+      "max_chainage": 4050.3579465350012,
+      "saddle": {
+        "x": 335822.0,
+        "y": 3140412.0,
+        "z": 2775.650390625,
+        "chainage": 3380.0415168600357,
+        "distance": 683.0651506262049
+      },
+      "max_adverse_start": {
+        "x": 335758.0,
+        "y": 3141052.0
+      },
+      "max_adverse_end": {
+        "x": 335822.0,
+        "y": 3140412.0
+      },
+      "neighborhood": "LOCAL_DEPRESSION"
+    }
+  },
+  "saddle_separation_m": {
+    "native-32m": 11.40175425099138,
+    "native-64m": 29.966648127543394,
+    "32m-64m": 22.627416997969522
+  },
+  "classification": "C_MULTIRES_MAJOR_SADDLE",
+  "terrain_modified": false,
+  "corridor_modified": false,
+  "dclaw_runs": 0
+}
