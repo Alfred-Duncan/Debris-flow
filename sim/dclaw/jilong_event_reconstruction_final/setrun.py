@@ -6,7 +6,7 @@ from clawpack.clawutil import data
 from clawpack.geoclaw import fgmax_tools
 
 CASE = Path(__file__).resolve().parent
-DOMAIN = json.loads((CASE / "source_zone.json").read_text())
+DOMAIN = json.loads((CASE / "source_zone_v2.json").read_text())
 ACTIVE = json.loads((CASE / "active_run.json").read_text())
 V, T = float(ACTIVE["V_m3"]), float(ACTIVE["T_s"])
 TFINAL, OUTINT = float(ACTIVE["tfinal_s"]), float(ACTIVE["output_interval_s"])
@@ -55,7 +55,7 @@ def setrun(claw_pkg="dclaw"):
     r.fgmax_data.num_fgmax_val = 5
     r.fgmax_data.fgmax_grids.append(fg)
     with (CASE / "conservative_source.data").open("w", encoding="ascii") as f:
-        f.write(f"{V:.16g} {T:.16g} 3\n")
+        f.write(f"{V:.16g} {T:.16g} {len(DOMAIN['cells'])}\n")
         for cell in DOMAIN["cells"]:
             f.write(f"{cell['center_x']:.16g} {cell['center_y']:.16g} {cell['tangent_x']:.16g} {cell['tangent_y']:.16g}\n")
     return r

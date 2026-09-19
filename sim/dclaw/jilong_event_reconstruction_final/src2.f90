@@ -68,7 +68,8 @@
       real(kind=8) :: jilong_v,jilong_t,jilong_ta,jilong_tb,jilong_tmid
       real(kind=8) :: jilong_dv,jilong_dh,jilong_qmid,jilong_href,jilong_usrc
       real(kind=8) :: jilong_xc,jilong_yc
-      real(kind=8), save :: jilong_x(3),jilong_y(3),jilong_tx(3),jilong_ty(3)
+      integer, parameter :: jilong_nmax = 20
+      real(kind=8), save :: jilong_x(jilong_nmax),jilong_y(jilong_nmax),jilong_tx(jilong_nmax),jilong_ty(jilong_nmax)
       real(kind=8), save :: jilong_volume,jilong_duration
 
       integer :: i,j,itercount,itercountmax,jilong_k,jilong_matched,jilong_ios
@@ -110,7 +111,7 @@
               action='read',iostat=jilong_ios)
          if (jilong_ios.ne.0) stop 'JILONG source data open failure'
          read(79,*,iostat=jilong_ios) jilong_volume,jilong_duration,jilong_n
-         if (jilong_ios.ne.0 .or. jilong_n.ne.3 .or. jilong_volume.le.0.d0 .or. &
+         if (jilong_ios.ne.0 .or. jilong_n.lt.4 .or. jilong_n.gt.jilong_nmax .or. jilong_volume.le.0.d0 .or. &
              jilong_duration.le.0.d0) stop 'JILONG source header failure'
          do jilong_k=1,jilong_n
             read(79,*,iostat=jilong_ios) jilong_x(jilong_k),jilong_y(jilong_k), &
