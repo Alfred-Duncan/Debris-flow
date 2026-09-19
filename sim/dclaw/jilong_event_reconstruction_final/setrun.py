@@ -46,7 +46,8 @@ def setrun(claw_pkg="dclaw"):
     d.src2method, d.alphamethod = 2, 1
     d.segregation, d.beta_seg, d.chi0, d.chie = 0, 0.0, .5, .5
     d.bed_normal, d.theta_input = 0, 0.0
-    d.entrainment, d.entrainment_method, d.entrainment_rate, d.me = 0, 1, 0.0, .62
+    d.entrainment, d.entrainment_method, d.entrainment_rate, d.me = 1, 0, .20, .62
+    r.auxinitdclaw_data.auxinitfiles.append([3, 7, CASE / "entrainment/erodible_thickness_e2.tt3"])
     r.pinitdclaw_data.init_ptype = 0
     r.flowgrades_data.flowgrades = []
     fg = fgmax_tools.FGmaxGrid()
