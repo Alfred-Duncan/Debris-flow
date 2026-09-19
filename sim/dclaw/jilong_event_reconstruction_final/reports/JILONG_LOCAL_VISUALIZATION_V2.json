@@ -1,0 +1,8 @@
+{
+  "PASS": true,
+  "png_long_side_px": 2640,
+  "G0_G3_inside_extent": true,
+  "E4_front_inside_extent": true,
+  "canonical_intersects_extent": true,
+  "E4_wet_cell_count_t900": 110
+}
