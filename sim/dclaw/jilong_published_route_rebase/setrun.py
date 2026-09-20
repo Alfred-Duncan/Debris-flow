@@ -11,6 +11,9 @@ DOMAIN = json.loads((CASE / ("model_geometry_sourcefix.json" if ACTIVE.get("sour
 V, T = float(ACTIVE["V_m3"]), float(ACTIVE["T_s"])
 TFINAL, OUTINT = float(ACTIVE["tfinal_s"]), float(ACTIVE["output_interval_s"])
 ENTRAINMENT = int(ACTIVE.get("entrainment",0))
+KU = float(ACTIVE["momentum_factor"])
+if KU <= 0.0:
+    raise ValueError("momentum_factor must be > 0")
 
 def setrun(claw_pkg="dclaw"):
     r = data.ClawRunData("dclaw", 2)
@@ -60,6 +63,7 @@ def setrun(claw_pkg="dclaw"):
         f.write(f"{V:.16g} {T:.16g} {len(DOMAIN['cells'])}\n")
         for cell in DOMAIN["cells"]:
             f.write(f"{cell['center_x']:.16g} {cell['center_y']:.16g} {cell['tangent_x']:.16g} {cell['tangent_y']:.16g}\n")
+    (CASE / "source_momentum_factor.data").write_text(f"{KU:.17g}\n", encoding="ascii")
     return r
 
 if __name__ == "__main__":

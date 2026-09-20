@@ -70,7 +70,7 @@
       real(kind=8) :: jilong_xc,jilong_yc
       integer, parameter :: jilong_nmax = 20
       real(kind=8), save :: jilong_x(jilong_nmax),jilong_y(jilong_nmax),jilong_tx(jilong_nmax),jilong_ty(jilong_nmax)
-      real(kind=8), save :: jilong_volume,jilong_duration
+      real(kind=8), save :: jilong_volume,jilong_duration,jilong_ku
 
       integer :: i,j,itercount,itercountmax,jilong_k,jilong_matched,jilong_ios
       integer, save :: jilong_n
@@ -119,6 +119,12 @@
             if (jilong_ios.ne.0) stop 'JILONG source geometry read failure'
          enddo
          close(79)
+         open(unit=80,file='source_momentum_factor.data',status='old', &
+              action='read',iostat=jilong_ios)
+         if (jilong_ios.ne.0) stop 'JILONG_MOMENTUM_FACTOR_FILE_MISSING'
+         read(80,*,iostat=jilong_ios) jilong_ku
+         close(80)
+         if (jilong_ios.ne.0 .or. jilong_ku.le.0.d0) stop 'JILONG_MOMENTUM_FACTOR_INVALID'
          jilong_loaded = .true.
       endif
 
@@ -132,7 +138,7 @@
          jilong_qmid = 0.5d0*3.14159265358979323846d0*jilong_volume/jilong_duration &
                      * sin(3.14159265358979323846d0*jilong_tmid/jilong_duration)
          jilong_href = ((jilong_qmid/jilong_wref)**2/grav)**(1.d0/3.d0)
-         jilong_usrc = sqrt(grav*jilong_href)
+         jilong_usrc = jilong_ku*sqrt(grav*jilong_href)
          jilong_matched = 0
          do jilong_k=1,jilong_n
             jilong_found = .false.
