@@ -1,0 +1,9 @@
+{
+  "experiment": "Jilong Global Neural Operator baseline", "seed": 20260921,
+  "splits": {"train": 160, "val": 20, "test": 20, "h0_excluded": true},
+  "state_channels": ["h","hu","hv","c","ice"],
+  "input_channels": ["h","hu","hv","c","ice","bed_elevation","active_mask","volume_scale","ice_fraction","log_erosion_K","n_debris","log_dep_tau","time_norm","release_remaining"],
+  "step_seconds": 10, "t_end_seconds": 1440, "dry_threshold_m": 0.03,
+  "model_candidates": [{"width":24,"modes":16,"depth":3},{"width":32,"modes":16,"depth":3},{"width":32,"modes":24,"depth":3}],
+  "training": {"max_steps":12000,"batch_size":1,"gradient_accumulation":2,"lr":0.001,"weight_decay":0.0001,"warmup_steps":500,"validate_every":500,"checkpoint_every":500,"patience_evaluations":6,"wet_weight":2,"grad_clip":1.0,"amp_preference":"bf16"}
+}
