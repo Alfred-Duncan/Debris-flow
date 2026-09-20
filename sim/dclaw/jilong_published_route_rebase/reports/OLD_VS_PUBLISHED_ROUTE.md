@@ -1,0 +1,57 @@
+# OLD VS PUBLISHED ROUTE
+
+{
+  "vertices": 46,
+  "length_m": 21843.425062849135,
+  "source_endpoint": [
+    356076.514348,
+    3129773.452394
+  ],
+  "port_endpoint": [
+    340900.994467,
+    3129256.533688
+  ],
+  "source_native_z": 5220.00634765625,
+  "port_native_z": 1822.15869140625,
+  "S0": [
+    354426.653264872,
+    3130942.006006
+  ],
+  "S0_source_chainage_m": 2111.229420381748,
+  "S0_native_z": 4000.0,
+  "S0_brackets": [
+    {
+      "distance_from_source_m": 2100.0,
+      "x": 354437.88268525375,
+      "y": 3130942.006006,
+      "native_z": 4018.80859375,
+      "z32": 4018.80859375,
+      "z64": 4018.80859375
+    },
+    {
+      "distance_from_source_m": 2120.0,
+      "x": 354417.88268525375,
+      "y": 3130942.006006,
+      "native_z": 3985.309814453125,
+      "z32": 3985.309814453125,
+      "z64": 3985.309814453125
+    }
+  ],
+  "domain": {
+    "xmin": 338862.0,
+    "xmax": 356462.0,
+    "ymin": 3127196.0,
+    "ymax": 3137500.0,
+    "cells_x": 275,
+    "cells_y": 161
+  },
+  "route_drop_native_m": 2163.151123046875,
+  "route_length_s0_port_m": 19707.465910023548,
+  "mean_slope": 0.11050843972212904,
+  "W_ref_model_m": 192,
+  "old_s0_distance_m": 13883.540993418652,
+  "old_port_distance_m": 214.289736255198,
+  "old_s0_to_new_s0_m": 23877.80387683531,
+  "old_geometry_status": "SUPERSEDED_FOR_EVENT_RECONSTRUCTION",
+  "terrain_extension_note": "New cell-aligned computational crop reprojected directly from the same Copernicus raw DSM because legacy accepted 64m crop ends at x=342702 m and does not cover published S0."
+}
