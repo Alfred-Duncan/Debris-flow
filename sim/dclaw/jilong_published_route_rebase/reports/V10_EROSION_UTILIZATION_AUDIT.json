@@ -1,0 +1,36 @@
+{
+  "final3km_mask_coverage": {
+    "mask_coverage_fraction": 0.8648648648648649,
+    "mask_coverage_percent": 86.48648648648648,
+    "number_uncovered_cells": 5,
+    "longest_consecutive_uncovered_cells": 3,
+    "longest_consecutive_uncovered_distance_m": 192,
+    "uncovered_physical_distance_m": 320,
+    "uncovered_chainage_ranges": [
+      {
+        "start_chainage_m": 16630.1783945222,
+        "end_chainage_m": 16630.1783945222,
+        "n_cells": 1,
+        "distance_m": 64
+      },
+      {
+        "start_chainage_m": 17708.95450515423,
+        "end_chainage_m": 17888.95450515447,
+        "n_cells": 3,
+        "distance_m": 192
+      },
+      {
+        "start_chainage_m": 18488.954505154285,
+        "end_chainage_m": 18488.954505154285,
+        "n_cells": 1,
+        "distance_m": 64
+      }
+    ],
+    "geomfix_created": true,
+    "geomfix_added_cells": 30,
+    "geomfix_file": "entrainment/erodible_thickness_fullroute_geomfix_4m.tt3"
+  },
+  "V10_final_max_ratio_ge090_fraction": 0.013043478260869565,
+  "classification": "FINAL_CORRIDOR_MASK_GAP",
+  "state_semantics": "bdif is reported as bed-difference state integral; no cumulative entrained-volume claim is made."
+}

@@ -1,0 +1,34 @@
+{
+  "case": "RECON_C_phi32",
+  "V_m3": 10000000.0,
+  "T_s": 90.0,
+  "mass_gate_pass": true,
+  "rows": [
+    {
+      "time_s": 30,
+      "expected_conservative_source_mass_m3": 2500000.0,
+      "analytic_half_cosine_integral_m3": 2499999.9999999995,
+      "relative_error": 1.862645149230957e-16,
+      "pass": true
+    },
+    {
+      "time_s": 60,
+      "expected_conservative_source_mass_m3": 7500000.0,
+      "analytic_half_cosine_integral_m3": 7499999.999999999,
+      "relative_error": 1.241763432820638e-16,
+      "pass": true
+    },
+    {
+      "time_s": 90,
+      "expected_conservative_source_mass_m3": 10000000.0,
+      "analytic_half_cosine_integral_m3": 10000000.0,
+      "relative_error": 0.0,
+      "pass": true
+    }
+  ],
+  "sha256": {
+    "erodible_tt3": "e94ad901fcc2ad0dd74675eb143dfc207a4cdfb69fcd868eb3e92cfabecf90e8",
+    "terrain": "6623682eda38d8f5aa0f331868a9be349cf77b01a110e3f6db36bb3577f33dd4",
+    "executable": "4d11cb483c6567715c711a80b729b57ffb74ac4792ad18023cfdafdce06dcc69"
+  }
+}

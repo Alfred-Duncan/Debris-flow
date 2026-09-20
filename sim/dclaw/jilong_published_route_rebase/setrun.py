@@ -12,6 +12,12 @@ V, T = float(ACTIVE["V_m3"]), float(ACTIVE["T_s"])
 TFINAL, OUTINT = float(ACTIVE["tfinal_s"]), float(ACTIVE["output_interval_s"])
 ENTRAINMENT = int(ACTIVE.get("entrainment",0))
 KU = float(ACTIVE["momentum_factor"])
+# Defaults preserve the frozen V10 configuration; only predeclared ladder
+# values in active_run.json may override them.
+MANNING = float(ACTIVE.get("manning", 0.025))
+PHI = float(ACTIVE.get("phi_deg", 38.0))
+EROSION_RATE = float(ACTIVE.get("entrainment_rate", 0.20))
+ERODIBLE_FILE = str(ACTIVE.get("erodible_thickness_file", "entrainment/erodible_thickness_e4_published.tt3"))
 if KU <= 0.0:
     raise ValueError("momentum_factor must be > 0")
 
@@ -40,18 +46,18 @@ def setrun(claw_pkg="dclaw"):
     g = r.geo_data
     g.gravity, g.coordinate_system, g.earth_radius, g.coriolis_forcing = 9.81, 1, 6367500.0, False
     g.sea_level, g.dry_tolerance, g.friction_forcing = -9999.0, 1.e-3, True
-    g.manning_coefficient, g.friction_depth = .025, 1.e6
+    g.manning_coefficient, g.friction_depth = MANNING, 1.e6
     r.refinement_data.variable_dt_refinement_ratios, r.refinement_data.wave_tolerance = True, .01
     r.topo_data.topofiles.append([3, "terrain/published_route_domain_64m.tt3"])
     d = r.dclaw_data
     d.rho_f, d.rho_s = 1100.0, 2700.0
     d.m_crit, d.m0, d.mref, d.kref = .64, .62, .60, 1.e-11
-    d.phi, d.delta, d.mu, d.alpha_c, d.c1, d.sigma_0 = 38.0, .01, .005, .05, 1.0, 1.e3
+    d.phi, d.delta, d.mu, d.alpha_c, d.c1, d.sigma_0 = PHI, .01, .005, .05, 1.0, 1.e3
     d.src2method, d.alphamethod = 2, 1
     d.segregation, d.beta_seg, d.chi0, d.chie = 0, 0.0, .5, .5
     d.bed_normal, d.theta_input = 0, 0.0
-    d.entrainment, d.entrainment_method, d.entrainment_rate, d.me = ENTRAINMENT, 0, .20, .62
-    if ENTRAINMENT: r.auxinitdclaw_data.auxinitfiles.append([3, 7, CASE / "entrainment/erodible_thickness_e4_published.tt3"])
+    d.entrainment, d.entrainment_method, d.entrainment_rate, d.me = ENTRAINMENT, 0, EROSION_RATE, .62
+    if ENTRAINMENT: r.auxinitdclaw_data.auxinitfiles.append([3, 7, CASE / ERODIBLE_FILE])
     r.pinitdclaw_data.init_ptype = 0
     r.flowgrades_data.flowgrades = []
     fg = fgmax_tools.FGmaxGrid()

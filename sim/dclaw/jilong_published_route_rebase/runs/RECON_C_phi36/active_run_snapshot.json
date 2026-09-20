@@ -1,0 +1,16 @@
+{
+  "case_id": "RECON_C_phi36",
+  "V_m3": 10000000.0,
+  "T_s": 90.0,
+  "tfinal_s": 900.0,
+  "output_interval_s": 30.0,
+  "entrainment": 1,
+  "sourcefix": true,
+  "momentum_factor": 1.0,
+  "h_e_m": 8.0,
+  "entrainment_rate": 0.4,
+  "phi_deg": 36.0,
+  "manning": 0.025,
+  "erodible_thickness_file": "entrainment/erodible_thickness_fullroute_8m.tt3",
+  "physical_change": "predeclared reconstruction-ladder parameter only"
+}

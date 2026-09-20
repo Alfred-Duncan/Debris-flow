@@ -1,0 +1,4 @@
+2026-09-20T17:24:13+08:00 START case=RECON_B_rate060 pid=14662 h_e=8 rate=0.60 phi=38 n=0.025
+2026-09-20T17:25:13+08:00 HEARTBEAT case=RECON_B_rate060 elapsed=60 pid=14662 ps=[14662 Rl+ 337 0.0] frames=22 latest_frame_mtime=1789896313 run_log_mtime=1789896313 fatal_patterns=0
+2026-09-20T17:26:13+08:00 HEARTBEAT case=RECON_B_rate060 elapsed=120 pid=14662 ps=[] frames=31 latest_frame_mtime=1789896338 run_log_mtime=1789896338 fatal_patterns=0
+2026-09-20T17:26:13+08:00 EXIT rc=0 frames=31
