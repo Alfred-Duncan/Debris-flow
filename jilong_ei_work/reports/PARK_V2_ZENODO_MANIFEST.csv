@@ -1,0 +1,10 @@
+filename,size_bytes,checksum,type,likely_content,needed_for_H0,downloaded
+README.md,4021,md5:53d40a285eb80670ae269bb2b9cbe633,text,revision provenance and upper-run semantics,yes,yes
+animation_provenance.json,76636,md5:3a19bb65a2df85b67e315f3be953991e,json,frame/input/restart hashes,yes,yes
+revised_animation_support.zip,11041560,md5:fcffe70cfe4d53d442a3bff0e8b1c35e,zip,result/series/scripts/profile bundle,yes,yes
+animation_gorge_top_5s.mp4,1004872,md5:a50c33495eaba74d3202d739a8cf62c4,video,qualitative upper plan view,no,no
+animation_gorge_oblique_5s.mp4,766234,md5:df9b1351420e9d9f466001d876f734f6,video,qualitative upper oblique view,no,no
+animation_gorge_profile_5s.mp4,1184745,md5:b526d6bd5288ec7c66cb20695653fc96,video,qualitative upper profile,no,no
+animation_full_corridor_top_60s.mp4,4143717,md5:5f15fc9b20cc18d0989d6113ead76ea6,video,qualitative corridor plan view,no,no
+animation_full_corridor_oblique_60s.mp4,1713963,md5:3165f7da0c0bde286fd351edbceef628,video,qualitative corridor oblique view,no,no
+animation_full_corridor_profile_60s.mp4,2907238,md5:1ba85bee9f6e4465833d413e07eb2bf0,video,qualitative corridor profile,no,no

@@ -1,0 +1,19 @@
+{
+  "solver_exit": "PASS",
+  "t_end_s": 1440,
+  "steps": 6560,
+  "stored_frames": 289,
+  "time_monotonic": "PASS",
+  "all_final_state_arrays_finite": "PASS",
+  "nan_count": 0,
+  "inf_count": 0,
+  "h_nonnegative": "PASS",
+  "component_negative_state_handling": "solver clamps documented component depths nonnegative",
+  "released_v2_mass_residual_kg": -3651093.8166000005,
+  "released_v2_relative_mass_residual": -0.000039454261113,
+  "released_mass_ledger": "PASS",
+  "local_independent_boundary_flux_ledger": "UNKNOWN_NOT_RECONSTRUCTED",
+  "local_final_volume_relative_difference_vs_released": -0.002903678389,
+  "peak_vram_mib": "NOT_INSTRUMENTED; no OOM; static active-state preflight allocation was about 17 MiB, not a peak-VRAM claim",
+  "verdict": "PASS_WITH_EXPLICIT_LOCAL_LEDGER_LIMITATION"
+}

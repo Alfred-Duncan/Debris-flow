@@ -1,0 +1,4 @@
+{
+  "time":"AVAILABLE_NUMERICALLY","station_Q":"AVAILABLE_NUMERICALLY","station_Qdebris":"AVAILABLE_NUMERICALLY","station_hmax":"AVAILABLE_NUMERICALLY","station_stage":"AVAILABLE_NUMERICALLY","station_wet_width":"AVAILABLE_NUMERICALLY","debris_front":"AVAILABLE_NUMERICALLY","flood_front":"AVAILABLE_NUMERICALLY","total_volume":"AVAILABLE_NUMERICALLY","debris_volume":"AVAILABLE_NUMERICALLY","entrained_volume":"AVAILABLE_NUMERICALLY","ice_volume":"AVAILABLE_NUMERICALLY","melted_volume":"AVAILABLE_NUMERICALLY","result_mass_ledger":"AVAILABLE_NUMERICALLY","h_2d_fields":"NOT_AVAILABLE","hu_2d_fields":"NOT_AVAILABLE","hv_2d_fields":"NOT_AVAILABLE","c_2d_fields":"NOT_AVAILABLE","ice_2d_fields":"NOT_AVAILABLE","bed_change_2d_fields":"NOT_AVAILABLE","rendered_animation":"AVAILABLE_ONLY_IN_FIGURE_VIDEO",
+  "basis":"Zenodo 22566624 support archive member inventory; README says stored 2-D frames and inputs are not duplicated."
+}

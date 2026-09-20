@@ -1,0 +1,20 @@
+quantity,v1_semantics,v2_semantics,status,source,confidence
+release_duration,30 s release in public solver,30 s in upper_visual_5s,UNCHANGED_CONFIRMED,ZENODO_V2_OUTPUT,HIGH
+release_state,smoke setup included high-speed test,progressive addition at rest,CHANGED_CONFIRMED,ZENODO_V2_README+OUTPUT,HIGH
+release_speed,150 m/s used only in prior local smoke,0 m/s reference,CHANGED_CONFIRMED,ZENODO_V2_README+OUTPUT,HIGH
+release_volume,35.42 Mm3 input metadata,35.42 Mm3 reference,UNCHANGED_CONFIRMED,MANUSCRIPT+INPUT,HIGH
+release_ice_fraction,archived parameter,0.20 reference,UNCHANGED_CONFIRMED,MANUSCRIPT+OUTPUT,HIGH
+free_water_fraction,not a smoke constraint,no initial free water,CHANGED_CONFIRMED,MANUSCRIPT,HIGH
+rock_ice_water_density,not verified as v2 code semantics,2650/900/1000 kg m-3,CHANGED_CONFIRMED,MANUSCRIPT,HIGH
+mixture_conserved_variables,public v1 source only,h hu hv hc hi H documented,CHANGED_CONFIRMED,MANUSCRIPT,HIGH
+melting,older implementation,mass-conserving density-aware conversion,CHANGED_CONFIRMED,ZENODO_V2_README+MANUSCRIPT,HIGH
+melt_eff_melt_energy,public solver flags,1 and true,UNCHANGED_CONFIRMED,ZENODO_V2_OUTPUT,HIGH
+thermal_forcing,public solver flags,rock 3 C air 300 W m-2 river 12 C,UNCHANGED_CONFIRMED,ZENODO_V2_OUTPUT,HIGH
+erosion,public solver parameters,K .0074 uc 6 c .7 depth 5,UNCHANGED_CONFIRMED,ZENODO_V2_OUTPUT,HIGH
+resistance_and_roughness,public solver parameters,mu_s 0 nw .0208 nd .0145,UNCHANGED_CONFIRMED,ZENODO_V2_OUTPUT,HIGH
+deposition,public solver parameters,uc 1.833 tau 337,UNCHANGED_CONFIRMED,ZENODO_V2_OUTPUT,HIGH
+terrain_conditioning,public static input,upper30h hash unchanged in v2 provenance,UNCHANGED_CONFIRMED,ZENODO_V2_PROVENANCE,HIGH
+river_spinup,v1-style spinup,pre-event spinup hash recorded but state absent,LIKELY_CHANGED_BUT_UNDOCUMENTED,ZENODO_V2_PROVENANCE,MEDIUM
+downstream_routing_case,archived corridor use,route_b2_w1 selected below Syab,CHANGED_CONFIRMED,ZENODO_V2_README,HIGH
+frame_sampling,older output cadence,upper 5 s / corridor 60 s,CHANGED_CONFIRMED,ZENODO_V2_README,HIGH
+reference_run_duration,not H0-specific,upper 1440 s corridor 28800 s,CHANGED_CONFIRMED,ZENODO_V2_README,HIGH

@@ -1,0 +1,15 @@
+{
+  "v2_version_locked": true,
+  "source_semantics_locked": true,
+  "melting_semantics_locked": true,
+  "terrain_locked": true,
+  "spinup_locked": true,
+  "observation_registry_locked": true,
+  "gyirong_timing_reproduced": true,
+  "syabrubesi_timing_reproduced": true,
+  "mass_ledger_verified": "PUBLISHED_V2_PASS; local independent boundary-flux ledger unavailable",
+  "engineering_outputs_available": true,
+  "final_status": "READY_FOR_SCENARIO_DESIGN",
+  "scope_guard": "This task does not start scenario generation, FNO training, local-corrector experiments, or RL.",
+  "remaining_limit": "The v2 author source/restart/2-D frame fields are not public; B classification is parity-based documented reimplementation."
+}

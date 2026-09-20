@@ -1,0 +1,12 @@
+{
+  "upstream_head": "6210c663a6e4527793f92c34fea72ef711e38d52",
+  "tags": ["v1.0.0", "v1.0.1", "v1.0.2"],
+  "solver_sparse_history": [{"commit":"b5efb873006a3714b95cbb9c0b784c404df01f3f","date":"2026-09-07","subject":"Reconstruction code for the 26 August 2026 Langtang cascade"}],
+  "categories": {
+    "PARK_V1_CODE": "GitHub/Zenodo original code archive; sparse solver source first appears at b5efb873.",
+    "PARK_V1_DATA": "Zenodo 22549201 preprocessed inputs and historical outputs.",
+    "PARK_V2_REVISED_MODEL": "EarthArXiv v2 DOI 10.31223/X5250R and Zenodo v2 README; at-rest source and mass-conserving melt.",
+    "PARK_V2_REVISED_OUTPUTS": "Zenodo 22566624 support archive: upper_visual_5s and corridor_visual result/series records."
+  },
+  "source_code_status": "No revised v2 rerun source is released; v2 README says existing code archive has not been updated."
+}

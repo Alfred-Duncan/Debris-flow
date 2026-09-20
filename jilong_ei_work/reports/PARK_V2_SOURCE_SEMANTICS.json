@@ -1,0 +1,12 @@
+{
+  "release_duration_s":{"value":30,"source":"ZENODO_V2_OUTPUT: upper_visual_5s/result.json args.release_duration","confidence":"HIGH"},
+  "initial_momentum":{"value":"zero for each increment","source":"ZENODO_V2_README says source enters at rest; result args.release_speed=0","confidence":"HIGH"},
+  "treatment":{"value":"B: progressive 30-s addition, each increment at rest","source":"ZENODO_V2_OUTPUT args.release=true, release_duration=30, release_speed=0","confidence":"HIGH"},
+  "source_volume_m3":{"value":35420000,"source":"MANUSCRIPT v2 Methods; input metadata","confidence":"HIGH"},
+  "source_area_m2":{"value":1956600,"source":"upper30h.json input metadata","confidence":"HIGH"},
+  "source_thickness_m":{"value":18.1028314423,"source":"upper30h.json input metadata","confidence":"HIGH"},
+  "rock_fraction":{"value":0.8,"source":"MANUSCRIPT v2 Methods","confidence":"HIGH"},
+  "ice_fraction":{"value":0.2,"source":"MANUSCRIPT v2 Methods; Zenodo result args","confidence":"HIGH"},
+  "water_fraction":{"value":0,"source":"MANUSCRIPT v2 Methods","confidence":"HIGH"},
+  "source_energy_state":{"value":"at rest; rock temperature 3 C","source":"ZENODO_V2_OUTPUT args.release_speed and args.rock_temp_c","confidence":"HIGH"}
+}

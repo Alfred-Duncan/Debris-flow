@@ -1,0 +1,10 @@
+metric,units,observation,published_v2_5s,published_manuscript_30s,reimplementation,relative_error_vs_v2_5s,note
+arrival at Gyirong,s after onset,463 ± 90,365.0,390,365.0,0.0,arrival criterion: stage +0.5 m or Q > 2×base + 50; Gyirong uses Q in manuscript
+arrival at Rasuwagadhi,s after onset,170–770,390.0,390,390.0,0.0,arrival criterion: stage +0.5 m or Q > 2×base + 50; Gyirong uses Q in manuscript
+arrival at Syabrubesi,s after onset,770–1370,1025.0,1050,1030.0,0.004878048780487805,arrival criterion: stage +0.5 m or Q > 2×base + 50; Gyirong uses Q in manuscript
+final_volume_m3,m3,not a direct observation,42451017.1875,,42327752.34375,-0.0029036958809622163,final/cumulative diagnostic
+final_debris_m3,m3,not a direct observation,30767069.53125,,30765902.34375,-3.7936258401681445e-05,final/cumulative diagnostic
+entrained_m3,m3,not a direct observation,6763136.240623682,,6764060.603347351,0.00013667663799477067,final/cumulative diagnostic
+melted_m3,m3,not a direct observation,6697167.532495976,,6698292.02683348,0.00016790595905620252,final/cumulative diagnostic
+deposited_m3,m3,not a direct observation,2687559.9157820004,,2688250.9481287547,0.00025712258271766376,final/cumulative diagnostic
+dissipated_J,J,not a direct observation,2182589280221677.5,,2182390189391872.0,-9.121772548304602e-05,final/cumulative diagnostic
