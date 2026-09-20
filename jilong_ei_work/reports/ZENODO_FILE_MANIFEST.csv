@@ -1,0 +1,6 @@
+filename,size_bytes,record,purpose,downloaded,sha256
+corridor60s.npz,24181719,22549201,required preprocessed 60 m sparse-solver input,True,a566aa4acbff9e0d5fa228149cf1961a81552e9d5043f7a1d282f34d6e86dfaa
+corridor60s.json,5589,22549201,grid metadata; reused from matching GitHub upstream,True,389d0e372a3e3044e8c1e099b9c84f48a965844e01a24a70ef9121f1c5fd9662
+spinup60s_c/final_state.npz,,22549201,historical checkpoint absent from inspected manifest,False,
+prodp60_series.csv,423887,22549201,small original-production comparison series,True,4654ff89733a8d45144cdd4035be11c62eb79c7ec9b5fe1235a54175649d2c0c
+prodp60_result.json,7630,22549201,small original-production parameter/result record,True,4aaa1947cecb3728ebb4a6279e4f9ab4fa5e4c1afed9d0fbed2d509fe34c473f

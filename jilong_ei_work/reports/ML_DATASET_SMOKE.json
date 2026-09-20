@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "number_samples": 4,
+  "static_shape": [
+    4,
+    1265,
+    1950
+  ],
+  "state_shape": [
+    5,
+    1265,
+    1950
+  ],
+  "static_channels": [
+    "z",
+    "z_raw",
+    "source_mask",
+    "active"
+  ],
+  "dynamic_channels": [
+    "h",
+    "hu",
+    "hv",
+    "c",
+    "ice"
+  ],
+  "dtype": "float32",
+  "min": -15697.6435546875,
+  "max": 14735.8828125,
+  "nan": 0,
+  "inf": 0,
+  "disk_bytes": 70248984
+}

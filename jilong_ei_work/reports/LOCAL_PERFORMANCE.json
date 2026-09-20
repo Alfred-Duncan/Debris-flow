@@ -1,0 +1,22 @@
+{
+  "physics_smoke": {
+    "device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "wall_s": 3.9665539264678955,
+    "steps": 558,
+    "frames": 5,
+    "peak_gpu_used_mib_sampled": 837,
+    "static_vram_allocated_bytes": 42255872
+  },
+  "operator_forward": {
+    "device": "cuda",
+    "batch": 1,
+    "grid_shape": [
+      1265,
+      1950
+    ],
+    "channels": 5,
+    "wall_s": 0.3150105000240728,
+    "peak_vram_bytes": 1798904320
+  },
+  "interpretation": "8 GB local GPU completed the defined static preflight, 120-s physics software smoke, and untrained operator smoke."
+}

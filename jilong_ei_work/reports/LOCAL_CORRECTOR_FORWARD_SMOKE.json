@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "operator_source": "RVPI-PDE rvpi/models/fno.py:FNO2d, imported through LocalCorrectorWrapper",
+  "patch": "manual central 32x32 patch",
+  "output_shape": [
+    1,
+    5,
+    1265,
+    1950
+  ],
+  "finite": true,
+  "backprop": true,
+  "scope": "untrained API/shape smoke only"
+}

@@ -1,0 +1,19 @@
+{
+  "repositories": [
+    {
+      "repo": "langtang-2026-cascade",
+      "remote_url": "https://github.com/hyoseokp/langtang-2026-cascade.git",
+      "commit_sha": "6210c663a6e4527793f92c34fea72ef711e38d52",
+      "branch": "main",
+      "dirty": false
+    },
+    {
+      "repo": "RVPI-PDE",
+      "remote_url": "https://github.com/Alfred-Duncan/RVPI-PDE.git",
+      "commit_sha": "b121afcb61f550b995691068e1a0f64ccfaf3c86",
+      "branch": "main",
+      "dirty": false
+    }
+  ],
+  "policy": "Both directories are read-only upstreams; no tracked upstream file is modified."
+}

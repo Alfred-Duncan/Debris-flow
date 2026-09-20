@@ -1,0 +1,28 @@
+{
+  "run_id": "physics_smoke60",
+  "purpose": "ORIGINAL-CODE SOFTWARE SMOKE ONLY; not a physical reference reconstruction",
+  "input_tag": "corridor60s",
+  "t_end_s": 120,
+  "frame_dt_s": 30,
+  "save_frames": true,
+  "release": {
+    "release_c0": 1.0,
+    "release_duration_s": 30,
+    "release_speed_ms": 150,
+    "release_ice_fraction": 0.2,
+    "release_volume_scale": 1.0,
+    "melt_eff": 1.0,
+    "melt_energy": true,
+    "rock_temp_c": 3,
+    "q_air_wm2": 300,
+    "erosion_k": 0.0074,
+    "erosion_uc_ms": 6.0,
+    "erodible_depth_m": 5.0,
+    "mu_s": 0.0,
+    "n_w": 0.0208,
+    "n_d": 0.0145,
+    "dep_uc_ms": 1.833,
+    "dep_tau_s": 337
+  }
+}
+

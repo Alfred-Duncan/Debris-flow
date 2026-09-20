@@ -1,0 +1,9 @@
+{
+  "series_columns_present": true,
+  "time_monotonic": true,
+  "finite": true,
+  "front_nan_before_arrival_allowed": true,
+  "frames": 5,
+  "errors": [],
+  "status": "PASS"
+}

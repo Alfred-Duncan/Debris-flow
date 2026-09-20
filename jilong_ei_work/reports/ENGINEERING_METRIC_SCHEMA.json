@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "available_prefix": "gyirong_cctv_arrival",
+  "metrics": {
+    "arrival_time": "Derived later from threshold rule; not asserted by 120-s smoke.",
+    "peak_Q": "transect Q maximum",
+    "peak_Qdebris": "transect Qdebris maximum",
+    "peak_stage_or_rise": "transect stage field",
+    "max_depth": "transect hmax/global max_h_m",
+    "wet_width": "transect wet_width_m",
+    "front_position": "three front chainage diagnostics",
+    "runtime": "series/result wall time"
+  },
+  "smoke_scope": "schema/path verification; non-arrival at Gyirong during short run is normal"
+}

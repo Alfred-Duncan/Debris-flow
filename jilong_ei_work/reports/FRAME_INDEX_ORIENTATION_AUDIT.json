@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "shape": [
+    1265,
+    1950
+  ],
+  "idx_count": 330,
+  "idx_min": 282682,
+  "idx_max": 1419675,
+  "c_order_roundtrip": true,
+  "row_col_formula": "row=idx//cols, col=idx%cols",
+  "northing_orientation": "metadata extent [xmin,xmax,ymin,ymax]; row 0 is northern edge",
+  "frame_time_s": 5.0,
+  "static_channels": [
+    "z",
+    "z_raw",
+    "source_mask",
+    "active"
+  ],
+  "dynamic_channels": [
+    "h",
+    "hu",
+    "hv",
+    "c",
+    "ice"
+  ],
+  "finite": true,
+  "nonnegative_h": true,
+  "active_cells": 311936
+}

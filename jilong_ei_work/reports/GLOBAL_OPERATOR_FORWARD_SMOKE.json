@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "operator_source": "RVPI-PDE rvpi/models/fno.py:FNO2d, imported through GlobalOperatorWrapper",
+  "input_shape": [
+    1,
+    5,
+    1265,
+    1950
+  ],
+  "output_shape": [
+    1,
+    5,
+    1265,
+    1950
+  ],
+  "finite": true,
+  "backprop": true,
+  "peak_vram_bytes": 1798904320,
+  "scope": "untrained API/shape smoke only"
+}

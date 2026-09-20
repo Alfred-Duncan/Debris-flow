@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "LOCAL_GPU_LIMIT": false,
+  "active_cells": 311936,
+  "grid_shape": [
+    1265,
+    1950
+  ],
+  "input_bytes": 24181719,
+  "static_gpu_allocated_bytes": 42255872,
+  "static_gpu_reserved_bytes": 44040192,
+  "peak_gpu_allocated_bytes": 42255872,
+  "device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "vram_total_bytes": 8546484224
+}

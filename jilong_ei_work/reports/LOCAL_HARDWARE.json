@@ -1,0 +1,13 @@
+{
+  "os": "Windows-11-10.0.22631-SP0",
+  "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "ram_total_bytes": 34049220608,
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+  "conda_environment": "base",
+  "gpu_nvidia_smi": "NVIDIA GeForce RTX 5060 Laptop GPU, 8151 MiB, 581.57",
+  "torch": "2.9.0+cu130",
+  "cuda_runtime": "13.0",
+  "torch_cuda_available": true,
+  "torch_device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "vram_total_bytes": 8546484224
+}

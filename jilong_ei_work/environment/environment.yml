@@ -1,0 +1,15 @@
+name: base
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.13
+  - pytorch=2.9
+  - pytorch-cuda=13.0
+  - numpy>=2.0
+  - pandas>=2.2
+  - scipy>=1.14
+  - matplotlib>=3.10
+  - imageio-ffmpeg>=0.5
+

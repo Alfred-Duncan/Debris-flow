@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "note": "Untrained models: metric is interface-only, not physical accuracy.",
+  "sample": "sample_0000.npz",
+  "device": "cuda",
+  "input_shape": [
+    1,
+    5,
+    1265,
+    1950
+  ],
+  "prediction_shape": [
+    1,
+    5,
+    1265,
+    1950
+  ],
+  "corrected_shape": [
+    1,
+    5,
+    1265,
+    1950
+  ],
+  "finite": true,
+  "global_backprop": true,
+  "local_backprop": true,
+  "dummy_mse": 497.4146728515625,
+  "wall_s": 0.3150105000240728,
+  "peak_vram_bytes": 1798904320
+}
