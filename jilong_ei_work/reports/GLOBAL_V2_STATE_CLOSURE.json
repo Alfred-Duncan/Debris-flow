@@ -1,0 +1,164 @@
+{
+  "status": "FAIL",
+  "audit_cases": 20,
+  "tolerance_m": 2e-06,
+  "dz_final_frame_vs_final_state": [
+    {
+      "scenario_id": "JILONG_EI_0001",
+      "max_abs_dz_m": 0.04931640625,
+      "mean_abs_dz_m": 9.352860615763348e-06,
+      "frame_dz_nonzero": 2357,
+      "final_dz_nonzero": 4766
+    },
+    {
+      "scenario_id": "JILONG_EI_0002",
+      "max_abs_dz_m": 0.0498046875,
+      "mean_abs_dz_m": 1.109062122850446e-05,
+      "frame_dz_nonzero": 2150,
+      "final_dz_nonzero": 4456
+    },
+    {
+      "scenario_id": "JILONG_EI_0003",
+      "max_abs_dz_m": 0.04931640625,
+      "mean_abs_dz_m": 1.4543300494551659e-05,
+      "frame_dz_nonzero": 2350,
+      "final_dz_nonzero": 4706
+    },
+    {
+      "scenario_id": "JILONG_EI_0004",
+      "max_abs_dz_m": 0.0499267578125,
+      "mean_abs_dz_m": 7.809252565493807e-06,
+      "frame_dz_nonzero": 2072,
+      "final_dz_nonzero": 2778
+    },
+    {
+      "scenario_id": "JILONG_EI_0005",
+      "max_abs_dz_m": 0.04931640625,
+      "mean_abs_dz_m": 9.323106496594846e-06,
+      "frame_dz_nonzero": 2214,
+      "final_dz_nonzero": 4627
+    },
+    {
+      "scenario_id": "JILONG_EI_0006",
+      "max_abs_dz_m": 0.048828125,
+      "mean_abs_dz_m": 1.9070585040026344e-05,
+      "frame_dz_nonzero": 2394,
+      "final_dz_nonzero": 4709
+    },
+    {
+      "scenario_id": "JILONG_EI_0007",
+      "max_abs_dz_m": 0.04931640625,
+      "mean_abs_dz_m": 1.1138858099002391e-05,
+      "frame_dz_nonzero": 2132,
+      "final_dz_nonzero": 4434
+    },
+    {
+      "scenario_id": "JILONG_EI_0008",
+      "max_abs_dz_m": 0.0498046875,
+      "mean_abs_dz_m": 1.0233011380478274e-05,
+      "frame_dz_nonzero": 2403,
+      "final_dz_nonzero": 4837
+    },
+    {
+      "scenario_id": "JILONG_EI_0009",
+      "max_abs_dz_m": 0.048095703125,
+      "mean_abs_dz_m": 1.181178231490776e-05,
+      "frame_dz_nonzero": 2413,
+      "final_dz_nonzero": 4817
+    },
+    {
+      "scenario_id": "JILONG_EI_0010",
+      "max_abs_dz_m": 0.047119140625,
+      "mean_abs_dz_m": 8.661152605782263e-06,
+      "frame_dz_nonzero": 2079,
+      "final_dz_nonzero": 4422
+    },
+    {
+      "scenario_id": "JILONG_EI_0011",
+      "max_abs_dz_m": 0.04931640625,
+      "mean_abs_dz_m": 7.529594313382404e-06,
+      "frame_dz_nonzero": 2136,
+      "final_dz_nonzero": 2932
+    },
+    {
+      "scenario_id": "JILONG_EI_0012",
+      "max_abs_dz_m": 0.049560546875,
+      "mean_abs_dz_m": 1.6391360986744985e-05,
+      "frame_dz_nonzero": 2373,
+      "final_dz_nonzero": 4720
+    },
+    {
+      "scenario_id": "JILONG_EI_0013",
+      "max_abs_dz_m": 0.0498046875,
+      "mean_abs_dz_m": 1.755237281031441e-05,
+      "frame_dz_nonzero": 2406,
+      "final_dz_nonzero": 4797
+    },
+    {
+      "scenario_id": "JILONG_EI_0014",
+      "max_abs_dz_m": 0.04931640625,
+      "mean_abs_dz_m": 8.411398084717803e-06,
+      "frame_dz_nonzero": 2200,
+      "final_dz_nonzero": 4604
+    },
+    {
+      "scenario_id": "JILONG_EI_0015",
+      "max_abs_dz_m": 0.0491943359375,
+      "mean_abs_dz_m": 8.280058864329476e-06,
+      "frame_dz_nonzero": 2172,
+      "final_dz_nonzero": 4507
+    },
+    {
+      "scenario_id": "JILONG_EI_0016",
+      "max_abs_dz_m": 0.0498046875,
+      "mean_abs_dz_m": 1.35212912937277e-05,
+      "frame_dz_nonzero": 2457,
+      "final_dz_nonzero": 4853
+    },
+    {
+      "scenario_id": "JILONG_EI_0017",
+      "max_abs_dz_m": 0.0499267578125,
+      "mean_abs_dz_m": 7.514266599173425e-06,
+      "frame_dz_nonzero": 2176,
+      "final_dz_nonzero": 2916
+    },
+    {
+      "scenario_id": "JILONG_EI_0018",
+      "max_abs_dz_m": 0.049072265625,
+      "mean_abs_dz_m": 1.5862098734942265e-05,
+      "frame_dz_nonzero": 2359,
+      "final_dz_nonzero": 4698
+    },
+    {
+      "scenario_id": "JILONG_EI_0019",
+      "max_abs_dz_m": 0.0498046875,
+      "mean_abs_dz_m": 1.0607342119328678e-05,
+      "frame_dz_nonzero": 2278,
+      "final_dz_nonzero": 4614
+    },
+    {
+      "scenario_id": "JILONG_EI_0020",
+      "max_abs_dz_m": 0.0498046875,
+      "mean_abs_dz_m": 1.0252997526549734e-05,
+      "frame_dz_nonzero": 2220,
+      "final_dz_nonzero": 4629
+    }
+  ],
+  "retained_frame_state": [
+    "h",
+    "hu",
+    "hv",
+    "c",
+    "ice",
+    "dz"
+  ],
+  "reconstructable": [
+    "hc=h*c",
+    "hi=h*ice",
+    "current_bed=z_initial+dz"
+  ],
+  "not_retained": [
+    "hq (remaining erodible/material variable)"
+  ],
+  "closure_statement": "The retained state is directly reconstructable as listed, but is not claimed to be an exact Markov state because hq is absent from sparse frames."
+}

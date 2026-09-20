@@ -1,0 +1,26 @@
+[
+  {
+    "width": 24,
+    "modes": 16,
+    "depth": 3,
+    "parameters": 887669,
+    "peak_vram_mib": 987.1181640625,
+    "step_s": 0.1107425800000783
+  },
+  {
+    "width": 32,
+    "modes": 16,
+    "depth": 3,
+    "parameters": 1577797,
+    "peak_vram_mib": 1281.9609375,
+    "step_s": 0.11913751499960198
+  },
+  {
+    "width": 32,
+    "modes": 24,
+    "depth": 3,
+    "parameters": 3543877,
+    "peak_vram_mib": 1331.3896484375,
+    "step_s": 0.12047423500043805
+  }
+]
