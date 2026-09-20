@@ -1,0 +1,7 @@
+# C3 correction
+
+{
+  "time_s": 900.0,
+  "active_connected_front_m": 12816.563800161319,
+  "historical_max_reached_front_m": 12816.563800161319
+}
