@@ -1,0 +1,17 @@
+# provenance
+
+{
+  "native30_independent_of_64m": true,
+  "terrain32_independent_of_64m": true,
+  "accepted64_baseline": true,
+  "raw_source": "/root/autodl-tmp/Jilong_DClaw_Handoff/terrain/source/Copernicus_DSM_COG_10_N28_00_E085_00_DEM.tif",
+  "raw_sha256": "1590255a0ae7e8c1f49b277e287032a18a2e32c8e13c4c3298ed458f851cd3c7",
+  "native30_resolution": 30,
+  "terrain32_resolution": 32,
+  "domain_bounds": [
+    338862.0,
+    356462.0,
+    3127196.0,
+    3137500.0
+  ]
+}
