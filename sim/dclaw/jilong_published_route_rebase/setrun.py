@@ -6,8 +6,8 @@ from clawpack.clawutil import data
 from clawpack.geoclaw import fgmax_tools
 
 CASE = Path(__file__).resolve().parent
-DOMAIN = json.loads((CASE / "model_geometry.json").read_text())
 ACTIVE = json.loads((CASE / "active_run.json").read_text())
+DOMAIN = json.loads((CASE / ("model_geometry_sourcefix.json" if ACTIVE.get("sourcefix",False) else "model_geometry.json")).read_text())
 V, T = float(ACTIVE["V_m3"]), float(ACTIVE["T_s"])
 TFINAL, OUTINT = float(ACTIVE["tfinal_s"]), float(ACTIVE["output_interval_s"])
 ENTRAINMENT = int(ACTIVE.get("entrainment",0))

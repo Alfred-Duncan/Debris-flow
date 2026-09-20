@@ -3,7 +3,7 @@ set -uo pipefail
 CASE=$(cd "$(dirname "$0")/.."&&pwd); NAME=$1; EN=$2; RUN="$CASE/runs/$NAME"; OUT="$RUN/_output"; mkdir -p "$OUT"; cd "$CASE"
 python - <<PY
 import json
-p='active_run.json';json.dump({'case_id':'$NAME','V_m3':2e6,'T_s':90.,'tfinal_s':900.,'output_interval_s':30.,'entrainment':int('$EN')},open(p,'w'),indent=2)
+p='active_run.json';json.dump({'case_id':'$NAME','V_m3':2e6,'T_s':90.,'tfinal_s':900.,'output_interval_s':30.,'entrainment':int('$EN'),'sourcefix':True},open(p,'w'),indent=2)
 PY
 python setrun.py > "$RUN/setrun.log" 2>&1 || exit 2
 cp *.data "$CASE/terrain/published_route_domain_64m.tt3" "$OUT/"; sed -i 's#terrain/published_route_domain_64m.tt3#published_route_domain_64m.tt3#' "$OUT/topo.data"; rm -f "$OUT"/fort.q???? "$OUT"/fort.t????
