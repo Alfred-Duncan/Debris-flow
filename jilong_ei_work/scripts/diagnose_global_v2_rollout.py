@@ -68,10 +68,12 @@ def _configure_runtime_data(runtime_root: Path) -> None:
 def _load_model(path: Path, device: torch.device):
     checkpoint = torch.load(path, map_location="cpu", weights_only=False)
     architecture = checkpoint["architecture"]
-    model = JilongGlobalOperatorV2(len(feature_names()), **architecture).to(device)
+    semantics=checkpoint.get('model_semantics',{});bounded=bool(semantics.get('bounded_residual',False));bounds=semantics.get('delta_bounds') if bounded else None
+    model = JilongGlobalOperatorV2(len(feature_names()), **architecture,delta_bounds=bounds).to(device)
     missing, unexpected = model.load_state_dict(checkpoint["model"], strict=False)
     if unexpected or set(missing) - {"delta_bounds"}:
         raise RuntimeError(f"incompatible checkpoint state: missing={missing}, unexpected={unexpected}")
+    if bounded and (not model.bounded_residual or not torch.equal(model.delta_bounds.detach().cpu(),torch.as_tensor(bounds))):raise RuntimeError('DELTA_MODEL_SEMANTICS_MISMATCH')
     model.eval()
     transform = PhysicalTransform.from_dict(checkpoint["transform"])
     normalizer = FeatureNormalizer.from_dict(checkpoint["feature_normalizer"])

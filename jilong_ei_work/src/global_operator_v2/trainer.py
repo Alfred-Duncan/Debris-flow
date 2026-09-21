@@ -20,15 +20,23 @@ def choose_amp(device: torch.device):
 def save_checkpoint(path, model, optimizer, scheduler, step, transform, config, normalizer=None, stage=None, best_metric=None, stage_step=None, stage_updates_total=None, architecture=None, best_checkpoint_path=None, stage_best_score=None):
     """Write a complete resumable checkpoint atomically (including on Windows)."""
     path=__import__('pathlib').Path(path);path.parent.mkdir(parents=True,exist_ok=True)
+    semantics={"bounded_residual":bool(getattr(model,'bounded_residual',False)),"delta_bounds":getattr(model,'delta_bounds',torch.empty(0)).detach().cpu().tolist()}
     payload={"model":model.state_dict(),"optimizer":optimizer.state_dict(),"scheduler":scheduler.state_dict() if scheduler else None,
-             "checkpoint_version":"2.3","step":step,"stage_name":stage,"stage_step":stage_step,"stage_updates_total":stage_updates_total,"global_step":step,"best_val_score":best_metric,"best_metric":best_metric,"best_checkpoint_path":best_checkpoint_path,"stage_best_score":stage_best_score,"transform":transform.to_dict(),"feature_normalizer":normalizer.to_dict() if normalizer else None,"config":config,"config_hash":__import__('hashlib').sha256(__import__('json').dumps(config,sort_keys=True).encode()).hexdigest(),"architecture":architecture,"torch_rng":torch.get_rng_state(),"numpy_rng":np.random.get_state(),"python_rng":random.getstate(),"cuda_rng":torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None}
+             "checkpoint_version":"2.4","step":step,"stage_name":stage,"stage_step":stage_step,"stage_updates_total":stage_updates_total,"global_step":step,"best_val_score":best_metric,"best_metric":best_metric,"best_checkpoint_path":best_checkpoint_path,"stage_best_score":stage_best_score,"transform":transform.to_dict(),"feature_normalizer":normalizer.to_dict() if normalizer else None,"delta_normalization":getattr(model,'delta_normalization',None),"model_semantics":semantics,"config":config,"config_hash":__import__('hashlib').sha256(__import__('json').dumps(config,sort_keys=True).encode()).hexdigest(),"architecture":architecture,"torch_rng":torch.get_rng_state(),"numpy_rng":np.random.get_state(),"python_rng":random.getstate(),"cuda_rng":torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None}
     fd,tmp=tempfile.mkstemp(dir=path.parent,suffix='.pt.tmp');os.close(fd)
     try: torch.save(payload,tmp);os.replace(tmp,path)
     finally:
         if os.path.exists(tmp):os.unlink(tmp)
 
 def restore_checkpoint(path, model, optimizer=None, scheduler=None):
-    ck=torch.load(path,map_location="cpu",weights_only=False); model.load_state_dict(ck["model"])
+    ck=torch.load(path,map_location="cpu",weights_only=False);semantics=ck.get('model_semantics')
+    if semantics:
+        expected=bool(semantics.get('bounded_residual'))
+        if expected and not hasattr(model,'delta_bounds'):raise RuntimeError('DELTA_MODEL_SEMANTICS_MISMATCH')
+        if hasattr(model,'delta_bounds'):
+            bounds=torch.as_tensor(semantics.get('delta_bounds',[]),dtype=model.delta_bounds.dtype)
+            if bool(getattr(model,'bounded_residual',False))!=expected or bounds.shape!=model.delta_bounds.shape or not torch.equal(bounds,model.delta_bounds.detach().cpu()):raise RuntimeError('DELTA_MODEL_SEMANTICS_MISMATCH')
+    model.load_state_dict(ck["model"])
     if optimizer and ck.get("optimizer"):optimizer.load_state_dict(ck["optimizer"])
     if scheduler and ck.get("scheduler"):scheduler.load_state_dict(ck["scheduler"])
     torch.set_rng_state(ck["torch_rng"]);np.random.set_state(ck["numpy_rng"]);random.setstate(ck["python_rng"])
@@ -84,10 +92,14 @@ def rollout_loss(model, transform, normalizer, previous, current, targets, stati
     for k in range(steps):
         features=build_features(previous,pred,static,params,times+(.0069444*(k+int(burn_in_steps))),transform,normalizer)
         encoded=transform.encode(pred)
-        fn=lambda f,e:model(f,e)
-        with torch.autocast(device_type=pred.device.type,enabled=amp_dtype is not None,dtype=amp_dtype): out=checkpoint(fn,features,encoded,use_reentrant=False) if gradient_checkpointing and len(targets)>=2 else fn(features,encoded)
+        diagnostics_supported=hasattr(model,'bounded_residual')
+        fn=(lambda f,e:model(f,e,return_diagnostics=True)) if diagnostics_supported else (lambda f,e:(model(f,e),None))
+        with torch.autocast(device_type=pred.device.type,enabled=amp_dtype is not None,dtype=amp_dtype): out,raw_over_bound=checkpoint(fn,features,encoded,use_reentrant=False) if gradient_checkpointing and len(targets)>=2 else fn(features,encoded)
         nextp=project_physical(transform.decode(out),active);target_t=transform.encode(targets[k]);reference_t=transform.encode(reference)
         source_active=bool(float((times[0]+(.0069444*(k+int(burn_in_steps)))).detach().cpu())*1440<30)
         scales=None if delta_normalization is None else delta_normalization.scales
-        term,detail=step_loss(out,target_t,reference,nextp,targets[k],active,cell_area,encoded,reference_t,scales,static,source_active,weighting);losses.append(term);amps.append(amplitude_guard(out,target_t,active));previous,pred=pred,nextp;reference=targets[k]
+        term,detail=step_loss(out,target_t,reference,nextp,targets[k],active,cell_area,encoded,reference_t,scales,static,source_active,weighting)
+        if raw_over_bound is not None:
+            rms=raw_over_bound.square().mean((0,2,3)).sqrt();saturation=(raw_over_bound.abs()>3).float().mean((0,2,3));detail.update({f'raw_delta_over_bound_rms_{name}':value for name,value in zip(('h','hu','hv','c','ice','dz'),rms)});detail.update({f'saturation_fraction_{name}':value for name,value in zip(('h','hu','hv','c','ice','dz'),saturation)});detail['max_channel_saturation_fraction']=saturation.max()
+        losses.append(term);amps.append(amplitude_guard(out,target_t,active));previous,pred=pred,nextp;reference=targets[k]
     total,parts=rollout_objective(losses,amps);return total,{**parts,**detail,'burn_in_steps':int(burn_in_steps)},pred

@@ -84,11 +84,11 @@ def core_stage_path(state):
  while current!=PipelineStage.FREEZE.value:
   trace.append(current);current=next_effective_stage(state,current) or PipelineStage.FREEZE.value
  return trace+[PipelineStage.FREEZE.value]
-def _capacity_loss(store,static,tr,norm,device):
+def _capacity_loss(store,static,tr,norm,delta_norm,device):
  row=store.rows.iloc[0];previous,current,_,params,times,_=store.sample(0,0);tensor=lambda x:torch.from_numpy(np.asarray(x)).unsqueeze(0).to(device);previous,current,params=tensor(previous),tensor(current),tensor(params);active=static[:,1:2]
  def closure(k):
   targets=[tensor(store.frame(row,10*(i+1))) for i in range(k)]
-  return rollout_loss(model_ref[0],tr,norm,previous,current,targets,static,params,torch.tensor([times],device=device),active,900.,gradient_checkpointing=True)[0]
+  return rollout_loss(model_ref[0],tr,norm,previous,current,targets,static,params,torch.tensor([times],device=device),active,900.,gradient_checkpointing=True,delta_normalization=delta_norm,weighting={**CFG['stabilization']['teacher_weighting'],'change_threshold':delta_norm.change_threshold})[0]
  return closure
 def _save_subset(rows,train_rows):
  subset=select_fixed_val_subset(rows,8,20260920,train_rows);path=ROOT/'configs/global_operator_v2_val_subset.csv';subset.to_csv(path,index=False);return subset
@@ -110,7 +110,11 @@ def _stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows
  def updated(current,details,cadence):
   if current.global_step%250==0:save_resume_pair(model,opt,sched,tr,norm,current)
   if current.global_step%50==0:
-   latest=training_sample_for_step(CFG['seed'],current.global_step-1,len(store.rows),config['k'],burn_in_choices=burn_choices,sampler=CFG['stabilization']['sampler']);row={'global_step':current.global_step,'stage':stage,'stage_step':current.stage_step,'K':config['k'],'burn_in_steps':latest['burn_in_steps'],'sampler_stratum':latest['sampler_stratum'],'total_loss':details['total_loss'].detach().cpu().item(),'multi_loss':details['multi'].detach().cpu().item(),'one_step_anchor':details['one_step_anchor'].detach().cpu().item(),'delta_loss':details['delta'].detach().cpu().item(),'state_loss':details['state'].detach().cpu().item(),'wet_loss':details['wet'].detach().cpu().item(),'integral_loss':details['integral'].detach().cpu().item(),'amplitude_guard':details['amplitude_guard'].detach().cpu().item(),'learning_rate':opt.param_groups[0]['lr'],'step_seconds':float(details.get('step_seconds',float('nan'))),'peak_vram_gib':float(torch.cuda.max_memory_allocated()/1024**3)};safe_append_csv(RESULTS/'training_log.csv',row)
+   latest=training_sample_for_step(CFG['seed'],current.global_step-1,len(store.rows),config['k'],burn_in_choices=burn_choices,sampler=CFG['stabilization']['sampler']);value=lambda key:details[key].detach().cpu().item();delta=value('delta');state_loss_value=value('state');wet_value=value('wet');integral_value=value('integral');row={'global_step':current.global_step,'stage':stage,'stage_step':current.stage_step,'K':config['k'],'burn_in_steps':latest['burn_in_steps'],'seed_time_s':latest['seed_time_s'],'gradient_start_time_s':latest['gradient_start_time_s'],'sampler_stratum':latest['sampler_stratum'],'total_loss':value('total_loss'),'multi_loss':value('multi'),'one_step_anchor':value('one_step_anchor'),'delta_loss':delta,'delta_h':value('delta_h'),'delta_hu':value('delta_hu'),'delta_hv':value('delta_hv'),'delta_c':value('delta_c'),'delta_ice':value('delta_ice'),'delta_dz':value('delta_dz'),'weighted_delta_contribution':.5*delta,'weighted_state_contribution':state_loss_value,'weighted_wet_contribution':.1*wet_value,'weighted_integral_contribution':.05*integral_value,'state_loss':state_loss_value,'wet_loss':wet_value,'integral_loss':integral_value,'amplitude_guard':value('amplitude_guard'),'max_channel_saturation_fraction':value('max_channel_saturation_fraction') if 'max_channel_saturation_fraction' in details else 0.,'learning_rate':opt.param_groups[0]['lr'],'step_seconds':float(details.get('step_seconds',float('nan'))),'peak_vram_gib':float(torch.cuda.max_memory_allocated()/1024**3)}
+   for name in ('h','hu','hv','c','ice','dz'):row[f'raw_delta_over_bound_rms_{name}']=value(f'raw_delta_over_bound_rms_{name}') if f'raw_delta_over_bound_rms_{name}' in details else 0.;row[f'saturation_fraction_{name}']=value(f'saturation_fraction_{name}') if f'saturation_fraction_{name}' in details else 0.
+   if row['weighted_delta_contribution']>100*(row['weighted_state_contribution']+row['weighted_wet_contribution']+row['weighted_integral_contribution']):print('WARNING DELTA_OBJECTIVE_DOMINANCE_WARNING',flush=True)
+   if row['max_channel_saturation_fraction']>.2:print('WARNING DELTA_SATURATION_WARNING',flush=True)
+   safe_append_csv(RESULTS/'training_log.csv',row)
   if current.global_step%500==0:validate_one_step(model,val_subset_store,tr,norm,device,val_subset_rows,times_s=(120,300,600,900,1200))
   if current.global_step%1000==0:
    records,summary=validate_all_val(model,val_subset_store,tr,norm,device,rows=val_subset_rows,steps=144);_record_horizons(current,stage,validate_horizon_ladder(model,val_subset_store,tr,norm,device,val_subset_rows))
@@ -139,13 +143,13 @@ def formal(stop_after_freeze=False):
    done(state,PipelineStage.PRECHECK);save_state(FORMAL/'run_state.json',state)
   if state.current_stage==PipelineStage.FIT_NORMALIZERS.value:
    tr,norm=fit_training_transforms(rows,store,static_np);delta_norm=fit_delta_normalization(rows,store,static_np,tr,CFG['seed'],**CFG['stabilization']['delta_normalization'],bound_quantile=CFG['stabilization']['delta_bound']['quantile'],safety_factor=CFG['stabilization']['delta_bound']['safety_factor'],change_quantile=CFG['stabilization']['teacher_weighting']['change_quantile']);
-   if delta_norm.coverage<CFG['stabilization']['delta_bound']['minimum_coverage']:raise RuntimeError('DELTA_BOUND_COVERAGE_INSUFFICIENT')
+   if delta_norm.coverage<CFG['stabilization']['delta_bound']['minimum_coverage'] or any(item['coverage_all_samples']<CFG['stabilization']['delta_bound']['minimum_coverage'] for item in delta_norm.per_channel.values()):raise RuntimeError('DELTA_BOUND_COVERAGE_INSUFFICIENT')
    FORMAL.mkdir(parents=True,exist_ok=True);(FORMAL/'transform.json').write_text(json.dumps(tr.to_dict()));(FORMAL/'feature_normalization.json').write_text(json.dumps(norm.to_dict()));(FORMAL/'delta_normalization.json').write_text(json.dumps(delta_norm.to_dict(),indent=2));done(state,PipelineStage.FIT_NORMALIZERS);save_state(FORMAL/'run_state.json',state)
   else:
    tr=PhysicalTransform.from_dict(json.loads((FORMAL/'transform.json').read_text()));norm=FeatureNormalizer.from_dict(json.loads((FORMAL/'feature_normalization.json').read_text()));delta_norm=DeltaNormalization.from_dict(json.loads((FORMAL/'delta_normalization.json').read_text()))
-  random.seed(CFG['seed']);np.random.seed(CFG['seed']);torch.manual_seed(CFG['seed']);torch.cuda.manual_seed_all(CFG['seed']);architecture={'width':32,'modes':24,'depth':4};model=JilongGlobalOperatorV2(len(feature_names()),**architecture,delta_bounds=delta_norm.bounds).to(dev);model_ref[0]=model
+  random.seed(CFG['seed']);np.random.seed(CFG['seed']);torch.manual_seed(CFG['seed']);torch.cuda.manual_seed_all(CFG['seed']);architecture={'width':32,'modes':24,'depth':4};model=JilongGlobalOperatorV2(len(feature_names()),**architecture,delta_bounds=delta_norm.bounds).to(dev);model.delta_normalization=delta_norm.to_dict();model_ref[0]=model
   if state.current_stage==PipelineStage.CAPACITY_PROBE.value:
-   probes=capacity_probe(model,_capacity_loss(store,static,tr,norm,dev));apply_capacity_result(state,probes);done(state,PipelineStage.CAPACITY_PROBE);save_state(FORMAL/'run_state.json',state)
+   probes=capacity_probe(model,_capacity_loss(store,static,tr,norm,delta_norm,dev));apply_capacity_result(state,probes);done(state,PipelineStage.CAPACITY_PROBE);save_state(FORMAL/'run_state.json',state)
   if not (RESULTS/'persistence_baseline.csv').exists():
    baseline_records,persistence_summary=validate_persistence_baseline(val_subset_store,tr,norm,dev,val_subset_rows,144);RESULTS.mkdir(parents=True,exist_ok=True);__import__('pandas').DataFrame(baseline_records).to_csv(RESULTS/'persistence_baseline.csv',index=False)
   else:

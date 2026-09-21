@@ -43,15 +43,18 @@ def integral_loss(pred_p,target_p,active,cell_area:float,eps=1.):
 def amplitude_guard(pred_t,target_t,active,eps=1e-6):
     a=(active if active.ndim==4 else active[:,None]).to(pred_t.dtype); pr=((pred_t.square()*a).sum((0,2,3))/a.sum((0,2,3)).clamp_min(1)).sqrt();tr=((target_t.square()*a).sum((0,2,3))/a.sum((0,2,3)).clamp_min(1)).sqrt();valid=tr>eps
     return (torch.relu(pr[valid]/tr[valid].clamp_min(eps)-2).square().mean() if valid.any() else pred_t.new_zeros(()))
-def normalized_delta_huber(pred_t,encoded_current,target_t,teacher_current_t,active,delta_scales):
+def normalized_delta_huber_components(pred_t,encoded_current,target_t,teacher_current_t,active,delta_scales):
     """Directly penalize a zero residual whenever the teacher changes."""
     scales=torch.as_tensor(delta_scales,device=pred_t.device,dtype=pred_t.dtype)[None,:,None,None]
     predicted_delta=(pred_t-encoded_current)/scales;teacher_delta=(target_t-teacher_current_t)/scales;a=(active if active.ndim==4 else active[:,None]).to(pred_t.dtype)
-    per=F.smooth_l1_loss(predicted_delta,teacher_delta,reduction='none');return (per*a).sum()/((a.sum()*pred_t.shape[1]).clamp_min(1))
+    per=F.smooth_l1_loss(predicted_delta,teacher_delta,reduction='none');channels=(per*a).sum((0,2,3))/a.sum((0,2,3)).clamp_min(1);return channels.mean(),channels
+def normalized_delta_huber(pred_t,encoded_current,target_t,teacher_current_t,active,delta_scales):
+    return normalized_delta_huber_components(pred_t,encoded_current,target_t,teacher_current_t,active,delta_scales)[0]
 def step_loss(pred_t,target_t,teacher_current,pred_p,target_p,active,cell_area,encoded_current=None,teacher_current_t=None,delta_scales=None,static=None,source_active=False,weighting=None):
     encoded_current=target_t if encoded_current is None else encoded_current;teacher_current_t=target_t if teacher_current_t is None else teacher_current_t
     teacher_delta=target_t-teacher_current_t;s,ch=state_loss(pred_t,target_t,teacher_current,target_p,active,teacher_delta,static,source_active,weighting);w=wet_loss(pred_p,target_p,active);i,parts=integral_loss(pred_p,target_p,active,cell_area)
-    delta=pred_t.new_zeros(()) if delta_scales is None else normalized_delta_huber(pred_t,encoded_current,target_t,teacher_current_t,active,delta_scales)
-    return s+.10*w+.05*i+.50*delta,{'state':s,'wet':w,'integral':i,'delta':delta,'channels':ch,**parts}
+    if delta_scales is None:delta=pred_t.new_zeros(());delta_channels=pred_t.new_zeros(6)
+    else:delta,delta_channels=normalized_delta_huber_components(pred_t,encoded_current,target_t,teacher_current_t,active,delta_scales)
+    names=('h','hu','hv','c','ice','dz');return s+.10*w+.05*i+.50*delta,{'state':s,'wet':w,'integral':i,'delta':delta,**{f'delta_{name}':value for name,value in zip(names,delta_channels)},'channels':ch,**parts}
 def rollout_objective(step_terms,amp_terms):
     multi=torch.stack(step_terms).mean();one=step_terms[0];amp=torch.stack(amp_terms).mean() if amp_terms else multi.new_zeros(());return multi+.5*one+.01*amp,{'multi':multi.detach(),'one_step_anchor':one.detach(),'amplitude_guard':amp.detach()}

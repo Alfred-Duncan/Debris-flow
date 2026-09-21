@@ -56,14 +56,18 @@ def next_effective_stage(state,current_stage):
 def training_sample_for_step(seed,global_step,n_scenarios,k,n_time_states=145,burn_in_choices=(0,),sampler=None):
  import numpy as np
  if n_scenarios<1 or k<1 or n_time_states<k+1 or not burn_in_choices:raise ValueError('invalid training sampler dimensions')
- r=np.random.default_rng(np.random.SeedSequence([seed,global_step,k]));burn=int(r.choice(np.asarray(burn_in_choices,int)));max_index=n_time_states-k-burn-1
- if max_index<0:raise ValueError('burn-in and K exceed retained trajectory')
- sampler=sampler or {};source_fraction=float(sampler.get('source_active_fraction',.20));early_fraction=float(sampler.get('early_fraction',.20));source=[int(x//10) for x in sampler.get('source_starts_s',(0,10,20)) if int(x//10)<=max_index];early_low,early_high=sampler.get('early_start_range_s',(30,120));early=[index for index in range(int(early_low//10),int(early_high//10)+1) if index<=max_index]
+ r=np.random.default_rng(np.random.SeedSequence([seed,global_step,k]));sampler=sampler or {};max_gradient_index=n_time_states-k-1
+ if max_gradient_index<0:raise ValueError('K exceeds retained trajectory')
+ source_fraction=float(sampler.get('source_active_fraction',.20));early_fraction=float(sampler.get('early_fraction',.20));source=[int(x//10) for x in sampler.get('source_starts_s',(0,10,20)) if int(x//10)<=max_gradient_index];early_low,early_high=sampler.get('early_start_range_s',(30,120));early=[index for index in range(int(early_low//10),int(early_high//10)+1) if index<=max_gradient_index]
  draw=float(r.random());i=int(r.integers(n_scenarios))
- if draw<source_fraction and source:ti=int(r.choice(source));stratum='source_active'
- elif draw<source_fraction+early_fraction and early:ti=int(r.choice(early));stratum='early_evolution'
- else:ti=int(r.integers(0,max_index+1));stratum='uniform'
- return {'scenario_index':i,'time_index':ti,'time_s':ti*10,'burn_in_steps':burn,'sampler_stratum':stratum}
+ if draw<source_fraction and source:
+  gradient_index=int(r.choice(source));burn=0;stratum='source_active'
+ elif draw<source_fraction+early_fraction and early:
+  gradient_index=int(r.choice(early));choices=[int(value) for value in burn_in_choices if int(value)<=gradient_index];burn=int(r.choice(choices or [0]));stratum='early_evolution'
+ else:
+  gradient_index=int(r.integers(0,max_gradient_index+1));choices=[int(value) for value in burn_in_choices if int(value)<=gradient_index];burn=int(r.choice(choices or [0]));stratum='uniform'
+ seed_index=gradient_index-burn
+ return {'scenario_index':i,'time_index':seed_index,'time_s':seed_index*10,'seed_time_s':seed_index*10,'gradient_start_time_s':gradient_index*10,'burn_in_steps':burn,'sampler_stratum':stratum}
 def build_scheduler(optimizer,warmup_steps,total_updates):
  import math,torch
  if warmup_steps<1 or total_updates<1:raise ValueError('scheduler requires positive update counts')

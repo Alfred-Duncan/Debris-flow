@@ -43,11 +43,13 @@ class DeltaNormalization:
     bound_quantile:float
     safety_factor:float
     sample_count:int
+    per_channel:dict|None=None
+    change_nonzero_fraction:float=0.
     def scale_tensor(self,device,dtype=torch.float32):return torch.tensor(self.scales,device=device,dtype=dtype)[None,:,None,None]
     def bound_tensor(self,device,dtype=torch.float32):return torch.tensor(self.bounds,device=device,dtype=dtype)[None,:,None,None]
-    def to_dict(self):return {"state_names":list(STATE_NAMES),"scales":self.scales,"bounds":self.bounds,"change_threshold":self.change_threshold,"coverage":self.coverage,"quantile":self.quantile,"bound_quantile":self.bound_quantile,"safety_factor":self.safety_factor,"sample_count":self.sample_count,"fit_scope":"TRAIN_ONLY"}
+    def to_dict(self):return {"state_names":list(STATE_NAMES),"scales":self.scales,"bounds":self.bounds,"change_threshold":self.change_threshold,"coverage":self.coverage,"coverage_per_channel":{name:float((self.per_channel or {}).get(name,{}).get("coverage_all_samples",self.coverage)) for name in STATE_NAMES},"quantile":self.quantile,"bound_quantile":self.bound_quantile,"safety_factor":self.safety_factor,"sample_count":self.sample_count,"per_channel":self.per_channel or {},"change_nonzero_fraction":self.change_nonzero_fraction,"fit_scope":"TRAIN_ONLY"}
     @classmethod
-    def from_dict(cls,d):return cls(d["scales"],d["bounds"],d["change_threshold"],d["coverage"],d["quantile"],d["bound_quantile"],d["safety_factor"],d["sample_count"])
+    def from_dict(cls,d):return cls(d["scales"],d["bounds"],d["change_threshold"],d["coverage"],d["quantile"],d["bound_quantile"],d["safety_factor"],d["sample_count"],d.get("per_channel"),d.get("change_nonzero_fraction",0.))
 
 def fit_training_transforms(rows,store,static,seed=20260920,times=(0,120,300,600,900,1200,1440),max_cells=2048):
     """Streaming deterministic fit over all and only TRAIN scenarios."""
@@ -71,14 +73,14 @@ def _encode_numpy(state,transform):
     out[5]=np.arcsinh(out[5]/transform.dz_scale)
     return out
 
-def fit_delta_normalization(rows,store,static,transform,seed=20260920,samples_per_case=12,max_cells=512,quantile=.995,bound_quantile=.999,safety_factor=1.2,floor=1e-6,change_quantile=.90):
+def fit_delta_normalization(rows,store,static,transform,seed=20260920,samples_per_case=12,max_cells=512,quantile=.995,bound_quantile=.999,safety_factor=1.2,floor=1e-6,change_quantile=.90,epsilon=1e-8):
     """Fit delta scales/bounds from deterministic samples of TRAIN pairs only.
 
     The same sampled distribution is retained for the reported coverage, so a
     resume or another machine derives byte-for-byte equivalent configuration.
     """
     if not set(rows['split']).issubset({'TRAIN'}):raise ValueError('TRAIN-only delta fit required')
-    rng=np.random.default_rng(seed);active=np.asarray(static[1],bool);samples=[[] for _ in STATE_NAMES];change=[]
+    rng=np.random.default_rng(seed);active=np.asarray(static[1],bool);samples=[[] for _ in STATE_NAMES];cell_change=[];epsilon=max(float(epsilon),1e-8)
     available=np.arange(144,dtype=int)
     for _,row in rows.sort_values('scenario_id').iterrows():
         forced=np.asarray([0,1,2],int);count=max(int(samples_per_case)-len(forced),0)
@@ -87,9 +89,15 @@ def fit_delta_normalization(rows,store,static,transform,seed=20260920,samples_pe
             before=_encode_numpy(store.frame(row,int(index*10)),transform);after=_encode_numpy(store.frame(row,int((index+1)*10)),transform);delta=after-before
             cells=np.flatnonzero(active.ravel());take=rng.choice(cells,size=min(len(cells),int(max_cells)),replace=False)
             for channel in range(len(STATE_NAMES)):samples[channel].append(delta[channel].ravel()[take])
-            change.append(np.mean(np.abs(delta[:,active]),axis=0))
-    flattened=[np.concatenate(parts) for parts in samples];scales=[max(float(np.quantile(np.abs(values),quantile)),floor) for values in flattened]
-    raw_bounds=[max(float(np.quantile(np.abs(values),bound_quantile)),floor) for values in flattened];bounds=[value*float(safety_factor) for value in raw_bounds]
+            cell_change.append(np.mean(np.abs(delta[:,active]),axis=0))
+    flattened=[np.concatenate(parts) for parts in samples];scales=[];bounds=[];per_channel={}
+    for name,values in zip(STATE_NAMES,flattened):
+        absolute=np.abs(values);changed=absolute[absolute>epsilon];nonzero_count=int(changed.size);zero_fraction=float(1-nonzero_count/max(int(absolute.size),1))
+        scale=max(float(np.quantile(changed,quantile)),floor) if nonzero_count else float(floor)
+        bound=(max(float(np.quantile(changed,bound_quantile)),floor) if nonzero_count else float(floor))*float(safety_factor)
+        coverage=float(np.mean(absolute<=bound))
+        scales.append(scale);bounds.append(bound)
+        per_channel[name]={"nonzero_sample_count":nonzero_count,"zero_fraction":zero_fraction,"scale":scale,"bound":bound,"coverage_all_samples":coverage,"q50_nonzero":float(np.quantile(changed,.50)) if nonzero_count else None,"q90_nonzero":float(np.quantile(changed,.90)) if nonzero_count else None,"q99_nonzero":float(np.quantile(changed,.99)) if nonzero_count else None,"q995_nonzero":float(np.quantile(changed,.995)) if nonzero_count else None,"q999_nonzero":float(np.quantile(changed,.999)) if nonzero_count else None,"max_abs_sampled":float(absolute.max()) if absolute.size else 0.}
+    all_change=np.concatenate(cell_change);positive_change=all_change[all_change>epsilon];threshold=max(float(np.quantile(positive_change,change_quantile)),floor) if positive_change.size else float(floor)
     coverage=float(np.mean(np.concatenate([np.abs(values)<=bound for values,bound in zip(flattened,bounds)])))
-    threshold=max(float(np.quantile(np.concatenate(change),change_quantile)),floor)
-    return DeltaNormalization(scales,bounds,threshold,coverage,float(quantile),float(bound_quantile),float(safety_factor),int(sum(len(x) for x in flattened)))
+    return DeltaNormalization(scales,bounds,threshold,coverage,float(quantile),float(bound_quantile),float(safety_factor),int(sum(len(x) for x in flattened)),per_channel,float(positive_change.size/max(all_change.size,1)))
