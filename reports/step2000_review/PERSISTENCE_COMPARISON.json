@@ -1,0 +1,46 @@
+{
+  "checkpoint_step": 2000,
+  "model_metrics": {
+    "trajectory_h_rel_l2": 1.0671964436769485,
+    "trajectory_momentum_rel_l2": 2.587574452161789,
+    "mean_wet_iou": 0.2971500866115093,
+    "mixture_volume_relative_error": 0.24881804570989474,
+    "debris_front_mae_km": 14.770648676917592
+  },
+  "persistence_metrics": {
+    "trajectory_h_rel_l2": 0.9749480932950974,
+    "trajectory_momentum_rel_l2": 0.9994422718882561,
+    "mean_wet_iou": 0.6614985093474388,
+    "mixture_volume_relative_error": 0.9180354559794068,
+    "debris_front_mae_km": 23.940000534057617
+  },
+  "comparison": {
+    "trajectory_h_rel_l2": {
+      "step2000": 1.0671964436769485,
+      "persistence": 0.9749480932950974,
+      "better": false
+    },
+    "trajectory_momentum_rel_l2": {
+      "step2000": 2.587574452161789,
+      "persistence": 0.9994422718882561,
+      "better": false
+    },
+    "mean_wet_iou": {
+      "step2000": 0.2971500866115093,
+      "persistence": 0.6614985093474388,
+      "better": false
+    },
+    "mixture_volume_relative_error": {
+      "step2000": 0.24881804570989474,
+      "persistence": 0.9180354559794068,
+      "better": true
+    },
+    "debris_front_mae_km": {
+      "step2000": 14.770648676917592,
+      "persistence": 23.940000534057617,
+      "better": true
+    }
+  },
+  "primary_metrics_better_than_persistence": "2/5",
+  "automatic_termination": "EARLY_TRAINING_QUALITY_FAILURE PERSISTENCE_COLLAPSE"
+}

@@ -1,0 +1,164 @@
+{
+  "training_source_commit": "75b5c56e2c4a518a59b486cb8a80b36208bf1d78",
+  "resume_checkpoint_before_run": {
+    "path": "E:\\Alfred\\Documents\\JiLong-PDE\\jilong_ei_work\\models\\global_operator_v2\\last.pt",
+    "global_step": 1250,
+    "stage": "STAGE_A"
+  },
+  "step2000_checkpoint": {
+    "path": "E:\\Alfred\\Documents\\JiLong-PDE\\jilong_ei_work\\models\\global_operator_v2\\last.pt",
+    "global_step": 2000,
+    "stage": "STAGE_A"
+  },
+  "checkpoint_agreement": "PASS",
+  "run_state_stage": "STAGE_A",
+  "run_state_global_step": 2000,
+  "validation_status": "FINITE",
+  "finite_rollout": true,
+  "first_nonfinite_step": null,
+  "step2000_metrics": {
+    "trajectory_h_rel_l2": 1.0671964436769485,
+    "trajectory_momentum_rel_l2": 2.587574452161789,
+    "trajectory_c_rel_l2": 1.297632023692131,
+    "trajectory_ice_rel_l2": 0.9594948813319206,
+    "trajectory_dz_rel_l2": 1.1035605072975159,
+    "mean_wet_iou": 0.2971500866115093,
+    "final_wet_iou": 0.17564444430172443,
+    "mixture_volume_relative_error": 0.24881804570989474,
+    "debris_front_mae_km": 14.770648676917592,
+    "debris_front_final_error_km": 7.196249842643738,
+    "J_val": 4.198644704488726,
+    "finite_rollout": true,
+    "validation_status": "FINITE"
+  },
+  "step1000_primary_metrics": {
+    "trajectory_h_rel_l2": 1.0561033487319946,
+    "trajectory_momentum_rel_l2": 1.4109766334295273,
+    "mean_wet_iou": 0.2031461298465728,
+    "mixture_volume_relative_error": 0.5101281811302114,
+    "debris_front_mae_km": 15.944932442255787,
+    "J_val": 4.347900712733323
+  },
+  "step1000_to_step2000_deltas_primary": {
+    "trajectory_h_rel_l2": 0.011093094944953918,
+    "trajectory_momentum_rel_l2": 1.1765978187322617,
+    "mean_wet_iou": 0.09400395676493653,
+    "mixture_volume_relative_error": -0.26131013542031667,
+    "debris_front_mae_km": -1.1742837653381955,
+    "J_val": -0.14925600824459728
+  },
+  "step1000_to_step2000_deltas_unavailable": [
+    "trajectory_c_rel_l2",
+    "trajectory_ice_rel_l2",
+    "trajectory_dz_rel_l2",
+    "final_wet_iou",
+    "debris_front_final_error_km"
+  ],
+  "persistence_comparison": {
+    "trajectory_h_rel_l2": {
+      "step2000": 1.0671964436769485,
+      "persistence": 0.9749480932950974,
+      "better": false
+    },
+    "trajectory_momentum_rel_l2": {
+      "step2000": 2.587574452161789,
+      "persistence": 0.9994422718882561,
+      "better": false
+    },
+    "mean_wet_iou": {
+      "step2000": 0.2971500866115093,
+      "persistence": 0.6614985093474388,
+      "better": false
+    },
+    "mixture_volume_relative_error": {
+      "step2000": 0.24881804570989474,
+      "persistence": 0.9180354559794068,
+      "better": true
+    },
+    "debris_front_mae_km": {
+      "step2000": 14.770648676917592,
+      "persistence": 23.940000534057617,
+      "better": true
+    }
+  },
+  "primary_metrics_better_than_persistence": "2/5",
+  "horizon_count": 8,
+  "horizon_deltas": [
+    {
+      "horizon": 1,
+      "h_rel_l2": -0.038370709866285324,
+      "momentum_rel_l2": -0.28694722056388855,
+      "wet_iou": 0.08492825925350189,
+      "volume_rel_error": 0.002404090017080307,
+      "finite_step1000": 1.0,
+      "finite_step2000": 1.0
+    },
+    {
+      "horizon": 2,
+      "h_rel_l2": -0.08366647362709051,
+      "momentum_rel_l2": -0.22477473691105843,
+      "wet_iou": 0.08747860789299011,
+      "volume_rel_error": -0.043591383378952714,
+      "finite_step1000": 1.0,
+      "finite_step2000": 1.0
+    },
+    {
+      "horizon": 4,
+      "h_rel_l2": -0.09995381534099579,
+      "momentum_rel_l2": -0.22401488572359085,
+      "wet_iou": 0.09127360582351685,
+      "volume_rel_error": -0.11315756174735728,
+      "finite_step1000": 1.0,
+      "finite_step2000": 1.0
+    },
+    {
+      "horizon": 8,
+      "h_rel_l2": -0.08654270321130741,
+      "momentum_rel_l2": -0.24611572176218033,
+      "wet_iou": 0.10859213769435883,
+      "volume_rel_error": -0.17856427919468842,
+      "finite_step1000": 1.0,
+      "finite_step2000": 1.0
+    },
+    {
+      "horizon": 16,
+      "h_rel_l2": -0.061874762177467346,
+      "momentum_rel_l2": -0.17491810768842697,
+      "wet_iou": 0.1597447320818901,
+      "volume_rel_error": -0.2598826319781296,
+      "finite_step1000": 1.0,
+      "finite_step2000": 1.0
+    },
+    {
+      "horizon": 32,
+      "h_rel_l2": -0.00842064619064331,
+      "momentum_rel_l2": -0.057508327066898346,
+      "wet_iou": 0.14071226492524147,
+      "volume_rel_error": -0.3130730619437757,
+      "finite_step1000": 1.0,
+      "finite_step2000": 1.0
+    },
+    {
+      "horizon": 64,
+      "h_rel_l2": 0.011844143271446228,
+      "momentum_rel_l2": 0.17509666830301307,
+      "wet_iou": 0.1080851666629315,
+      "volume_rel_error": -0.3104866031902098,
+      "finite_step1000": 1.0,
+      "finite_step2000": 1.0
+    },
+    {
+      "horizon": 144,
+      "h_rel_l2": 0.011093094944953696,
+      "momentum_rel_l2": 1.1765978187322617,
+      "wet_iou": 0.09400395676493653,
+      "volume_rel_error": -0.2613101354203167,
+      "finite_step1000": 1.0,
+      "finite_step2000": 1.0
+    }
+  ],
+  "termination": "EARLY_TRAINING_QUALITY_FAILURE PERSISTENCE_COLLAPSE",
+  "decision": "INSUFFICIENT: finite, but 2/5 primary metrics beat persistence and h/momentum/wet did not all improve.",
+  "training_entered_stage_b": false,
+  "post_freeze_work": false
+}
