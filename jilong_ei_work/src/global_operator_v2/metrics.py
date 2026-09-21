@@ -1,23 +1,19 @@
-"""Physics-unit engineering diagnostics; route data is evaluation-only."""
+"""Metric definitions copied from Park-v2 solver_sparse_v2.py output loop."""
 from __future__ import annotations
 import json
 from pathlib import Path
 import numpy as np
-import torch
 
-def station_discharge(state: np.ndarray, transect: dict, cell_m: float=30.) -> float:
-    """Q = sum (hu*north + hv*east) * cell width over supplied station line."""
-    rows=np.asarray(transect["rows"],int); cols=np.asarray(transect["cols"],int); tangent=np.asarray(transect["tangent"],float)
-    normal=np.array([-tangent[1],tangent[0]])
-    return float(np.sum((state[1,rows,cols]*normal[0]+state[2,rows,cols]*normal[1])*cell_m)*float(transect.get("flux_scale",1.)))
-
-def route_front(state: np.ndarray, route_chainage_m: np.ndarray, active: np.ndarray, dry: float=.03) -> float | None:
-    valid=(state[0]>=dry)&active&np.isfinite(route_chainage_m)
-    return float(np.max(route_chainage_m[valid])) if valid.any() else None
-
-def arrival_time(times_s: np.ndarray, states: list[np.ndarray], rows: np.ndarray, cols: np.ndarray, dry: float=.03) -> float | None:
-    for t,s in zip(times_s,states):
-        if np.any(s[0,rows,cols]>=dry): return float(t)
-    return None
-
-def load_transects(path: str | Path) -> dict: return json.loads(Path(path).read_text(encoding="utf-8"))
+def station_metrics(state,z,transect,cell_m=30.):
+    """Exact solver semantics: flux projects onto stored tangent, not a normal."""
+    r=np.asarray(transect['rows'],int);c=np.asarray(transect['cols'],int);tx,ty=transect['tangent'];scale=float(transect.get('flux_scale',1.))
+    h,hu,hv,solid,ice=state[:5]; conc=np.divide(solid,h,out=np.zeros_like(h),where=h>=1e-3) if solid.max()>1 else solid
+    flux=(hu[r,c]*tx+hv[r,c]*ty)*cell_m*scale; wet=h[r,c]>.05
+    return {'Q':float(flux.sum()),'Qdebris':float((flux*conc[r,c]).sum()),'hmax':float(h[r,c].max()),'stage':float((z[r,c]+h[r,c])[wet].min()) if wet.any() else float('nan'),'cmax':float(conc[r,c][wet].max()) if wet.any() else 0.,'wet_width_m':float(wet.sum()*cell_m)}
+def debris_front(state,chainage):
+    h,c=state[0],state[3];valid=(h>.1)&(c>.05)&np.isfinite(chainage);return float(np.max(chainage[valid])/1e3) if valid.any() else float('nan')
+def flood_front(state,h_base,chainage):
+    valid=(state[0]-h_base>.5)&np.isfinite(chainage);return float(np.max(chainage[valid])/1e3) if valid.any() else float('nan')
+def arrival_from_series(df,station):
+    q,s=df[f'{station}_Q'],df[f'{station}_stage'];hit=(q>2*q.iloc[0]+50)|(s>s.iloc[0]+.5);return float(df.loc[hit,'time_s'].iloc[0]) if hit.any() else None
+def load_transects(path):return json.loads(Path(path).read_text(encoding='utf-8'))

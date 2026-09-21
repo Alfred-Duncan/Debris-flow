@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "scenario_id": "JILONG_EI_0007",
+      "max_station_relative_error": 0.00045371390503303426,
+      "max_route_front_error_km": 4.5776367230132564e-07,
+      "arrival_parity_10s": true
+    },
+    {
+      "scenario_id": "JILONG_EI_0092",
+      "max_station_relative_error": 0.0004512555857656634,
+      "max_route_front_error_km": 7.629394538355427e-07,
+      "arrival_parity_10s": true
+    },
+    {
+      "scenario_id": "JILONG_EI_0105",
+      "max_station_relative_error": 0.007362634116101844,
+      "max_route_front_error_km": 9.155273446026513e-07,
+      "arrival_parity_10s": true
+    }
+  ],
+  "semantics": "station flux/tangent, Qdebris, hmax, stage, wet width, debris-front and arrival copied from Park-v2 solver/postprocessor; retained 10-s frames allow quantization."
+}

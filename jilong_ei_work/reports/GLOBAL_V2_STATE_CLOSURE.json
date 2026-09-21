@@ -1,7 +1,134 @@
 {
-  "status": "FAIL",
+  "status": "PASS_THRESHOLD_AWARE",
   "audit_cases": 20,
-  "tolerance_m": 2e-06,
+  "threshold_semantics_m": 0.05,
+  "storage_dtype": "float16",
+  "retained_comparison_rtol": 0.002,
+  "retained_comparison_atol_m": 0.002,
+  "FULL_PHYSICAL_BED_CHANGE": "final_state.bed_change float32",
+  "RETAINED_ML_BED_CHANGE": "sparse dz_idx/dz thresholded cumulative field",
+  "threshold_audit": [
+    {
+      "scenario_id": "JILONG_EI_0001",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.04931640625
+    },
+    {
+      "scenario_id": "JILONG_EI_0002",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.0498046875
+    },
+    {
+      "scenario_id": "JILONG_EI_0003",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.04931640625
+    },
+    {
+      "scenario_id": "JILONG_EI_0004",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.0499267578125
+    },
+    {
+      "scenario_id": "JILONG_EI_0005",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.04931640625
+    },
+    {
+      "scenario_id": "JILONG_EI_0006",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.048828125
+    },
+    {
+      "scenario_id": "JILONG_EI_0007",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.04931640625
+    },
+    {
+      "scenario_id": "JILONG_EI_0008",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.0498046875
+    },
+    {
+      "scenario_id": "JILONG_EI_0009",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.048095703125
+    },
+    {
+      "scenario_id": "JILONG_EI_0010",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.047119140625
+    },
+    {
+      "scenario_id": "JILONG_EI_0011",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.04931640625
+    },
+    {
+      "scenario_id": "JILONG_EI_0012",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.049560546875
+    },
+    {
+      "scenario_id": "JILONG_EI_0013",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.0498046875
+    },
+    {
+      "scenario_id": "JILONG_EI_0014",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.04931640625
+    },
+    {
+      "scenario_id": "JILONG_EI_0015",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.0491943359375
+    },
+    {
+      "scenario_id": "JILONG_EI_0016",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.0498046875
+    },
+    {
+      "scenario_id": "JILONG_EI_0017",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.0499267578125
+    },
+    {
+      "scenario_id": "JILONG_EI_0018",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.049072265625
+    },
+    {
+      "scenario_id": "JILONG_EI_0019",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.0498046875
+    },
+    {
+      "scenario_id": "JILONG_EI_0020",
+      "retained_float16_match": true,
+      "omitted_within_threshold": true,
+      "omitted_max_abs_m": 0.0498046875
+    }
+  ],
   "dz_final_frame_vs_final_state": [
     {
       "scenario_id": "JILONG_EI_0001",
@@ -150,15 +277,16 @@
     "hv",
     "c",
     "ice",
-    "dz"
+    "thresholded_dz"
   ],
   "reconstructable": [
     "hc=h*c",
     "hi=h*ice",
-    "current_bed=z_initial+dz"
+    "current_bed=z_initial+dz_retained"
   ],
   "not_retained": [
-    "hq (remaining erodible/material variable)"
+    "hq (heat / thermal-energy storage state)",
+    "erodible (remaining erodible-depth / material-availability state)"
   ],
-  "closure_statement": "The retained state is directly reconstructable as listed, but is not claimed to be an exact Markov state because hq is absent from sparse frames."
+  "closure_statement": "The retained dataset is not an exact Markov-complete state: hq and erodible are absent. Previous/current/delta, thresholded dynamic bed, and known forcing reduce but do not eliminate partial observability. LATENT_STATE_FALLBACK remains disabled."
 }

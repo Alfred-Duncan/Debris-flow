@@ -40,5 +40,5 @@ is approved.
 python scripts/run_global_operator_v2_full.py --formal
 ```
 
-The command remains intentionally locked during this code-only task; formal
-execution needs explicit approval after the `dz` representation decision.
+The formal execution path is implemented but was not invoked during this
+code-only task. It requires explicit human approval before use.
