@@ -40,16 +40,17 @@ def validation_score(metrics,weights=None):
     return (weights["trajectory_h_rel_l2"]*metrics["trajectory_h_rel_l2"]+weights["trajectory_momentum_rel_l2"]*metrics["trajectory_momentum_rel_l2"]+weights["one_minus_mean_wet_iou"]*(1-metrics["mean_wet_iou"])+weights["debris_front_mae_normalized"]*metrics["debris_front_mae_km"]/weights["front_normalization_km"]+weights["mixture_volume_relative_error_normalized"]*metrics["mixture_volume_relative_error"]/weights["volume_normalization"])
 
 @torch.no_grad()
-def validate_one_step(model,store,transform,normalizer,device,rows=None):
+def validate_one_step(model,store,transform,normalizer,device,rows=None,times_s=(120,300,600,900,1200)):
     rows=store.rows if rows is None else rows
     if not set(rows["split"]).issubset({"VAL"}):raise ValueError("validation accepts VAL only")
     static=torch.from_numpy(store.static).unsqueeze(0).to(device);active=static[:,1:2];records=[]
     for _,row in rows.iterrows():
-        index=int(np.where(store.rows.scenario_id.eq(row.scenario_id))[0][0]);previous,current,target,params,time,_=store.sample(index,0)
-        previous,current,target,params=(_tensor(x,device) for x in (previous,current,target,params))
-        pred=project_physical(transform.decode(model(build_features(previous,current,static,params,torch.tensor([time],device=device),transform,normalizer),transform.encode(current))))
-        mask=active[:,0].bool();hrel=_ratio(((pred[:,0]-target[:,0]).square()*mask).sum(),(target[:,0].square()*mask).sum());iou=((pred[:,0]>=STORAGE_WET_THRESHOLD_M)&(target[:,0]>=STORAGE_WET_THRESHOLD_M)&mask).sum().float()/(((pred[:,0]>=STORAGE_WET_THRESHOLD_M)|(target[:,0]>=STORAGE_WET_THRESHOLD_M))&mask).sum().clamp_min(1)
-        records.append({"scenario_id":row.scenario_id,"h_rel_l2":hrel,"wet_iou":float(iou)})
+        index=int(np.where(store.rows.scenario_id.eq(row.scenario_id))[0][0])
+        for time_s in times_s:
+            previous,current,target,params,time,_=store.sample(index,int(time_s));previous,current,target,params=(_tensor(x,device) for x in (previous,current,target,params))
+            pred=project_physical(transform.decode(model(build_features(previous,current,static,params,torch.tensor([time],device=device),transform,normalizer),transform.encode(current))))
+            mask=active[:,0].bool();hrel=_ratio(((pred[:,0]-target[:,0]).square()*mask).sum(),(target[:,0].square()*mask).sum());mrel=_ratio(((pred[:,1:3]-target[:,1:3]).square()*active).sum(),(target[:,1:3].square()*active).sum());iou=((pred[:,0]>=STORAGE_WET_THRESHOLD_M)&(target[:,0]>=STORAGE_WET_THRESHOLD_M)&mask).sum().float()/(((pred[:,0]>=STORAGE_WET_THRESHOLD_M)|(target[:,0]>=STORAGE_WET_THRESHOLD_M))&mask).sum().clamp_min(1)
+            records.append({"scenario_id":row.scenario_id,"time_s":time_s,"h_rel_l2":hrel,"momentum_rel_l2":mrel,"wet_iou":float(iou)})
     return records
 
 @torch.no_grad()
@@ -66,7 +67,9 @@ def validate_full_rollout(model,store,transform,normalizer,device,steps=144,rows
         inum=torch.zeros((),device=device);iden=torch.zeros((),device=device)
         dznum=torch.zeros((),device=device);dzden=torch.zeros((),device=device)
         wet_sum=torch.zeros((),device=device);volume_errors=[];front_errors=[];target=None;final_iou=0.;final_front_error=0.
-        route=np.asarray(np.load(INPUT)['route_chainage_m'],np.float32);route_length=float(np.nanmax(route)/1e3)
+        if not out:
+            with np.load(INPUT) as data:route=np.asarray(data['route_chainage_m'],np.float32)
+        route_length=float(np.nanmax(route)/1e3)
         for step in range(min(steps,144)):
             target=_tensor(store.frame(row,(step+1)*10),device);pred=project_physical(transform.decode(model(build_features(previous,current,static,params,torch.tensor([time+step/144.],device=device),transform,normalizer),transform.encode(current))))
             mask=active[:,0].bool();hnum+=((pred[:,0]-target[:,0]).square()*mask).sum();hden+=(target[:,0].square()*mask).sum();mnum+=((pred[:,1:3]-target[:,1:3]).square()*active).sum();mden+=(target[:,1:3].square()*active).sum();cnum+=((pred[:,3]-target[:,3]).square()*mask).sum();cden+=(target[:,3].square()*mask).sum();inum+=((pred[:,4]-target[:,4]).square()*mask).sum();iden+=(target[:,4].square()*mask).sum();dznum+=((pred[:,5]-target[:,5]).square()*mask).sum();dzden+=(target[:,5].square()*mask).sum()
