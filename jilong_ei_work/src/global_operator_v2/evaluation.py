@@ -25,7 +25,7 @@ def streaming_rollout(model,store,row,transform,normalizer,device,steps=144,on_s
     tensor=lambda x:torch.from_numpy(x).unsqueeze(0).to(device);previous,current,params=tensor(previous),tensor(current),tensor(params);static=torch.from_numpy(store.static).unsqueeze(0).to(device)
     if on_state:on_state(0,current)
     for step in range(steps):
-        prediction=project_physical(transform.decode(model(build_features(previous,current,static,params,torch.tensor([time+step/144.],device=device),transform,normalizer),transform.encode(current))))
+        prediction=project_physical(transform.decode(model(build_features(previous,current,static,params,torch.tensor([time+step/144.],device=device),transform,normalizer),transform.encode(current))),static[:,1:2])
         previous,current=current,prediction
         if on_state:on_state((step+1)*10,current)
 

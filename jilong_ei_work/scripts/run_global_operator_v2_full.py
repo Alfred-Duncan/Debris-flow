@@ -1,6 +1,6 @@
 """Single-state-machine V2 training-core launcher; --formal is deliberately not invoked in code review."""
 from __future__ import annotations
-import argparse,csv,hashlib,json,math,random,sys,time
+import argparse,csv,gc,hashlib,json,math,random,sys,time
 from pathlib import Path
 import numpy as np,torch
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
@@ -9,14 +9,31 @@ from src.global_operator_v2.dataset import FrameStore,scenario_rows,feature_name
 from src.global_operator_v2.frame_adapter import static_and_exogenous
 from src.global_operator_v2.model import JilongGlobalOperatorV2
 from src.global_operator_v2.trainer import restore_checkpoint,save_checkpoint,rollout_loss,train_stage,is_improvement
-from src.global_operator_v2.validation import select_fixed_val_subset,validate_one_step,validate_all_val
+from src.global_operator_v2.validation import select_fixed_val_subset,validate_one_step,validate_all_val,validate_horizon_ladder,validate_persistence_baseline
 from src.global_operator_v2.evaluation import freeze_best_candidate
-from src.global_operator_v2.transforms import PhysicalTransform,FeatureNormalizer,fit_training_transforms
+from src.global_operator_v2.transforms import PhysicalTransform,FeatureNormalizer,DeltaNormalization,fit_training_transforms,fit_delta_normalization
 CFG=json.loads((ROOT/'configs/GLOBAL_OPERATOR_V2.json').read_text());FORMAL=ROOT/'models/global_operator_v2';RESULTS=ROOT/'results/global_operator_v2'
 model_ref=[None]
 CORE=(PipelineStage.PRECHECK,PipelineStage.FIT_NORMALIZERS,PipelineStage.CAPACITY_PROBE,PipelineStage.ARCHITECTURE,PipelineStage.STAGE_A,PipelineStage.STAGE_B,PipelineStage.STAGE_C,PipelineStage.STAGE_D,PipelineStage.VAL_CONFIRM,PipelineStage.FREEZE)
 def cfg_hash():return hashlib.sha256(json.dumps(CFG,sort_keys=True).encode()).hexdigest()
 def initial_state():return PipelineState(CFG['pipeline_version'],cfg_hash())
+def safe_append_csv(path,row):
+ """Telemetry cannot be allowed to terminate an optimizer on Windows locks."""
+ path=Path(path);path.parent.mkdir(parents=True,exist_ok=True);error=None
+ for _ in range(4):
+  try:
+   new=not path.exists()
+   with path.open('a',newline='') as handle:
+    writer=csv.DictWriter(handle,fieldnames=row.keys())
+    if new:writer.writeheader()
+    writer.writerow(row)
+   return True
+  except PermissionError as exc:
+   error=exc;time.sleep(.2)
+ fallback=path.with_name(f'{path.stem}_fallback_{int(time.time())}.jsonl')
+ with fallback.open('a',encoding='utf-8') as handle:handle.write(json.dumps({'warning':'TELEMETRY_PERMISSION_FALLBACK','target':str(path),'error':str(error),'row':row},default=str)+'\n')
+ print(f'WARNING TELEMETRY_PERMISSION_FALLBACK {path}',flush=True)
+ return False
 def sample_for_global_step(seed,step,n,max_t):
  return training_sample_for_step(seed,step,n,1,n_time_states=max_t+1)
 def save_last(model,opt,sched,tr,norm,state):
@@ -44,15 +61,19 @@ def probe_one_k(model,k,loss_fn=None):
  try:
   if loss_fn is None: raise RuntimeError('CAPACITY_PROBE_INPUT_REQUIRED')
   loss=loss_fn(k);loss.backward();torch.cuda.synchronize()
-  peak=torch.cuda.max_memory_allocated()/1024**3;model.zero_grad(set_to_none=True)
+  peak=torch.cuda.max_memory_allocated()/1024**3;model.zero_grad(set_to_none=True);gc.collect();torch.cuda.empty_cache()
   return {'K':k,'status':'SAFE' if peak<=7.2 else 'UNSAFE','peak_vram_gib':peak,'safe':peak<=7.2}
  except torch.cuda.OutOfMemoryError:
-  model.zero_grad(set_to_none=True);torch.cuda.empty_cache();return {'K':k,'status':'OOM','peak_vram_gib':None,'safe':False}
+  model.zero_grad(set_to_none=True);gc.collect();torch.cuda.empty_cache();return {'K':k,'status':'OOM','peak_vram_gib':None,'safe':False}
 def capacity_probe(model,loss_fn=None,probe_fn=probe_one_k):
+ before={} if model is None else {name:value.detach().cpu().clone() for name,value in model.state_dict().items()}
  out=[]
  for k in (1,2,4,6):
   result=probe_fn(model,k,loss_fn);out.append(result)
+  if model is not None:model.zero_grad(set_to_none=True)
+  gc.collect();torch.cuda.empty_cache()
   if not result['safe']:break
+ if model is not None and any(not torch.equal(before[name],value.detach().cpu()) for name,value in model.state_dict().items()):raise RuntimeError('CAPACITY_PROBE_MUTATED_MODEL')
  return out
 def stage_entry_checkpoint(model,opt,sched,tr,norm,state):save_last(model,opt,sched,tr,norm,state)
 def _advance(state):
@@ -72,37 +93,42 @@ def _capacity_loss(store,static,tr,norm,device):
 def _save_subset(rows,train_rows):
  subset=select_fixed_val_subset(rows,8,20260920,train_rows);path=ROOT/'configs/global_operator_v2_val_subset.csv';subset.to_csv(path,index=False);return subset
 def _record_validation(state,summary,is_global_best,is_stage_best):
- RESULTS.mkdir(parents=True,exist_ok=True);path=RESULTS/'validation_history.csv';row={'global_step':state.global_step,'stage':state.current_stage,'trajectory_h_rel_l2':summary['trajectory_h_rel_l2'],'trajectory_momentum_rel_l2':summary['trajectory_momentum_rel_l2'],'mean_wet_iou':summary['mean_wet_iou'],'debris_front_mae_km':summary['debris_front_mae_km'],'mixture_volume_relative_error':summary['mixture_volume_relative_error'],'J_val':summary['J_val'],'is_global_best':is_global_best,'is_stage_best':is_stage_best};new=not path.exists()
- with path.open('a',newline='') as handle:
-  writer=csv.DictWriter(handle,fieldnames=row.keys());
-  if new:writer.writeheader()
-  writer.writerow(row)
-def _stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows,static,tr,norm,device,stage):
+ RESULTS.mkdir(parents=True,exist_ok=True);row={'global_step':state.global_step,'stage':state.current_stage,'trajectory_h_rel_l2':summary.get('trajectory_h_rel_l2'),'trajectory_momentum_rel_l2':summary.get('trajectory_momentum_rel_l2'),'mean_wet_iou':summary.get('mean_wet_iou'),'debris_front_mae_km':summary.get('debris_front_mae_km'),'mixture_volume_relative_error':summary.get('mixture_volume_relative_error'),'J_val':summary.get('J_val'),'validation_status':summary.get('validation_status'),'first_nonfinite_step':summary.get('first_nonfinite_step'),'is_global_best':is_global_best,'is_stage_best':is_stage_best}
+ safe_append_csv(RESULTS/'validation_history.csv',row)
+def _record_horizons(state,stage,rows):
+ for row in rows:safe_append_csv(RESULTS/'horizon_history.csv',{'global_step':state.global_step,'stage':stage,**row})
+def _stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows,static,tr,norm,delta_norm,device,stage,persistence_summary):
  assert set(val_subset_rows.scenario_id)==set(val_subset_store.rows.scenario_id)
- config=next(item for item in state.effective_curriculum if item['stage']==stage);state.stage_updates_total=config['updates'];save_resume_pair(model,opt,sched,tr,norm,state)
- active=static[:,1:2]
+ config=next(item for item in state.effective_curriculum if item['stage']==stage);state.stage_updates_total=config['updates'];save_resume_pair(model,opt,sched,tr,norm,state);active=static[:,1:2];stage_has_finite=[False]
+ burn_choices=CFG['stabilization']['burn_in'][stage]
  def batch(step):
-  sample=training_sample_for_step(CFG['seed'],step,len(store.rows),config['k']);row=store.rows.iloc[sample['scenario_index']];previous,current,_,params,times,_=store.sample(sample['scenario_index'],sample['time_s']);tensor=lambda x:torch.from_numpy(np.asarray(x)).unsqueeze(0).to(device)
-  return tensor(previous),tensor(current),[tensor(store.frame(row,sample['time_s']+10*(j+1))) for j in range(config['k'])],tensor(params),torch.tensor([times],device=device)
- def loss(batch):return rollout_loss(model,tr,norm,*batch[:2],batch[2],static,batch[3],batch[4],active,900.,gradient_checkpointing=True)[:2]
+  sample=training_sample_for_step(CFG['seed'],step,len(store.rows),config['k'],burn_in_choices=burn_choices,sampler=CFG['stabilization']['sampler']);row=store.rows.iloc[sample['scenario_index']];t=sample['time_s'];burn=sample['burn_in_steps'];previous,current,_,params,times,_=store.sample(sample['scenario_index'],t);tensor=lambda x:torch.from_numpy(np.asarray(x)).unsqueeze(0).to(device)
+  teacher_current=tensor(store.frame(row,t+10*burn));targets=[tensor(store.frame(row,t+10*(burn+j+1))) for j in range(config['k'])];burn_targets=[tensor(store.frame(row,t+10*(j+1))) for j in range(burn)]
+  return tensor(previous),tensor(current),targets,tensor(params),torch.tensor([times],device=device),burn,burn_targets,teacher_current,sample
+ def loss(batch):
+  previous,current,targets,params,times,burn,burn_targets,teacher_current,_=batch;return rollout_loss(model,tr,norm,previous,current,targets,static,params,times,active,900.,gradient_checkpointing=True,burn_in_steps=burn,burn_targets=burn_targets,teacher_current=teacher_current,delta_normalization=delta_norm,weighting={**CFG['stabilization']['teacher_weighting'],'change_threshold':delta_norm.change_threshold})[:2]
  def updated(current,details,cadence):
   if current.global_step%250==0:save_resume_pair(model,opt,sched,tr,norm,current)
   if current.global_step%50==0:
-   RESULTS.mkdir(parents=True,exist_ok=True);path=RESULTS/'training_log.csv';new=not path.exists();row={'global_step':current.global_step,'stage':stage,'stage_step':current.stage_step,'K':config['k'],'total_loss':float(details['total_loss']),'multi_loss':float(details['multi']),'one_step_anchor':float(details['one_step_anchor']),'state_loss':float(details['state']),'wet_loss':float(details['wet']),'integral_loss':float(details['integral']),'amplitude_guard':float(details['amplitude_guard']),'learning_rate':opt.param_groups[0]['lr'],'step_seconds':float(details.get('step_seconds',float('nan'))),'peak_vram_gib':float(torch.cuda.max_memory_allocated()/1024**3)}
-   with path.open('a',newline='') as handle:
-    writer=csv.DictWriter(handle,fieldnames=row.keys());
-    if new:writer.writeheader()
-    writer.writerow(row)
+   latest=training_sample_for_step(CFG['seed'],current.global_step-1,len(store.rows),config['k'],burn_in_choices=burn_choices,sampler=CFG['stabilization']['sampler']);row={'global_step':current.global_step,'stage':stage,'stage_step':current.stage_step,'K':config['k'],'burn_in_steps':latest['burn_in_steps'],'sampler_stratum':latest['sampler_stratum'],'total_loss':details['total_loss'].detach().cpu().item(),'multi_loss':details['multi'].detach().cpu().item(),'one_step_anchor':details['one_step_anchor'].detach().cpu().item(),'delta_loss':details['delta'].detach().cpu().item(),'state_loss':details['state'].detach().cpu().item(),'wet_loss':details['wet'].detach().cpu().item(),'integral_loss':details['integral'].detach().cpu().item(),'amplitude_guard':details['amplitude_guard'].detach().cpu().item(),'learning_rate':opt.param_groups[0]['lr'],'step_seconds':float(details.get('step_seconds',float('nan'))),'peak_vram_gib':float(torch.cuda.max_memory_allocated()/1024**3)};safe_append_csv(RESULTS/'training_log.csv',row)
   if current.global_step%500==0:validate_one_step(model,val_subset_store,tr,norm,device,val_subset_rows,times_s=(120,300,600,900,1200))
   if current.global_step%1000==0:
-   records,summary=validate_all_val(model,val_subset_store,tr,norm,device,rows=val_subset_rows,steps=144);score=summary['J_val'];global_best=current.best_val_score
-   global_improved=is_improvement(score,global_best);stage_improved=is_improvement(score,current.stage_best_score)
+   records,summary=validate_all_val(model,val_subset_store,tr,norm,device,rows=val_subset_rows,steps=144);_record_horizons(current,stage,validate_horizon_ladder(model,val_subset_store,tr,norm,device,val_subset_rows))
+   if not summary.get('finite_rollout'):
+    _record_validation(current,summary,False,False)
+    if current.global_step>=2000:raise RuntimeError('EARLY_TRAINING_QUALITY_FAILURE NONFINITE_ROLLOUT')
+    return
+   stage_has_finite[0]=True;score=summary['J_val'];global_best=current.best_val_score;global_improved=is_improvement(score,global_best);stage_improved=is_improvement(score,current.stage_best_score)
+   primary=('trajectory_h_rel_l2','trajectory_momentum_rel_l2','mean_wet_iou','mixture_volume_relative_error','debris_front_mae_km');worse=sum((summary[k]>=persistence_summary[k] if k!='mean_wet_iou' else summary[k]<=persistence_summary[k]) for k in primary)
+   summary['primary_metrics_better_than_persistence']=len(primary)-worse
+   if current.global_step>=2000 and worse>=3:raise RuntimeError('EARLY_TRAINING_QUALITY_FAILURE PERSISTENCE_COLLAPSE')
    if global_improved:
     current.best_val_score=score;current.best_checkpoint_path=str(FORMAL/'best_candidate.pt');save_checkpoint(path=FORMAL/'best_candidate.pt',model=model,optimizer=opt,scheduler=sched,step=current.global_step,transform=tr,config=CFG,normalizer=norm,stage=current.current_stage,best_metric=score,stage_step=current.stage_step,stage_updates_total=current.stage_updates_total,architecture=current.architecture,best_checkpoint_path=current.best_checkpoint_path,stage_best_score=current.stage_best_score);save_state(FORMAL/'run_state.json',current)
    if stage_improved:
     current.stage_best_score=score;save_checkpoint(path=FORMAL/f'{stage.lower()}_best.pt',model=model,optimizer=opt,scheduler=sched,step=current.global_step,transform=tr,config=CFG,normalizer=norm,stage=current.current_stage,best_metric=score,stage_step=current.stage_step,stage_updates_total=current.stage_updates_total,architecture=current.architecture,best_checkpoint_path=current.best_checkpoint_path,stage_best_score=current.stage_best_score);save_state(FORMAL/'run_state.json',current)
    _record_validation(current,summary,global_improved,stage_improved)
  train_stage(model,opt,sched,state,config['updates'],batch,loss,on_update=updated)
+ if not stage_has_finite[0]:raise RuntimeError('NO_FINITE_VALIDATION_CANDIDATE')
  save_resume_pair(model,opt,sched,tr,norm,state)
 def formal(stop_after_freeze=False):
  state=load_state(FORMAL/'run_state.json',initial_state());model=None
@@ -112,23 +138,31 @@ def formal(stop_after_freeze=False):
    if len(rows)!=160 or len(feature_names())!=35 or not torch.cuda.is_available():raise RuntimeError('FORMAL_PRECHECK_FAILED')
    done(state,PipelineStage.PRECHECK);save_state(FORMAL/'run_state.json',state)
   if state.current_stage==PipelineStage.FIT_NORMALIZERS.value:
-   tr,norm=fit_training_transforms(rows,store,static_np);FORMAL.mkdir(parents=True,exist_ok=True);(FORMAL/'transform.json').write_text(json.dumps(tr.to_dict()));(FORMAL/'feature_normalization.json').write_text(json.dumps(norm.to_dict()));done(state,PipelineStage.FIT_NORMALIZERS);save_state(FORMAL/'run_state.json',state)
+   tr,norm=fit_training_transforms(rows,store,static_np);delta_norm=fit_delta_normalization(rows,store,static_np,tr,CFG['seed'],**CFG['stabilization']['delta_normalization'],bound_quantile=CFG['stabilization']['delta_bound']['quantile'],safety_factor=CFG['stabilization']['delta_bound']['safety_factor'],change_quantile=CFG['stabilization']['teacher_weighting']['change_quantile']);
+   if delta_norm.coverage<CFG['stabilization']['delta_bound']['minimum_coverage']:raise RuntimeError('DELTA_BOUND_COVERAGE_INSUFFICIENT')
+   FORMAL.mkdir(parents=True,exist_ok=True);(FORMAL/'transform.json').write_text(json.dumps(tr.to_dict()));(FORMAL/'feature_normalization.json').write_text(json.dumps(norm.to_dict()));(FORMAL/'delta_normalization.json').write_text(json.dumps(delta_norm.to_dict(),indent=2));done(state,PipelineStage.FIT_NORMALIZERS);save_state(FORMAL/'run_state.json',state)
   else:
-   tr=PhysicalTransform.from_dict(json.loads((FORMAL/'transform.json').read_text()));norm=FeatureNormalizer.from_dict(json.loads((FORMAL/'feature_normalization.json').read_text()))
-  random.seed(CFG['seed']);np.random.seed(CFG['seed']);torch.manual_seed(CFG['seed']);torch.cuda.manual_seed_all(CFG['seed']);architecture={'width':32,'modes':24,'depth':4};model=JilongGlobalOperatorV2(len(feature_names()),**architecture).to(dev);model_ref[0]=model
+   tr=PhysicalTransform.from_dict(json.loads((FORMAL/'transform.json').read_text()));norm=FeatureNormalizer.from_dict(json.loads((FORMAL/'feature_normalization.json').read_text()));delta_norm=DeltaNormalization.from_dict(json.loads((FORMAL/'delta_normalization.json').read_text()))
+  random.seed(CFG['seed']);np.random.seed(CFG['seed']);torch.manual_seed(CFG['seed']);torch.cuda.manual_seed_all(CFG['seed']);architecture={'width':32,'modes':24,'depth':4};model=JilongGlobalOperatorV2(len(feature_names()),**architecture,delta_bounds=delta_norm.bounds).to(dev);model_ref[0]=model
   if state.current_stage==PipelineStage.CAPACITY_PROBE.value:
    probes=capacity_probe(model,_capacity_loss(store,static,tr,norm,dev));apply_capacity_result(state,probes);done(state,PipelineStage.CAPACITY_PROBE);save_state(FORMAL/'run_state.json',state)
-  opt=torch.optim.AdamW(model.parameters(),lr=5e-4,weight_decay=1e-4);sched=build_scheduler(opt,500,state.total_planned_updates)
+  if not (RESULTS/'persistence_baseline.csv').exists():
+   baseline_records,persistence_summary=validate_persistence_baseline(val_subset_store,tr,norm,dev,val_subset_rows,144);RESULTS.mkdir(parents=True,exist_ok=True);__import__('pandas').DataFrame(baseline_records).to_csv(RESULTS/'persistence_baseline.csv',index=False)
+  else:
+   _,persistence_summary=validate_persistence_baseline(val_subset_store,tr,norm,dev,val_subset_rows,144)
+  torch.cuda.reset_peak_memory_stats();opt=torch.optim.AdamW(model.parameters(),lr=5e-4,weight_decay=1e-4);sched=build_scheduler(opt,500,state.total_planned_updates)
   if (FORMAL/'last.pt').exists():ck=restore_checkpoint(FORMAL/'last.pt',model,opt,sched);checkpoint_agreement(state,ck)
   while state.current_stage!=PipelineStage.FREEZE.value:
    if state.current_stage==PipelineStage.ARCHITECTURE.value:
     state.architecture=architecture;_advance(state);save_state(FORMAL/'run_state.json',state);continue
    if state.current_stage in {x['stage'] for x in state.effective_curriculum}:
-    next_stage=next_effective_stage(state,state.current_stage);_stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows,static,tr,norm,dev,state.current_stage);enter_stage(model,opt,sched,tr,norm,state,next_stage);continue
+    next_stage=next_effective_stage(state,state.current_stage);_stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows,static,tr,norm,delta_norm,dev,state.current_stage,persistence_summary);enter_stage(model,opt,sched,tr,norm,state,next_stage);continue
    if state.current_stage==PipelineStage.VAL_CONFIRM.value:
     best=FORMAL/'best_candidate.pt'
     if not best.exists():raise RuntimeError('BEST_CANDIDATE_MISSING')
-    restore_checkpoint(best,model,opt,sched);records,summary=validate_all_val(model,all_val_store,tr,norm,dev,rows=all_val_rows,steps=144);RESULTS.mkdir(parents=True,exist_ok=True);__import__('pandas').DataFrame(records).to_csv(RESULTS/'val_full_metrics.csv',index=False);(ROOT/'reports/GLOBAL_V2_VAL_CONFIRMATION.json').write_text(json.dumps(summary,indent=2));state.best_val_score=summary['J_val'];_advance(state);save_resume_pair(model,opt,sched,tr,norm,state);continue
+    restore_checkpoint(best,model,opt,sched);records,summary=validate_all_val(model,all_val_store,tr,norm,dev,rows=all_val_rows,steps=144)
+    if not summary.get('finite_rollout'):raise RuntimeError('NO_FINITE_VALIDATION_CANDIDATE')
+    RESULTS.mkdir(parents=True,exist_ok=True);__import__('pandas').DataFrame(records).to_csv(RESULTS/'val_full_metrics.csv',index=False);(ROOT/'reports/GLOBAL_V2_VAL_CONFIRMATION.json').write_text(json.dumps(summary,indent=2));state.best_val_score=summary['J_val'];_advance(state);save_resume_pair(model,opt,sched,tr,norm,state);continue
    raise RuntimeError('UNSUPPORTED_CORE_STAGE '+state.current_stage)
   source=FORMAL/'best_candidate.pt';freeze_best_candidate(source,FORMAL/'best.pt',FORMAL/'FREEZE_MANIFEST.json',{'config_hash':state.config_hash,'architecture':state.architecture,'best_val_score':state.best_val_score});done(state,PipelineStage.FREEZE);save_state(FORMAL/'run_state.json',state)
   if stop_after_freeze:return

@@ -62,13 +62,32 @@ def is_improvement(candidate,best):
     """Strict ordering prevents a later worse validation from replacing best."""
     return best is None or candidate<best
 
-def rollout_loss(model, transform, normalizer, previous, current, targets, static, params, times, active, cell_area, amp_dtype=None, gradient_checkpointing=True):
-    """Closed loop: targets are future distinct GT frames, inputs after k1 are predictions."""
-    losses=[];amps=[];pred=current;steps=len(targets)
+def rollout_loss(model, transform, normalizer, previous, current, targets, static, params, times, active, cell_area, amp_dtype=None, gradient_checkpointing=True, burn_in_steps=0, burn_targets=None, teacher_current=None, delta_normalization=None, weighting=None):
+    """Closed loop with no-grad burn-in followed by gradient-tracked BPTT.
+
+    Burn-in exposes the model to its own state distribution without retaining a
+    graph.  Teacher fields remain the only source of delta/change weighting.
+    """
+    burn_targets=[] if burn_targets is None else burn_targets
+    if len(burn_targets)!=int(burn_in_steps):raise ValueError('burn target count mismatch')
+    pred=current
+    with torch.no_grad():
+        for burn_step in range(int(burn_in_steps)):
+            features=build_features(previous,pred,static,params,times+(.0069444*burn_step),transform,normalizer)
+            pred=project_physical(transform.decode(model(features,transform.encode(pred))),active)
+            previous=pred if burn_step==0 else previous
+            # History must progress with two model states, not reuse an old GT.
+            previous,current= current,pred
+            pred=current
+    previous,pred=previous,pred;reference=current if teacher_current is None else teacher_current
+    losses=[];amps=[];steps=len(targets)
     for k in range(steps):
-        features=build_features(previous,pred,static,params,times+(.0069444*k),transform,normalizer)
+        features=build_features(previous,pred,static,params,times+(.0069444*(k+int(burn_in_steps))),transform,normalizer)
         encoded=transform.encode(pred)
         fn=lambda f,e:model(f,e)
         with torch.autocast(device_type=pred.device.type,enabled=amp_dtype is not None,dtype=amp_dtype): out=checkpoint(fn,features,encoded,use_reentrant=False) if gradient_checkpointing and len(targets)>=2 else fn(features,encoded)
-        nextp=project_physical(transform.decode(out));teacher_current=current if k==0 else targets[k-1];term,detail=step_loss(out,transform.encode(targets[k]),teacher_current,nextp,targets[k],active,cell_area); losses.append(term);amps.append(amplitude_guard(out,transform.encode(targets[k]),active));previous,pred=pred,nextp
-    total,parts=rollout_objective(losses,amps);return total,{**parts,**detail},pred
+        nextp=project_physical(transform.decode(out),active);target_t=transform.encode(targets[k]);reference_t=transform.encode(reference)
+        source_active=bool(float((times[0]+(.0069444*(k+int(burn_in_steps)))).detach().cpu())*1440<30)
+        scales=None if delta_normalization is None else delta_normalization.scales
+        term,detail=step_loss(out,target_t,reference,nextp,targets[k],active,cell_area,encoded,reference_t,scales,static,source_active,weighting);losses.append(term);amps.append(amplitude_guard(out,target_t,active));previous,pred=pred,nextp;reference=targets[k]
+    total,parts=rollout_objective(losses,amps);return total,{**parts,**detail,'burn_in_steps':int(burn_in_steps)},pred

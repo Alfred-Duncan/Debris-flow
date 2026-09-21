@@ -32,6 +32,23 @@ class FeatureNormalizer:
     @classmethod
     def from_dict(cls,d):return cls(d['terrain']['mean_active'],d['terrain']['std_active'],d['lateral_q']['scale'],d['external_inflow_q']['scale'],d['parameters']['mean'],d['parameters']['std'])
 
+@dataclass
+class DeltaNormalization:
+    """TRAIN-only robust scales, bounds, and change threshold for 10-s deltas."""
+    scales:list
+    bounds:list
+    change_threshold:float
+    coverage:float
+    quantile:float
+    bound_quantile:float
+    safety_factor:float
+    sample_count:int
+    def scale_tensor(self,device,dtype=torch.float32):return torch.tensor(self.scales,device=device,dtype=dtype)[None,:,None,None]
+    def bound_tensor(self,device,dtype=torch.float32):return torch.tensor(self.bounds,device=device,dtype=dtype)[None,:,None,None]
+    def to_dict(self):return {"state_names":list(STATE_NAMES),"scales":self.scales,"bounds":self.bounds,"change_threshold":self.change_threshold,"coverage":self.coverage,"quantile":self.quantile,"bound_quantile":self.bound_quantile,"safety_factor":self.safety_factor,"sample_count":self.sample_count,"fit_scope":"TRAIN_ONLY"}
+    @classmethod
+    def from_dict(cls,d):return cls(d["scales"],d["bounds"],d["change_threshold"],d["coverage"],d["quantile"],d["bound_quantile"],d["safety_factor"],d["sample_count"])
+
 def fit_training_transforms(rows,store,static,seed=20260920,times=(0,120,300,600,900,1200,1440),max_cells=2048):
     """Streaming deterministic fit over all and only TRAIN scenarios."""
     if not set(rows['split']).issubset({'TRAIN'}):raise ValueError('TRAIN-only fit required')
@@ -44,3 +61,35 @@ def fit_training_transforms(rows,store,static,seed=20260920,times=(0,120,300,600
     tr=PhysicalTransform(_q(h,.90,1e-6),_q(hu,.95,1e-6),_q(hv,.95,1e-6),_q(dz,.95,.05)); active=static[1].astype(bool);z=static[0][active];lat=static[4][static[4]!=0];ext=static[5][static[5]!=0]
     p=rows.loc[:,PARAMETER_NAMES].to_numpy(float);p[:,2]=np.log(p[:,2]);p[:,4]=np.log(p[:,4]);norm=FeatureNormalizer(float(z.mean()),float(z.std() or 1),_q([lat],.95,1e-6),_q([ext],.95,1e-6),p.mean(0).tolist(),np.maximum(p.std(0),1e-6).tolist())
     return tr,norm
+
+def _encode_numpy(state,transform):
+    """Numpy counterpart used only while fitting persisted TRAIN statistics."""
+    out=np.asarray(state,dtype=np.float32).copy()
+    out[0]=np.log1p(np.maximum(out[0],0)/transform.h_scale)
+    out[1]=np.arcsinh(out[1]/transform.hu_scale)
+    out[2]=np.arcsinh(out[2]/transform.hv_scale)
+    out[5]=np.arcsinh(out[5]/transform.dz_scale)
+    return out
+
+def fit_delta_normalization(rows,store,static,transform,seed=20260920,samples_per_case=12,max_cells=512,quantile=.995,bound_quantile=.999,safety_factor=1.2,floor=1e-6,change_quantile=.90):
+    """Fit delta scales/bounds from deterministic samples of TRAIN pairs only.
+
+    The same sampled distribution is retained for the reported coverage, so a
+    resume or another machine derives byte-for-byte equivalent configuration.
+    """
+    if not set(rows['split']).issubset({'TRAIN'}):raise ValueError('TRAIN-only delta fit required')
+    rng=np.random.default_rng(seed);active=np.asarray(static[1],bool);samples=[[] for _ in STATE_NAMES];change=[]
+    available=np.arange(144,dtype=int)
+    for _,row in rows.sort_values('scenario_id').iterrows():
+        forced=np.asarray([0,1,2],int);count=max(int(samples_per_case)-len(forced),0)
+        picked=np.unique(np.concatenate((forced,rng.choice(available,size=count,replace=False))))
+        for index in picked:
+            before=_encode_numpy(store.frame(row,int(index*10)),transform);after=_encode_numpy(store.frame(row,int((index+1)*10)),transform);delta=after-before
+            cells=np.flatnonzero(active.ravel());take=rng.choice(cells,size=min(len(cells),int(max_cells)),replace=False)
+            for channel in range(len(STATE_NAMES)):samples[channel].append(delta[channel].ravel()[take])
+            change.append(np.mean(np.abs(delta[:,active]),axis=0))
+    flattened=[np.concatenate(parts) for parts in samples];scales=[max(float(np.quantile(np.abs(values),quantile)),floor) for values in flattened]
+    raw_bounds=[max(float(np.quantile(np.abs(values),bound_quantile)),floor) for values in flattened];bounds=[value*float(safety_factor) for value in raw_bounds]
+    coverage=float(np.mean(np.concatenate([np.abs(values)<=bound for values,bound in zip(flattened,bounds)])))
+    threshold=max(float(np.quantile(np.concatenate(change),change_quantile)),floor)
+    return DeltaNormalization(scales,bounds,threshold,coverage,float(quantile),float(bound_quantile),float(safety_factor),int(sum(len(x) for x in flattened)))

@@ -48,7 +48,7 @@ def validate_one_step(model,store,transform,normalizer,device,rows=None,times_s=
         index=int(np.where(store.rows.scenario_id.eq(row.scenario_id))[0][0])
         for time_s in times_s:
             previous,current,target,params,time,_=store.sample(index,int(time_s));previous,current,target,params=(_tensor(x,device) for x in (previous,current,target,params))
-            pred=project_physical(transform.decode(model(build_features(previous,current,static,params,torch.tensor([time],device=device),transform,normalizer),transform.encode(current))))
+            pred=project_physical(transform.decode(model(build_features(previous,current,static,params,torch.tensor([time],device=device),transform,normalizer),transform.encode(current))),active)
             mask=active[:,0].bool();hrel=_ratio(((pred[:,0]-target[:,0]).square()*mask).sum(),(target[:,0].square()*mask).sum());mrel=_ratio(((pred[:,1:3]-target[:,1:3]).square()*active).sum(),(target[:,1:3].square()*active).sum());iou=((pred[:,0]>=STORAGE_WET_THRESHOLD_M)&(target[:,0]>=STORAGE_WET_THRESHOLD_M)&mask).sum().float()/(((pred[:,0]>=STORAGE_WET_THRESHOLD_M)|(target[:,0]>=STORAGE_WET_THRESHOLD_M))&mask).sum().clamp_min(1)
             records.append({"scenario_id":row.scenario_id,"time_s":time_s,"h_rel_l2":hrel,"momentum_rel_l2":mrel,"wet_iou":float(iou)})
     return records
@@ -66,23 +66,46 @@ def validate_full_rollout(model,store,transform,normalizer,device,steps=144,rows
         cnum=torch.zeros((),device=device);cden=torch.zeros((),device=device)
         inum=torch.zeros((),device=device);iden=torch.zeros((),device=device)
         dznum=torch.zeros((),device=device);dzden=torch.zeros((),device=device)
-        wet_sum=torch.zeros((),device=device);volume_errors=[];front_errors=[];target=None;final_iou=0.;final_front_error=0.
+        wet_sum=torch.zeros((),device=device);volume_errors=[];front_errors=[];target=None;final_iou=0.;final_front_error=0.;nonfinite_step=None
         if not out:
             with np.load(INPUT) as data:route=np.asarray(data['route_chainage_m'],np.float32)
         route_length=float(np.nanmax(route)/1e3)
         for step in range(min(steps,144)):
-            target=_tensor(store.frame(row,(step+1)*10),device);pred=project_physical(transform.decode(model(build_features(previous,current,static,params,torch.tensor([time+step/144.],device=device),transform,normalizer),transform.encode(current))))
+            target=_tensor(store.frame(row,(step+1)*10),device);pred=project_physical(transform.decode(model(build_features(previous,current,static,params,torch.tensor([time+step/144.],device=device),transform,normalizer),transform.encode(current))),active)
+            if not torch.isfinite(pred).all():
+                nonfinite_step=step+1;break
             mask=active[:,0].bool();hnum+=((pred[:,0]-target[:,0]).square()*mask).sum();hden+=(target[:,0].square()*mask).sum();mnum+=((pred[:,1:3]-target[:,1:3]).square()*active).sum();mden+=(target[:,1:3].square()*active).sum();cnum+=((pred[:,3]-target[:,3]).square()*mask).sum();cden+=(target[:,3].square()*mask).sum();inum+=((pred[:,4]-target[:,4]).square()*mask).sum();iden+=(target[:,4].square()*mask).sum();dznum+=((pred[:,5]-target[:,5]).square()*mask).sum();dzden+=(target[:,5].square()*mask).sum()
             p_wet=pred[:,0]>=STORAGE_WET_THRESHOLD_M;t_wet=target[:,0]>=STORAGE_WET_THRESHOLD_M;iou=(p_wet&t_wet&mask).sum().float()/((p_wet|t_wet)&mask).sum().clamp_min(1);wet_sum+=iou;final_iou=float(iou.cpu())
             pv=(pred[:,0:1]*active).sum()*cell_area;tv=(target[:,0:1]*active).sum()*cell_area;volume_errors.append(float(((pv-tv).abs()/tv.abs().clamp_min(1.)).cpu()))
             error=front_error(debris_front(pred[0].detach().cpu().numpy(),route),debris_front(target[0].detach().cpu().numpy(),route),route_length)
             if error is not None:front_errors.append(error);final_front_error=error
             previous,current=current,pred
-        out.append({"scenario_id":row.scenario_id,"trajectory_h_rel_l2":_ratio(hnum,hden),"final_h_rel_l2":_ratio(((current[:,0]-target[:,0]).square()*active[:,0]).sum(),(target[:,0].square()*active[:,0]).sum()),"trajectory_momentum_rel_l2":_ratio(mnum,mden),"trajectory_c_rel_l2":_ratio(cnum,cden),"trajectory_ice_rel_l2":_ratio(inum,iden),"trajectory_dz_rel_l2":_ratio(dznum,dzden),"mean_wet_iou":float((wet_sum/min(steps,144)).cpu()),"final_wet_iou":final_iou,"mixture_volume_relative_error":float(np.mean(volume_errors)),"debris_front_mae_km":float(np.mean(front_errors)) if front_errors else route_length,"debris_front_final_error_km":final_front_error})
+        if nonfinite_step is not None:
+            out.append({"scenario_id":row.scenario_id,"validation_status":"NONFINITE_ROLLOUT","finite_rollout":False,"first_nonfinite_step":nonfinite_step,"trajectory_h_rel_l2":None,"trajectory_momentum_rel_l2":None,"trajectory_c_rel_l2":None,"trajectory_ice_rel_l2":None,"trajectory_dz_rel_l2":None,"mean_wet_iou":None,"final_wet_iou":None,"mixture_volume_relative_error":None,"debris_front_mae_km":None,"debris_front_final_error_km":None})
+        else:
+            out.append({"scenario_id":row.scenario_id,"validation_status":"FINITE","finite_rollout":True,"first_nonfinite_step":None,"trajectory_h_rel_l2":_ratio(hnum,hden),"final_h_rel_l2":_ratio(((current[:,0]-target[:,0]).square()*active[:,0]).sum(),(target[:,0].square()*active[:,0]).sum()),"trajectory_momentum_rel_l2":_ratio(mnum,mden),"trajectory_c_rel_l2":_ratio(cnum,cden),"trajectory_ice_rel_l2":_ratio(inum,iden),"trajectory_dz_rel_l2":_ratio(dznum,dzden),"mean_wet_iou":float((wet_sum/min(steps,144)).cpu()),"final_wet_iou":final_iou,"mixture_volume_relative_error":float(np.mean(volume_errors)),"debris_front_mae_km":float(np.mean(front_errors)) if front_errors else route_length,"debris_front_final_error_km":final_front_error})
     return out
 
 def validate_all_val(model,store,transform,normalizer,device,rows=None,steps=144):
-    records=validate_full_rollout(model,store,transform,normalizer,device,steps,rows);keys=REQUIRED_SCORE_KEYS
-    summary={k:float(np.mean([r[k] for r in records])) for k in keys};summary["validation_subset_hash"]=hashlib.sha256("\n".join(sorted(str(r["scenario_id"]) for r in records)).encode()).hexdigest();summary["J_val"]=validation_score(summary);return records,summary
+    records=validate_full_rollout(model,store,transform,normalizer,device,steps,rows)
+    nonfinite=[r for r in records if not r.get("finite_rollout",True)]
+    subset_hash=hashlib.sha256("\n".join(sorted(str(r["scenario_id"]) for r in records)).encode()).hexdigest()
+    if nonfinite:return records,{"validation_status":"NONFINITE_ROLLOUT","finite_rollout":False,"first_nonfinite_step":min(r["first_nonfinite_step"] for r in nonfinite),"validation_subset_hash":subset_hash}
+    keys=REQUIRED_SCORE_KEYS;summary={k:float(np.mean([r[k] for r in records])) for k in keys};summary["validation_subset_hash"]=subset_hash;summary["validation_status"]="FINITE";summary["finite_rollout"]=True;summary["J_val"]=validation_score(summary);return records,summary
+
+class _PersistenceModel(torch.nn.Module):
+    def forward(self,features,encoded_current):return encoded_current
+
+def validate_persistence_baseline(store,transform,normalizer,device,rows=None,steps=144):
+    """The immutable closed-loop baseline: next state is current state."""
+    model=_PersistenceModel().to(device);return validate_all_val(model,store,transform,normalizer,device,rows,steps)
+
+def validate_horizon_ladder(model,store,transform,normalizer,device,rows=None,horizons=(1,2,4,8,16,32,64,144)):
+    """Small persisted horizon summary; each entry retains nonfinite status."""
+    output=[]
+    for horizon in horizons:
+        _,summary=validate_all_val(model,store,transform,normalizer,device,rows,steps=int(horizon))
+        output.append({"horizon":int(horizon),"h_rel_l2":summary.get("trajectory_h_rel_l2"),"momentum_rel_l2":summary.get("trajectory_momentum_rel_l2"),"wet_iou":summary.get("mean_wet_iou"),"volume_rel_error":summary.get("mixture_volume_relative_error"),"finite_fraction":1.0 if summary.get("finite_rollout") else 0.0,"validation_status":summary["validation_status"]})
+    return output
 
 def validate_short_rollout(model,store,transform,normalizer,device,steps=12):return validate_full_rollout(model,store,transform,normalizer,device,steps)
