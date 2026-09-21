@@ -1,0 +1,36 @@
+{
+  "training_source_commit": "19c68c587c10d9e83848ac7d4bfb61e9242155c0",
+  "pid": 94228,
+  "stop_time": "2026-09-21T09:30:23.275519+00:00",
+  "last_resumable_checkpoint_step": 1250,
+  "checkpoint_agreement": "PASS",
+  "run_state_stage": "STAGE_A",
+  "run_state_global_step": 1250,
+  "validation_status": "FINITE",
+  "finite_rollout": true,
+  "first_nonfinite_step": null,
+  "step1000_metrics": {
+    "trajectory_h_rel_l2": 1.0561033487319946,
+    "trajectory_momentum_rel_l2": 1.4109766334295273,
+    "mean_wet_iou": 0.20314612984657288,
+    "mixture_volume_relative_error": 0.5101281811302114,
+    "debris_front_mae_km": 15.944932442255787
+  },
+  "J_val": 4.347900712733323,
+  "primary_metrics_better_than_persistence": "2/5",
+  "persistence_metrics": {
+    "trajectory_h_rel_l2": 0.9749480932950974,
+    "trajectory_momentum_rel_l2": 0.9994422718882561,
+    "mean_wet_iou": 0.6614985093474388,
+    "mixture_volume_relative_error": 0.9180354559794068,
+    "debris_front_mae_km": 23.940000534057617
+  },
+  "better_than_persistence": {
+    "trajectory_h_rel_l2": false,
+    "trajectory_momentum_rel_l2": false,
+    "mean_wet_iou": false,
+    "mixture_volume_relative_error": true,
+    "debris_front_mae_km": true
+  },
+  "horizon_count": 8
+}
