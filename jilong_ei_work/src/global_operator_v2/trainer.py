@@ -20,9 +20,10 @@ def choose_amp(device: torch.device):
 def save_checkpoint(path, model, optimizer, scheduler, step, transform, config, normalizer=None, stage=None, best_metric=None, stage_step=None, stage_updates_total=None, architecture=None, best_checkpoint_path=None, stage_best_score=None):
     """Write a complete resumable checkpoint atomically (including on Windows)."""
     path=__import__('pathlib').Path(path);path.parent.mkdir(parents=True,exist_ok=True)
-    semantics={"bounded_residual":bool(getattr(model,'bounded_residual',False)),"delta_bounds":getattr(model,'delta_bounds',torch.empty(0)).detach().cpu().tolist()}
+    guarded=bool(getattr(model,'momentum_state_guard',False))
+    semantics={"bounded_residual":bool(getattr(model,'bounded_residual',False)),"delta_bounds":getattr(model,'delta_bounds',torch.empty(0)).detach().cpu().tolist(),"momentum_state_guard":guarded,"momentum_state_bounds":getattr(model,'momentum_state_bounds',torch.empty(0)).detach().cpu().tolist() if guarded else None,"momentum_envelope_version":getattr(model,'momentum_envelope_version',None)}
     payload={"model":model.state_dict(),"optimizer":optimizer.state_dict(),"scheduler":scheduler.state_dict() if scheduler else None,
-             "checkpoint_version":"2.4","step":step,"stage_name":stage,"stage_step":stage_step,"stage_updates_total":stage_updates_total,"global_step":step,"best_val_score":best_metric,"best_metric":best_metric,"best_checkpoint_path":best_checkpoint_path,"stage_best_score":stage_best_score,"transform":transform.to_dict(),"feature_normalizer":normalizer.to_dict() if normalizer else None,"delta_normalization":getattr(model,'delta_normalization',None),"model_semantics":semantics,"config":config,"config_hash":__import__('hashlib').sha256(__import__('json').dumps(config,sort_keys=True).encode()).hexdigest(),"architecture":architecture,"torch_rng":torch.get_rng_state(),"numpy_rng":np.random.get_state(),"python_rng":random.getstate(),"cuda_rng":torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None}
+             "checkpoint_version":"2.5","step":step,"stage_name":stage,"stage_step":stage_step,"stage_updates_total":stage_updates_total,"global_step":step,"best_val_score":best_metric,"best_metric":best_metric,"best_checkpoint_path":best_checkpoint_path,"stage_best_score":stage_best_score,"transform":transform.to_dict(),"feature_normalizer":normalizer.to_dict() if normalizer else None,"delta_normalization":getattr(model,'delta_normalization',None),"model_semantics":semantics,"config":config,"config_hash":__import__('hashlib').sha256(__import__('json').dumps(config,sort_keys=True).encode()).hexdigest(),"architecture":architecture,"torch_rng":torch.get_rng_state(),"numpy_rng":np.random.get_state(),"python_rng":random.getstate(),"cuda_rng":torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None}
     fd,tmp=tempfile.mkstemp(dir=path.parent,suffix='.pt.tmp');os.close(fd)
     try: torch.save(payload,tmp);os.replace(tmp,path)
     finally:
@@ -36,7 +37,16 @@ def restore_checkpoint(path, model, optimizer=None, scheduler=None):
         if hasattr(model,'delta_bounds'):
             bounds=torch.as_tensor(semantics.get('delta_bounds',[]),dtype=model.delta_bounds.dtype)
             if bool(getattr(model,'bounded_residual',False))!=expected or bounds.shape!=model.delta_bounds.shape or not torch.equal(bounds,model.delta_bounds.detach().cpu()):raise RuntimeError('DELTA_MODEL_SEMANTICS_MISMATCH')
-    model.load_state_dict(ck["model"])
+    expected_guard=bool((semantics or {}).get('momentum_state_guard',False));requested_guard=bool(getattr(model,'momentum_state_guard',False))
+    if expected_guard:
+        bounds=torch.as_tensor((semantics or {}).get('momentum_state_bounds',[]),dtype=model.momentum_state_bounds.dtype)
+        if not requested_guard or bounds.shape!=model.momentum_state_bounds.shape or not torch.equal(bounds,model.momentum_state_bounds.detach().cpu()):raise RuntimeError('MOMENTUM_GUARD_SEMANTICS_MISMATCH')
+    elif requested_guard:
+        ck['checkpoint_migration']='ADD_TRAIN_ONLY_MOMENTUM_STATE_GUARD'
+    state_dict=dict(ck['model'])
+    if not expected_guard and requested_guard:state_dict.pop('momentum_state_bounds',None)
+    missing,unexpected=model.load_state_dict(state_dict,strict=False)
+    if unexpected or set(missing)-{'momentum_state_bounds'}:raise RuntimeError(f'CHECKPOINT_MODEL_STATE_MISMATCH missing={missing} unexpected={unexpected}')
     if optimizer and ck.get("optimizer"):optimizer.load_state_dict(ck["optimizer"])
     if scheduler and ck.get("scheduler"):scheduler.load_state_dict(ck["scheduler"])
     torch.set_rng_state(ck["torch_rng"]);np.random.set_state(ck["numpy_rng"]);random.setstate(ck["python_rng"])

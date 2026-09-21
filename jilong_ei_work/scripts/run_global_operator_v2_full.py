@@ -46,9 +46,27 @@ def rollback_state_to_last_checkpoint(state):
  if not path.exists():return state
  checkpoint=torch.load(path,map_location='cpu',weights_only=False)
  state.current_stage=checkpoint['stage_name'];state.stage_step=checkpoint['stage_step'];state.global_step=checkpoint['global_step'];state.stage_updates_total=checkpoint['stage_updates_total'];state.architecture=checkpoint['architecture']
- state.best_val_score=checkpoint.get('best_val_score',checkpoint.get('best_metric'));state.best_checkpoint_path=checkpoint.get('best_checkpoint_path');state.stage_best_score=checkpoint.get('stage_best_score')
+ state.best_val_score=checkpoint.get('best_val_score',checkpoint.get('best_metric'));state.best_checkpoint_path=checkpoint.get('best_checkpoint_path');state.stage_best_score=checkpoint.get('stage_best_score');reconcile_best_metadata(state)
  checkpoint_agreement(state,checkpoint)
  return state
+def _checkpoint_score(checkpoint):
+ value=checkpoint.get('best_val_score',checkpoint.get('best_metric'))
+ return float(value) if value is not None and math.isfinite(float(value)) else None
+def reconcile_best_metadata(state):
+ """A stale last.pt must not silently replace a newer persisted best candidate."""
+ candidate=FORMAL/'best_candidate.pt'
+ if candidate.exists():
+  checkpoint=torch.load(candidate,map_location='cpu',weights_only=False);score=_checkpoint_score(checkpoint)
+  if score is not None and (state.best_val_score is None or score<state.best_val_score):state.best_val_score=score;state.best_checkpoint_path=str(candidate)
+ stage_path=FORMAL/f'{str(state.current_stage).lower()}_best.pt'
+ if stage_path.exists():
+  checkpoint=torch.load(stage_path,map_location='cpu',weights_only=False);score=_checkpoint_score(checkpoint)
+  if score is not None and (state.stage_best_score is None or score<state.stage_best_score):state.stage_best_score=score
+ return state
+def momentum_state_bounds():
+ path=FORMAL/'momentum_state_envelope.json'
+ if not path.exists():return None,None
+ envelope=json.loads(path.read_text());return [float(envelope['hu']['guard']),float(envelope['hv']['guard'])],envelope.get('envelope_version')
 def enter_stage(model,opt,sched,tr,norm,state,stage):
  state.current_stage=stage;state.stage_step=0;state.stage_best_score=None
  config=next((item for item in state.effective_curriculum if item['stage']==stage),None)
@@ -155,11 +173,13 @@ def _stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows
    stage_has_finite[0]=True;score=summary['J_val'];global_best=current.best_val_score;global_improved=is_improvement(score,global_best);stage_improved=is_improvement(score,current.stage_best_score)
    primary=('trajectory_h_rel_l2','trajectory_momentum_rel_l2','mean_wet_iou','mixture_volume_relative_error','debris_front_mae_km');worse=sum((summary[k]>=persistence_summary[k] if k!='mean_wet_iou' else summary[k]<=persistence_summary[k]) for k in primary)
    summary['primary_metrics_better_than_persistence']=len(primary)-worse
+   metadata_changed=False
    if global_improved:
-    current.best_val_score=score;current.best_checkpoint_path=str(FORMAL/'best_candidate.pt');save_checkpoint(path=FORMAL/'best_candidate.pt',model=model,optimizer=opt,scheduler=sched,step=current.global_step,transform=tr,config=CFG,normalizer=norm,stage=current.current_stage,best_metric=score,stage_step=current.stage_step,stage_updates_total=current.stage_updates_total,architecture=current.architecture,best_checkpoint_path=current.best_checkpoint_path,stage_best_score=current.stage_best_score);save_state(FORMAL/'run_state.json',current)
+    current.best_val_score=score;current.best_checkpoint_path=str(FORMAL/'best_candidate.pt');save_checkpoint(path=FORMAL/'best_candidate.pt',model=model,optimizer=opt,scheduler=sched,step=current.global_step,transform=tr,config=CFG,normalizer=norm,stage=current.current_stage,best_metric=score,stage_step=current.stage_step,stage_updates_total=current.stage_updates_total,architecture=current.architecture,best_checkpoint_path=current.best_checkpoint_path,stage_best_score=current.stage_best_score);metadata_changed=True
    if stage_improved:
-    current.stage_best_score=score;save_checkpoint(path=FORMAL/f'{stage.lower()}_best.pt',model=model,optimizer=opt,scheduler=sched,step=current.global_step,transform=tr,config=CFG,normalizer=norm,stage=current.current_stage,best_metric=score,stage_step=current.stage_step,stage_updates_total=current.stage_updates_total,architecture=current.architecture,best_checkpoint_path=current.best_checkpoint_path,stage_best_score=current.stage_best_score);save_state(FORMAL/'run_state.json',current)
+    current.stage_best_score=score;save_checkpoint(path=FORMAL/f'{stage.lower()}_best.pt',model=model,optimizer=opt,scheduler=sched,step=current.global_step,transform=tr,config=CFG,normalizer=norm,stage=current.current_stage,best_metric=score,stage_step=current.stage_step,stage_updates_total=current.stage_updates_total,architecture=current.architecture,best_checkpoint_path=current.best_checkpoint_path,stage_best_score=current.stage_best_score);metadata_changed=True
    finalize_periodic_validation(current,stage,horizons,summary,global_improved,stage_improved,worse)
+   if metadata_changed:save_resume_pair(model,opt,sched,tr,norm,current)
  train_stage(model,opt,sched,state,config['updates'],batch,loss,on_update=updated)
  ensure_stage_has_finite_candidate(stage_has_finite[0])
  save_resume_pair(model,opt,sched,tr,norm,state)
@@ -176,7 +196,7 @@ def formal(stop_after_freeze=False):
    FORMAL.mkdir(parents=True,exist_ok=True);(FORMAL/'transform.json').write_text(json.dumps(tr.to_dict()));(FORMAL/'feature_normalization.json').write_text(json.dumps(norm.to_dict()));(FORMAL/'delta_normalization.json').write_text(json.dumps(delta_norm.to_dict(),indent=2));done(state,PipelineStage.FIT_NORMALIZERS);save_state(FORMAL/'run_state.json',state)
   else:
    tr=PhysicalTransform.from_dict(json.loads((FORMAL/'transform.json').read_text()));norm=FeatureNormalizer.from_dict(json.loads((FORMAL/'feature_normalization.json').read_text()));delta_norm=DeltaNormalization.from_dict(json.loads((FORMAL/'delta_normalization.json').read_text()))
-  random.seed(CFG['seed']);np.random.seed(CFG['seed']);torch.manual_seed(CFG['seed']);torch.cuda.manual_seed_all(CFG['seed']);architecture={'width':32,'modes':24,'depth':4};model=JilongGlobalOperatorV2(len(feature_names()),**architecture,delta_bounds=delta_norm.bounds).to(dev);model.delta_normalization=delta_norm.to_dict();model_ref[0]=model
+  random.seed(CFG['seed']);np.random.seed(CFG['seed']);torch.manual_seed(CFG['seed']);torch.cuda.manual_seed_all(CFG['seed']);architecture={'width':32,'modes':24,'depth':4};guard_bounds,envelope_version=momentum_state_bounds();model=JilongGlobalOperatorV2(len(feature_names()),**architecture,delta_bounds=delta_norm.bounds,momentum_state_bounds=guard_bounds).to(dev);model.momentum_envelope_version=envelope_version;model.delta_normalization=delta_norm.to_dict();model_ref[0]=model
   if state.current_stage==PipelineStage.CAPACITY_PROBE.value:
    probes=capacity_probe(model,_capacity_loss(store,static,tr,norm,delta_norm,dev));apply_capacity_result(state,probes);done(state,PipelineStage.CAPACITY_PROBE);save_state(FORMAL/'run_state.json',state)
   if not (RESULTS/'persistence_baseline.csv').exists():
@@ -184,7 +204,9 @@ def formal(stop_after_freeze=False):
   else:
    _,persistence_summary=validate_persistence_baseline(val_subset_store,tr,norm,dev,val_subset_rows,144)
   torch.cuda.reset_peak_memory_stats();opt=torch.optim.AdamW(model.parameters(),lr=5e-4,weight_decay=1e-4);sched=build_scheduler(opt,500,state.total_planned_updates)
-  if (FORMAL/'last.pt').exists():ck=restore_checkpoint(FORMAL/'last.pt',model,opt,sched);checkpoint_agreement(state,ck)
+  if (FORMAL/'last.pt').exists():
+   ck=restore_checkpoint(FORMAL/'last.pt',model,opt,sched);checkpoint_agreement(state,ck)
+   if ck.get('checkpoint_migration'):(ROOT/'reports/GLOBAL_V2_CHECKPOINT_MIGRATION.json').write_text(json.dumps({'migration':ck['checkpoint_migration'],'from_checkpoint':str(FORMAL/'last.pt'),'global_step':state.global_step,'momentum_state_bounds':guard_bounds},indent=2))
   while state.current_stage!=PipelineStage.FREEZE.value:
    if state.current_stage==PipelineStage.ARCHITECTURE.value:
     state.architecture=architecture;_advance(state);save_state(FORMAL/'run_state.json',state);continue

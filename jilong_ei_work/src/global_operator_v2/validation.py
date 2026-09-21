@@ -66,12 +66,12 @@ def validate_full_rollout(model,store,transform,normalizer,device,steps=144,rows
         cnum=torch.zeros((),device=device);cden=torch.zeros((),device=device)
         inum=torch.zeros((),device=device);iden=torch.zeros((),device=device)
         dznum=torch.zeros((),device=device);dzden=torch.zeros((),device=device)
-        wet_sum=torch.zeros((),device=device);volume_errors=[];front_errors=[];target=None;final_iou=0.;final_front_error=0.;nonfinite_step=None
+        wet_sum=torch.zeros((),device=device);volume_errors=[];front_errors=[];guard_activations=[];target=None;final_iou=0.;final_front_error=0.;nonfinite_step=None
         if not out:
             with np.load(INPUT) as data:route=np.asarray(data['route_chainage_m'],np.float32)
         route_length=float(np.nanmax(route)/1e3)
         for step in range(min(steps,144)):
-            target=_tensor(store.frame(row,(step+1)*10),device);pred=project_physical(transform.decode(model(build_features(previous,current,static,params,torch.tensor([time+step/144.],device=device),transform,normalizer),transform.encode(current))),active)
+            target=_tensor(store.frame(row,(step+1)*10),device);pred=project_physical(transform.decode(model(build_features(previous,current,static,params,torch.tensor([time+step/144.],device=device),transform,normalizer),transform.encode(current))),active);guard_activations.append(float(getattr(model,'last_momentum_guard_activation_fraction',0.)))
             if not torch.isfinite(pred).all():
                 nonfinite_step=step+1;break
             mask=active[:,0].bool();hnum+=((pred[:,0]-target[:,0]).square()*mask).sum();hden+=(target[:,0].square()*mask).sum();mnum+=((pred[:,1:3]-target[:,1:3]).square()*active).sum();mden+=(target[:,1:3].square()*active).sum();cnum+=((pred[:,3]-target[:,3]).square()*mask).sum();cden+=(target[:,3].square()*mask).sum();inum+=((pred[:,4]-target[:,4]).square()*mask).sum();iden+=(target[:,4].square()*mask).sum();dznum+=((pred[:,5]-target[:,5]).square()*mask).sum();dzden+=(target[:,5].square()*mask).sum()
@@ -81,9 +81,9 @@ def validate_full_rollout(model,store,transform,normalizer,device,steps=144,rows
             if error is not None:front_errors.append(error);final_front_error=error
             previous,current=current,pred
         if nonfinite_step is not None:
-            out.append({"scenario_id":row.scenario_id,"validation_status":"NONFINITE_ROLLOUT","finite_rollout":False,"first_nonfinite_step":nonfinite_step,"trajectory_h_rel_l2":None,"trajectory_momentum_rel_l2":None,"trajectory_c_rel_l2":None,"trajectory_ice_rel_l2":None,"trajectory_dz_rel_l2":None,"mean_wet_iou":None,"final_wet_iou":None,"mixture_volume_relative_error":None,"debris_front_mae_km":None,"debris_front_final_error_km":None})
+            out.append({"scenario_id":row.scenario_id,"validation_status":"NONFINITE_ROLLOUT","finite_rollout":False,"first_nonfinite_step":nonfinite_step,"trajectory_h_rel_l2":None,"trajectory_momentum_rel_l2":None,"trajectory_c_rel_l2":None,"trajectory_ice_rel_l2":None,"trajectory_dz_rel_l2":None,"mean_wet_iou":None,"final_wet_iou":None,"mixture_volume_relative_error":None,"debris_front_mae_km":None,"debris_front_final_error_km":None,"momentum_guard_activation_fraction":float(np.mean(guard_activations)) if guard_activations else 0.,"momentum_guard_activation_steps":int(sum(value>0 for value in guard_activations))})
         else:
-            out.append({"scenario_id":row.scenario_id,"validation_status":"FINITE","finite_rollout":True,"first_nonfinite_step":None,"trajectory_h_rel_l2":_ratio(hnum,hden),"final_h_rel_l2":_ratio(((current[:,0]-target[:,0]).square()*active[:,0]).sum(),(target[:,0].square()*active[:,0]).sum()),"trajectory_momentum_rel_l2":_ratio(mnum,mden),"trajectory_c_rel_l2":_ratio(cnum,cden),"trajectory_ice_rel_l2":_ratio(inum,iden),"trajectory_dz_rel_l2":_ratio(dznum,dzden),"mean_wet_iou":float((wet_sum/min(steps,144)).cpu()),"final_wet_iou":final_iou,"mixture_volume_relative_error":float(np.mean(volume_errors)),"debris_front_mae_km":float(np.mean(front_errors)) if front_errors else route_length,"debris_front_final_error_km":final_front_error})
+            out.append({"scenario_id":row.scenario_id,"validation_status":"FINITE","finite_rollout":True,"first_nonfinite_step":None,"trajectory_h_rel_l2":_ratio(hnum,hden),"final_h_rel_l2":_ratio(((current[:,0]-target[:,0]).square()*active[:,0]).sum(),(target[:,0].square()*active[:,0]).sum()),"trajectory_momentum_rel_l2":_ratio(mnum,mden),"trajectory_c_rel_l2":_ratio(cnum,cden),"trajectory_ice_rel_l2":_ratio(inum,iden),"trajectory_dz_rel_l2":_ratio(dznum,dzden),"mean_wet_iou":float((wet_sum/min(steps,144)).cpu()),"final_wet_iou":final_iou,"mixture_volume_relative_error":float(np.mean(volume_errors)),"debris_front_mae_km":float(np.mean(front_errors)) if front_errors else route_length,"debris_front_final_error_km":final_front_error,"momentum_guard_activation_fraction":float(np.mean(guard_activations)) if guard_activations else 0.,"momentum_guard_activation_steps":int(sum(value>0 for value in guard_activations))})
     return out
 
 def validate_all_val(model,store,transform,normalizer,device,rows=None,steps=144):
@@ -91,7 +91,7 @@ def validate_all_val(model,store,transform,normalizer,device,rows=None,steps=144
     nonfinite=[r for r in records if not r.get("finite_rollout",True)]
     subset_hash=hashlib.sha256("\n".join(sorted(str(r["scenario_id"]) for r in records)).encode()).hexdigest()
     if nonfinite:return records,{"validation_status":"NONFINITE_ROLLOUT","finite_rollout":False,"first_nonfinite_step":min(r["first_nonfinite_step"] for r in nonfinite),"validation_subset_hash":subset_hash}
-    keys=REQUIRED_SCORE_KEYS;summary={k:float(np.mean([r[k] for r in records])) for k in keys};summary["validation_subset_hash"]=subset_hash;summary["validation_status"]="FINITE";summary["finite_rollout"]=True;summary["J_val"]=validation_score(summary);return records,summary
+    keys=REQUIRED_SCORE_KEYS;summary={k:float(np.mean([r[k] for r in records])) for k in keys};summary['momentum_guard_activation_fraction']=float(np.mean([r.get('momentum_guard_activation_fraction',0.) for r in records]));summary['momentum_guard_activation_steps']=int(sum(r.get('momentum_guard_activation_steps',0) for r in records));summary["validation_subset_hash"]=subset_hash;summary["validation_status"]="FINITE";summary["finite_rollout"]=True;summary["J_val"]=validation_score(summary);return records,summary
 
 class _PersistenceModel(torch.nn.Module):
     def forward(self,features,encoded_current):return encoded_current
