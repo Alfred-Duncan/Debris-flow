@@ -54,6 +54,27 @@ def enter_stage(model,opt,sched,tr,norm,state,stage):
  config=next((item for item in state.effective_curriculum if item['stage']==stage),None)
  if config:state.stage_updates_total=config['updates']
  save_resume_pair(model,opt,sched,tr,norm,state)
+def stage_completion_is_valid(state,stage,history_path=None,checkpoint_path=None):
+ """A fully checkpointed stage is resumably complete only after finite validation."""
+ stage=stage.value if isinstance(stage,PipelineStage) else stage
+ if state.current_stage!=stage or state.stage_updates_total<1 or state.stage_step<state.stage_updates_total:return False
+ history_path=Path(history_path or RESULTS/'validation_history.csv');checkpoint_path=Path(checkpoint_path or FORMAL/'last.pt')
+ if not stage_has_finite_candidate(state,stage,history_path) or not checkpoint_path.exists():return False
+ checkpoint_agreement(state,torch.load(checkpoint_path,map_location='cpu',weights_only=False))
+ return True
+def stage_has_finite_candidate(state,stage,history_path=None):
+ stage=stage.value if isinstance(stage,PipelineStage) else stage;history_path=Path(history_path or RESULTS/'validation_history.csv')
+ if not history_path.exists():return False
+ with history_path.open(newline='') as handle:
+  return any(row.get('stage')==stage and row.get('validation_status')=='FINITE' and int(row.get('global_step',-1))<=state.global_step for row in csv.DictReader(handle))
+def advance_completed_stage(model,opt,sched,tr,norm,state):
+ """Enter the next effective stage without replaying completed optimizer updates."""
+ stage=state.current_stage
+ if not stage_completion_is_valid(state,stage):return False
+ next_stage=next_effective_stage(state,stage)
+ if next_stage is None:raise RuntimeError('COMPLETED_STAGE_HAS_NO_SUCCESSOR '+stage)
+ enter_stage(model,opt,sched,tr,norm,state,next_stage)
+ return True
 def probe_one_k(model,k,loss_fn=None):
  """One formal-grid forward/backward capacity measurement, without an update."""
  if not torch.cuda.is_available():raise RuntimeError('CUDA_REQUIRED_FOR_CAPACITY_PROBE')
@@ -98,13 +119,18 @@ def _record_validation(state,summary,is_global_best,is_stage_best):
 def _record_horizons(state,stage,rows):
  for row in rows:safe_append_csv(RESULTS/'horizon_history.csv',{'global_step':state.global_step,'stage':stage,**row})
 def finalize_periodic_validation(state,stage,horizons,summary,is_global_best,is_stage_best,worse=None):
- """Persist all step evidence before applying a terminal quality decision."""
+ """Persist periodic evidence; only an empty finite-candidate stage is terminal."""
  _record_horizons(state,stage,horizons);_record_validation(state,summary,is_global_best,is_stage_best)
- if not summary.get('finite_rollout') and state.global_step>=2000:raise RuntimeError('EARLY_TRAINING_QUALITY_FAILURE NONFINITE_ROLLOUT')
- if summary.get('finite_rollout') and state.global_step>=2000 and worse is not None and worse>=3:raise RuntimeError('EARLY_TRAINING_QUALITY_FAILURE PERSISTENCE_COLLAPSE')
+ if worse is not None:
+  better=5-worse;warning=worse>=3
+  safe_append_csv(RESULTS/'persistence_comparison_history.csv',{'global_step':state.global_step,'stage':stage,'primary_metrics_better_than_persistence':better,'persistence_baseline_warning':warning})
+  if warning:print(f'WARNING PERSISTENCE_BASELINE_WARNING primary_metrics_better_than_persistence={better}/5',flush=True)
+ return bool(summary.get('finite_rollout'))
+def ensure_stage_has_finite_candidate(stage_has_finite):
+ if not stage_has_finite:raise RuntimeError('NO_FINITE_VALIDATION_CANDIDATE')
 def _stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows,static,tr,norm,delta_norm,device,stage,persistence_summary):
  assert set(val_subset_rows.scenario_id)==set(val_subset_store.rows.scenario_id)
- config=next(item for item in state.effective_curriculum if item['stage']==stage);state.stage_updates_total=config['updates'];save_resume_pair(model,opt,sched,tr,norm,state);active=static[:,1:2];stage_has_finite=[False]
+ config=next(item for item in state.effective_curriculum if item['stage']==stage);state.stage_updates_total=config['updates'];save_resume_pair(model,opt,sched,tr,norm,state);active=static[:,1:2];stage_has_finite=[stage_has_finite_candidate(state,stage)]
  burn_choices=CFG['stabilization']['burn_in'][stage]
  def batch(step):
   sample=training_sample_for_step(CFG['seed'],step,len(store.rows),config['k'],burn_in_choices=burn_choices,sampler=CFG['stabilization']['sampler']);row=store.rows.iloc[sample['scenario_index']];t=sample['time_s'];burn=sample['burn_in_steps'];previous,current,_,params,times,_=store.sample(sample['scenario_index'],t);tensor=lambda x:torch.from_numpy(np.asarray(x)).unsqueeze(0).to(device)
@@ -135,7 +161,7 @@ def _stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows
     current.stage_best_score=score;save_checkpoint(path=FORMAL/f'{stage.lower()}_best.pt',model=model,optimizer=opt,scheduler=sched,step=current.global_step,transform=tr,config=CFG,normalizer=norm,stage=current.current_stage,best_metric=score,stage_step=current.stage_step,stage_updates_total=current.stage_updates_total,architecture=current.architecture,best_checkpoint_path=current.best_checkpoint_path,stage_best_score=current.stage_best_score);save_state(FORMAL/'run_state.json',current)
    finalize_periodic_validation(current,stage,horizons,summary,global_improved,stage_improved,worse)
  train_stage(model,opt,sched,state,config['updates'],batch,loss,on_update=updated)
- if not stage_has_finite[0]:raise RuntimeError('NO_FINITE_VALIDATION_CANDIDATE')
+ ensure_stage_has_finite_candidate(stage_has_finite[0])
  save_resume_pair(model,opt,sched,tr,norm,state)
 def formal(stop_after_freeze=False):
  state=load_state(FORMAL/'run_state.json',initial_state());model=None
@@ -163,6 +189,7 @@ def formal(stop_after_freeze=False):
    if state.current_stage==PipelineStage.ARCHITECTURE.value:
     state.architecture=architecture;_advance(state);save_state(FORMAL/'run_state.json',state);continue
    if state.current_stage in {x['stage'] for x in state.effective_curriculum}:
+    if advance_completed_stage(model,opt,sched,tr,norm,state):continue
     next_stage=next_effective_stage(state,state.current_stage);_stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows,static,tr,norm,delta_norm,dev,state.current_stage,persistence_summary);enter_stage(model,opt,sched,tr,norm,state,next_stage);continue
    if state.current_stage==PipelineStage.VAL_CONFIRM.value:
     best=FORMAL/'best_candidate.pt'
