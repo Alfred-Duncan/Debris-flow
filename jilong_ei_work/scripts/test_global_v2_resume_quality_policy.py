@@ -27,7 +27,7 @@ def test_persistence_warning_and_periodic_nonfinite(runner):
  assert runner.finalize_periodic_validation(state,'STAGE_A',[{'horizon':1}],{'finite_rollout':True},False,False,3) is True
  assert events[:2]==['horizons','validation'] and events[2]['primary_metrics_better_than_persistence']==2 and events[2]['persistence_baseline_warning'] is True
  events.clear();assert runner.finalize_periodic_validation(state,'STAGE_A',[{'horizon':1}],{'finite_rollout':False,'validation_status':'NONFINITE_ROLLOUT'},False,False) is False
- assert events==['horizons','validation']
+ assert events[:2]==['horizons','validation'] and events[2]['momentum_guard_activation_fraction']==0.
 
 def test_no_finite_candidate_is_only_stage_end_error(runner):
  try:runner.ensure_stage_has_finite_candidate(False)

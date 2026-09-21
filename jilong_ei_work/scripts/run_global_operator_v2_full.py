@@ -143,6 +143,7 @@ def finalize_periodic_validation(state,stage,horizons,summary,is_global_best,is_
   better=5-worse;warning=worse>=3
   safe_append_csv(RESULTS/'persistence_comparison_history.csv',{'global_step':state.global_step,'stage':stage,'primary_metrics_better_than_persistence':better,'persistence_baseline_warning':warning})
   if warning:print(f'WARNING PERSISTENCE_BASELINE_WARNING primary_metrics_better_than_persistence={better}/5',flush=True)
+ safe_append_csv(RESULTS/'momentum_guard_history.csv',{'global_step':state.global_step,'stage':stage,'momentum_guard_activation_fraction':summary.get('momentum_guard_activation_fraction',0.),'momentum_guard_activation_steps':summary.get('momentum_guard_activation_steps',0)})
  return bool(summary.get('finite_rollout'))
 def ensure_stage_has_finite_candidate(stage_has_finite):
  if not stage_has_finite:raise RuntimeError('NO_FINITE_VALIDATION_CANDIDATE')
