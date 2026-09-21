@@ -25,3 +25,8 @@ def record_failure(root:Path,state,exc,last=None):atomic_json(root/'reports/GLOB
 def shutdown_allowed(root:Path,state):
  needed=[root/'models/global_operator_v2/best.pt',root/'reports/GLOBAL_OPERATOR_V2.json',root/'results/global_operator_v2/final_holdout_evaluation.lock.json',root/'reports/GLOBAL_V2_H0.json',root/'results/global_operator_v2/runtime_benchmark.csv']
  return state.current_stage=='COMPLETE' and state.final_report_done and state.final_holdout_done and state.h0_done and state.runtime_done and all(p.exists() for p in needed)
+def capacity_schedule(probe):
+ safe=[int(x['K']) for x in probe if x.get('status','SAFE')=='SAFE' and x.get('safe',False)]
+ m=max(safe,default=0)
+ if m<1:raise RuntimeError('NO_SAFE_CAPACITY')
+ return [(PipelineStage.STAGE_A,1,2000),(PipelineStage.STAGE_B,2,2000),(PipelineStage.STAGE_C,4,4000),(PipelineStage.STAGE_D,6,6000)][:1+int(m>=2)+int(m>=4)+int(m>=6)]

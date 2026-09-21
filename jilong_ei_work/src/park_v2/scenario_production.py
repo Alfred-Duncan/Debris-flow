@@ -11,12 +11,21 @@ def solver_cmd(row,case):
 def run_one_case(row,case):
  import subprocess,numpy as np
  case.mkdir(parents=True,exist_ok=True);(case/'config.json').write_text(json.dumps(case_config(row),indent=2));subprocess.run(solver_cmd(row,case),cwd=ROOT,check=True)
- frames=case/'frames'; raw=sorted(frames.glob('frame_*.npz'));keep=[]
+ frames=case/'frames'; raw=[]
+ for p in frames.glob('frame_*.npz'):
+  with np.load(p) as z: raw.append((float(z['time_s']),p))
+ keep=[]
  for t in range(10,1441,10):
-  pick=min(raw,key=lambda p:abs(float(np.load(p)['time_s'])-t));keep.append(p)
- for p in raw:
+  _,pick=min(raw,key=lambda q:abs(q[0]-t));keep.append(pick)
+ for _,p in raw:
   if p not in keep:p.unlink()
  for t,p in zip(range(10,1441,10),keep):p.rename(frames/f'state_{t:04d}s.npz')
+ write_initial_ml_frame_from_restart(frames/'state_0000s.npz')
  q={'status':'PASS' if (case/'final_state.npz').exists() and len(keep)==144 else 'FAIL','frames_saved':145}
  if q['status']!='PASS':raise RuntimeError(f'quality failed: {row.scenario_id}')
  (case/'quality.json').write_text(json.dumps(q,indent=2));(case/'DONE.json').write_text(json.dumps({'status':'PASS','scenario_id':row.scenario_id}))
+def write_initial_ml_frame_from_restart(path):
+ import numpy as np
+ with np.load(RESTART) as s:
+  h=np.asarray(s['h'],np.float32);wet=h>.05;idx=np.flatnonzero(wet.ravel());take=lambda x:np.asarray(x).ravel()[idx]
+  np.savez_compressed(path,time_s=np.array(0.),idx=idx.astype(np.int32),h=take(h).astype(np.float16),hu=take(s['hu']).astype(np.float32),hv=take(s['hv']).astype(np.float32),c=(take(s['hc'])/np.maximum(take(h),1e-3)).astype(np.float16),ice=(take(s['hi'])/np.maximum(take(h),1e-3)).astype(np.float16),speed=(np.hypot(take(s['hu']),take(s['hv']))/np.maximum(take(h),1e-3)).astype(np.float16),dz_idx=np.array([],np.int32),dz=np.array([],np.float16))
