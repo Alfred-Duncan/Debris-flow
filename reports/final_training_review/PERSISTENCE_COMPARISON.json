@@ -1,0 +1,25 @@
+{
+  "scope": "fixed_8_case_VAL guarded frozen-selected checkpoint",
+  "model": {
+    "trajectory_h_rel_l2": 1.009059488773346,
+    "trajectory_momentum_rel_l2": 3.0238814055919647,
+    "mean_wet_iou": 0.3600536845624447,
+    "mixture_volume_relative_error": 0.2410390382305189,
+    "debris_front_mae_km": 12.055103945877104
+  },
+  "persistence": {
+    "trajectory_h_rel_l2": 0.9749480932950974,
+    "trajectory_momentum_rel_l2": 0.9994422718882561,
+    "mean_wet_iou": 0.6614985093474388,
+    "mixture_volume_relative_error": 0.9180354559794068,
+    "debris_front_mae_km": 23.940000534057617
+  },
+  "better": {
+    "trajectory_h_rel_l2": false,
+    "trajectory_momentum_rel_l2": false,
+    "mean_wet_iou": false,
+    "mixture_volume_relative_error": true,
+    "debris_front_mae_km": true
+  },
+  "better_count": "2/5"
+}

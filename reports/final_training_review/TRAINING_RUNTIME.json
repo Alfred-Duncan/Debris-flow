@@ -1,0 +1,31 @@
+{
+  "total_optimizer_updates": 14000,
+  "stage_wall_times_reliable": false,
+  "total_wall_time_reliable": false,
+  "per_stage": {
+    "STAGE_A": {
+      "mean_step_seconds": 0.18671987618879587,
+      "median_step_seconds": 0.18452375000924798,
+      "peak_vram_gib": 1.783839225769043,
+      "logged_updates": 2100
+    },
+    "STAGE_B": {
+      "mean_step_seconds": 0.4812366075013415,
+      "median_step_seconds": 0.44635969999944786,
+      "peak_vram_gib": 2.0999717712402344,
+      "logged_updates": 2000
+    },
+    "STAGE_C": {
+      "mean_step_seconds": 1.1093152924979222,
+      "median_step_seconds": 1.1255279500037432,
+      "peak_vram_gib": 2.8370304107666016,
+      "logged_updates": 4000
+    },
+    "STAGE_D": {
+      "mean_step_seconds": 1.8181308424983096,
+      "median_step_seconds": 1.493484049977269,
+      "peak_vram_gib": 3.752809524536133,
+      "logged_updates": 6000
+    }
+  }
+}

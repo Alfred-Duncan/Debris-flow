@@ -1,0 +1,39 @@
+{
+  "selected_checkpoint": {
+    "global_step": 5000,
+    "stage": "STAGE_C",
+    "K": 4,
+    "subset_J_val": 3.6999269637778007,
+    "frozen_sha256": "a23d243628124a7259ee68c400fd277e2804a08ce086b508f503f42f47841745"
+  },
+  "fixed_8_case_guarded_reevaluation": {
+    "checkpoint": "stage_c_best.pt",
+    "original_global_step": 5000,
+    "original_stage": "STAGE_C",
+    "trajectory_h_rel_l2": 1.009059488773346,
+    "trajectory_momentum_rel_l2": 3.0238814055919647,
+    "mean_wet_iou": 0.3600536845624447,
+    "debris_front_mae_km": 12.055103945877104,
+    "mixture_volume_relative_error": 0.2410390382305189,
+    "momentum_guard_activation_fraction": 6.636603597836515e-06,
+    "momentum_guard_activation_steps": 399,
+    "validation_subset_hash": "2fa9bba795702cf7c06ee1a6c0b9dd42e011a4c034244a37e78c351c05f46f28",
+    "validation_status": "FINITE",
+    "finite_rollout": true,
+    "J_val": 3.6999269637778007
+  },
+  "frozen_20_case_VAL_CONFIRM": {
+    "trajectory_h_rel_l2": 1.008696934580803,
+    "trajectory_momentum_rel_l2": 2.9567309260368346,
+    "trajectory_c_rel_l2": 1.6621865510940552,
+    "trajectory_ice_rel_l2": 1.0698482125997544,
+    "trajectory_dz_rel_l2": 1.1218518614768982,
+    "mean_wet_iou": 0.3597991243004799,
+    "final_wet_iou": 0.22046705111861226,
+    "mixture_volume_relative_error": 0.24652144946643878,
+    "debris_front_mae_km": 11.912151311910051,
+    "debris_front_final_error_km": 3.2430004596710207,
+    "momentum_guard_activation_fraction": 6.549084419186596e-06,
+    "momentum_guard_activation_steps": 49.75
+  }
+}

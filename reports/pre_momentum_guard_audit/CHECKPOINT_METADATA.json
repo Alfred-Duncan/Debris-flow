@@ -1,0 +1,236 @@
+{
+  "pause_step": 7000,
+  "created_utc": "2026-09-21T12:33:07.880366+00:00",
+  "run_state": {
+    "pipeline_version": "2.2-long-horizon-stabilized",
+    "config_hash": "3f9e57573794c4489df85744de8be3a96198ef8d5c31e6344bec5176de6f716e",
+    "architecture": {
+      "width": 32,
+      "modes": 24,
+      "depth": 4
+    },
+    "current_stage": "STAGE_C",
+    "stage_step": 3000,
+    "global_step": 7000,
+    "stage_updates_total": 4000,
+    "best_val_score": 4.311402917381347,
+    "best_checkpoint_path": "E:\\Alfred\\Documents\\JiLong-PDE\\jilong_ei_work\\models\\global_operator_v2\\best_candidate.pt",
+    "effective_curriculum": [
+      {
+        "stage": "STAGE_A",
+        "k": 1,
+        "updates": 2000
+      },
+      {
+        "stage": "STAGE_B",
+        "k": 2,
+        "updates": 2000
+      },
+      {
+        "stage": "STAGE_C",
+        "k": 4,
+        "updates": 4000
+      },
+      {
+        "stage": "STAGE_D",
+        "k": 6,
+        "updates": 6000
+      }
+    ],
+    "max_safe_k": 6,
+    "total_planned_updates": 14000,
+    "stage_best_score": 5.295946717838825,
+    "skipped_stages": {},
+    "completed_stages": [
+      "PRECHECK",
+      "FIT_NORMALIZERS",
+      "CAPACITY_PROBE"
+    ],
+    "final_holdout_generated": false,
+    "final_holdout_unsealed": false,
+    "legacy_test_done": false,
+    "final_holdout_done": false,
+    "h0_done": false,
+    "runtime_done": false,
+    "final_report_done": false
+  },
+  "artifacts": [
+    {
+      "name": "last.pt",
+      "exists": true,
+      "bytes": 113374521,
+      "modified_utc": "2026-09-21T12:31:38.947103+00:00",
+      "sha256": "e3f535ab627d18dca0ee5577d1b29910a7fb5d1d3e2952b672a3998121369199",
+      "checkpoint": {
+        "global_step": 7000,
+        "stage_name": "STAGE_C",
+        "stage_step": 3000,
+        "stage_updates_total": 4000,
+        "best_val_score": 4.311402917381347,
+        "best_metric": 4.311402917381347,
+        "best_checkpoint_path": "E:\\Alfred\\Documents\\JiLong-PDE\\jilong_ei_work\\models\\global_operator_v2\\best_candidate.pt",
+        "stage_best_score": 5.295946717838825,
+        "config_hash": "3f9e57573794c4489df85744de8be3a96198ef8d5c31e6344bec5176de6f716e",
+        "architecture": {
+          "width": 32,
+          "modes": 24,
+          "depth": 4
+        },
+        "model_semantics": {
+          "bounded_residual": true,
+          "delta_bounds": [
+            1.637263536453247,
+            3.715447187423706,
+            3.264993667602539,
+            1.1818974018096924,
+            0.34364384412765503,
+            0.7325197458267212
+          ]
+        }
+      }
+    },
+    {
+      "name": "stage_a_best.pt",
+      "exists": true,
+      "bytes": 113374521,
+      "modified_utc": "2026-09-21T10:34:12.889789+00:00",
+      "sha256": "db9fe1bf9c85e974f7098b070385eb30445500880899c7599061e01744c1b462",
+      "checkpoint": {
+        "global_step": 2000,
+        "stage_name": "STAGE_A",
+        "stage_step": 2000,
+        "stage_updates_total": 2000,
+        "best_val_score": 4.198644704488726,
+        "best_metric": 4.198644704488726,
+        "best_checkpoint_path": "E:\\Alfred\\Documents\\JiLong-PDE\\jilong_ei_work\\models\\global_operator_v2\\best_candidate.pt",
+        "stage_best_score": 4.198644704488726,
+        "config_hash": "3f9e57573794c4489df85744de8be3a96198ef8d5c31e6344bec5176de6f716e",
+        "architecture": {
+          "width": 32,
+          "modes": 24,
+          "depth": 4
+        },
+        "model_semantics": {
+          "bounded_residual": true,
+          "delta_bounds": [
+            1.637263536453247,
+            3.715447187423706,
+            3.264993667602539,
+            1.1818974018096924,
+            0.34364384412765503,
+            0.7325197458267212
+          ]
+        }
+      }
+    },
+    {
+      "name": "stage_b_best.pt",
+      "exists": true,
+      "bytes": 113374521,
+      "modified_utc": "2026-09-21T11:18:35.233588+00:00",
+      "sha256": "5e39eb4424f203683a1fedadb30438103fe75b8bd688ccc1d068683dc0f07c64",
+      "checkpoint": {
+        "global_step": 3000,
+        "stage_name": "STAGE_B",
+        "stage_step": 1000,
+        "stage_updates_total": 2000,
+        "best_val_score": 4.311402917381347,
+        "best_metric": 4.311402917381347,
+        "best_checkpoint_path": "E:\\Alfred\\Documents\\JiLong-PDE\\jilong_ei_work\\models\\global_operator_v2\\best_candidate.pt",
+        "stage_best_score": 4.311402917381347,
+        "config_hash": "3f9e57573794c4489df85744de8be3a96198ef8d5c31e6344bec5176de6f716e",
+        "architecture": {
+          "width": 32,
+          "modes": 24,
+          "depth": 4
+        },
+        "model_semantics": {
+          "bounded_residual": true,
+          "delta_bounds": [
+            1.637263536453247,
+            3.715447187423706,
+            3.264993667602539,
+            1.1818974018096924,
+            0.34364384412765503,
+            0.7325197458267212
+          ]
+        }
+      }
+    },
+    {
+      "name": "stage_c_best.pt",
+      "exists": true,
+      "bytes": 113374521,
+      "modified_utc": "2026-09-21T11:52:24.674193+00:00",
+      "sha256": "15d7d4632b2fdda0db04bb6320c98edd7dbc321989e522a45ad4f7f30c617466",
+      "checkpoint": {
+        "global_step": 5000,
+        "stage_name": "STAGE_C",
+        "stage_step": 1000,
+        "stage_updates_total": 4000,
+        "best_val_score": 5.295946717838825,
+        "best_metric": 5.295946717838825,
+        "best_checkpoint_path": "E:\\Alfred\\Documents\\JiLong-PDE\\jilong_ei_work\\models\\global_operator_v2\\best_candidate.pt",
+        "stage_best_score": 5.295946717838825,
+        "config_hash": "3f9e57573794c4489df85744de8be3a96198ef8d5c31e6344bec5176de6f716e",
+        "architecture": {
+          "width": 32,
+          "modes": 24,
+          "depth": 4
+        },
+        "model_semantics": {
+          "bounded_residual": true,
+          "delta_bounds": [
+            1.637263536453247,
+            3.715447187423706,
+            3.264993667602539,
+            1.1818974018096924,
+            0.34364384412765503,
+            0.7325197458267212
+          ]
+        }
+      }
+    },
+    {
+      "name": "best_candidate.pt",
+      "exists": true,
+      "bytes": 113374521,
+      "modified_utc": "2026-09-21T11:18:35.138611+00:00",
+      "sha256": "9133a7ee6342568feec6c5fbbd1af51eca90683b1b05ed04ec213bb799a4f519",
+      "checkpoint": {
+        "global_step": 3000,
+        "stage_name": "STAGE_B",
+        "stage_step": 1000,
+        "stage_updates_total": 2000,
+        "best_val_score": 4.311402917381347,
+        "best_metric": 4.311402917381347,
+        "best_checkpoint_path": "E:\\Alfred\\Documents\\JiLong-PDE\\jilong_ei_work\\models\\global_operator_v2\\best_candidate.pt",
+        "stage_best_score": null,
+        "config_hash": "3f9e57573794c4489df85744de8be3a96198ef8d5c31e6344bec5176de6f716e",
+        "architecture": {
+          "width": 32,
+          "modes": 24,
+          "depth": 4
+        },
+        "model_semantics": {
+          "bounded_residual": true,
+          "delta_bounds": [
+            1.637263536453247,
+            3.715447187423706,
+            3.264993667602539,
+            1.1818974018096924,
+            0.34364384412765503,
+            0.7325197458267212
+          ]
+        }
+      }
+    },
+    {
+      "name": "run_state.json",
+      "exists": true,
+      "bytes": 1282,
+      "modified_utc": "2026-09-21T12:31:38.957163+00:00",
+      "sha256": "6d429f3be0da8a93d70d5bd3df153c94085ed3fcf994f40b685e97fc0d7c034d"
+    }
+  ]
+}

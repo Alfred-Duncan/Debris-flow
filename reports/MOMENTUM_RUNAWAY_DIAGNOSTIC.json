@@ -1,0 +1,244 @@
+{
+  "real_runaway": true,
+  "first_runaway_step": 1,
+  "runaway_scenarios": [
+    {
+      "checkpoint": "stage_a_best",
+      "scenario_id": "JILONG_EI_0109",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_a_best",
+      "scenario_id": "JILONG_EI_0129",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_a_best",
+      "scenario_id": "JILONG_EI_0119",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_a_best",
+      "scenario_id": "JILONG_EI_0049",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_a_best",
+      "scenario_id": "JILONG_EI_0199",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_a_best",
+      "scenario_id": "JILONG_EI_0149",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_a_best",
+      "scenario_id": "JILONG_EI_0099",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_a_best",
+      "scenario_id": "JILONG_EI_0159",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_b_best",
+      "scenario_id": "JILONG_EI_0109",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_b_best",
+      "scenario_id": "JILONG_EI_0129",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_b_best",
+      "scenario_id": "JILONG_EI_0119",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_b_best",
+      "scenario_id": "JILONG_EI_0049",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_b_best",
+      "scenario_id": "JILONG_EI_0199",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_b_best",
+      "scenario_id": "JILONG_EI_0149",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_b_best",
+      "scenario_id": "JILONG_EI_0099",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_b_best",
+      "scenario_id": "JILONG_EI_0159",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_c_best",
+      "scenario_id": "JILONG_EI_0109",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_c_best",
+      "scenario_id": "JILONG_EI_0129",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_c_best",
+      "scenario_id": "JILONG_EI_0119",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_c_best",
+      "scenario_id": "JILONG_EI_0049",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_c_best",
+      "scenario_id": "JILONG_EI_0199",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_c_best",
+      "scenario_id": "JILONG_EI_0149",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_c_best",
+      "scenario_id": "JILONG_EI_0099",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "stage_c_best",
+      "scenario_id": "JILONG_EI_0159",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "last",
+      "scenario_id": "JILONG_EI_0109",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "last",
+      "scenario_id": "JILONG_EI_0129",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "last",
+      "scenario_id": "JILONG_EI_0119",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "last",
+      "scenario_id": "JILONG_EI_0049",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "last",
+      "scenario_id": "JILONG_EI_0199",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "last",
+      "scenario_id": "JILONG_EI_0149",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "last",
+      "scenario_id": "JILONG_EI_0099",
+      "first_runaway_step": 1
+    },
+    {
+      "checkpoint": "last",
+      "scenario_id": "JILONG_EI_0159",
+      "first_runaway_step": 1
+    }
+  ],
+  "momentum_envelope": {
+    "envelope_version": "TRAIN_ONLY_MOMENTUM_STATE_ENVELOPE_V1",
+    "fit_scope": "TRAIN_ONLY",
+    "hu": {
+      "q50": 0.002362622879445553,
+      "q90": 0.5576029181480406,
+      "q99": 2.4737699270248434,
+      "q999": 3.4215985772609736,
+      "q9999": 3.8032507737875108,
+      "max_sampled": 4.2455596923828125,
+      "sample_count": 18350080,
+      "guard": 5.704876160681266,
+      "coverage": 1.0
+    },
+    "hv": {
+      "q50": 0.0017499570385552943,
+      "q90": 0.5160159587860107,
+      "q99": 1.8370161175727855,
+      "q999": 2.9757129452228552,
+      "q9999": 3.302241877079041,
+      "max_sampled": 3.5266597270965576,
+      "sample_count": 18350080,
+      "guard": 4.953362815618561,
+      "coverage": 1.0
+    },
+    "speed_mps": {
+      "q50": 1.722879946231842,
+      "q90": 20.657602119445794,
+      "q99": 55.497033538818414,
+      "q999": 77.72869931793215,
+      "q9999": 84.68283180999788,
+      "max_sampled": 95.2887191772461,
+      "sample_count": 18350080
+    },
+    "sampling": {
+      "times_s": [
+        0,
+        10,
+        20,
+        30,
+        60,
+        120,
+        180,
+        240,
+        300,
+        360,
+        420,
+        480,
+        540,
+        600,
+        660,
+        720,
+        780,
+        840,
+        900,
+        960,
+        1020,
+        1080,
+        1140,
+        1200,
+        1260,
+        1320,
+        1380,
+        1440
+      ],
+      "wet_threshold_m": 0.03,
+      "max_wet_cells_per_frame": 4096,
+      "seed": 20260920
+    },
+    "sample_count": 18350080
+  },
+  "checkpoints": [
+    "last",
+    "stage_a_best",
+    "stage_b_best",
+    "stage_c_best"
+  ],
+  "records": 4608
+}

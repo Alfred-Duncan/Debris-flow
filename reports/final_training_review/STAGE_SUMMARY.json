@@ -1,0 +1,148 @@
+{
+  "STAGE_A": {
+    "K": 1,
+    "start_global_step": 50,
+    "end_global_step": 2000,
+    "updates": 2000,
+    "burn_in_choices": [
+      0
+    ],
+    "best_metrics": {
+      "trajectory_h_rel_l2": {
+        "value": 1.0561033487319946,
+        "global_step": 1000
+      },
+      "trajectory_momentum_rel_l2": {
+        "value": 1.4109766334295273,
+        "global_step": 1000
+      },
+      "mean_wet_iou": {
+        "value": 0.2971500866115093,
+        "global_step": 2000
+      },
+      "mixture_volume_relative_error": {
+        "value": 0.2488180457098947,
+        "global_step": 2000
+      },
+      "debris_front_mae_km": {
+        "value": 14.770648676917592,
+        "global_step": 2000
+      },
+      "J_val": {
+        "value": 4.198644704488726,
+        "global_step": 2000
+      }
+    }
+  },
+  "STAGE_B": {
+    "K": 2,
+    "start_global_step": 2050,
+    "end_global_step": 4000,
+    "updates": 2000,
+    "burn_in_choices": [
+      0,
+      2
+    ],
+    "best_metrics": {
+      "trajectory_h_rel_l2": {
+        "value": 1.0110893696546557,
+        "global_step": 4000
+      },
+      "trajectory_momentum_rel_l2": {
+        "value": 2.3842714428901672,
+        "global_step": 3000
+      },
+      "mean_wet_iou": {
+        "value": 0.3120773248374462,
+        "global_step": 4000
+      },
+      "mixture_volume_relative_error": {
+        "value": 0.1341261268664766,
+        "global_step": 3000
+      },
+      "debris_front_mae_km": {
+        "value": 13.29526539263141,
+        "global_step": 4000
+      },
+      "J_val": {
+        "value": 4.311402917381347,
+        "global_step": 3000
+      }
+    }
+  },
+  "STAGE_C": {
+    "K": 4,
+    "start_global_step": 4050,
+    "end_global_step": 8000,
+    "updates": 4000,
+    "burn_in_choices": [
+      0,
+      4,
+      8
+    ],
+    "best_metrics": {
+      "trajectory_h_rel_l2": {
+        "value": 1.0034910961985588,
+        "global_step": 8000
+      },
+      "trajectory_momentum_rel_l2": {
+        "value": 8.712713599205017,
+        "global_step": 8000
+      },
+      "mean_wet_iou": {
+        "value": 0.3600386716425419,
+        "global_step": 5000
+      },
+      "mixture_volume_relative_error": {
+        "value": 0.1135070937741349,
+        "global_step": 6000
+      },
+      "debris_front_mae_km": {
+        "value": 12.057313070272851,
+        "global_step": 5000
+      },
+      "J_val": {
+        "value": 5.295946717838825,
+        "global_step": 5000
+      }
+    }
+  },
+  "STAGE_D": {
+    "K": 6,
+    "start_global_step": 8050,
+    "end_global_step": 14000,
+    "updates": 6000,
+    "burn_in_choices": [
+      0,
+      6,
+      12,
+      24
+    ],
+    "best_metrics": {
+      "trajectory_h_rel_l2": {
+        "value": 0.9614723920822144,
+        "global_step": 11000
+      },
+      "trajectory_momentum_rel_l2": {
+        "value": 5.101201087236404,
+        "global_step": 14000
+      },
+      "mean_wet_iou": {
+        "value": 0.4140480235219002,
+        "global_step": 13000
+      },
+      "mixture_volume_relative_error": {
+        "value": 0.1401695072189315,
+        "global_step": 12000
+      },
+      "debris_front_mae_km": {
+        "value": 14.138685763512566,
+        "global_step": 9000
+      },
+      "J_val": {
+        "value": 4.740729230111765,
+        "global_step": 14000
+      }
+    }
+  }
+}

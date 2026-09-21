@@ -1,0 +1,26 @@
+{
+  "migration": "ADD_TRAIN_ONLY_MOMENTUM_STATE_GUARD",
+  "pause_step": 7000,
+  "momentum_state_bounds": [
+    5.704876160681266,
+    4.953362815618561
+  ],
+  "momentum_envelope_version": "TRAIN_ONLY_MOMENTUM_STATE_ENVELOPE_V1",
+  "selected_candidate": {
+    "checkpoint": "stage_c_best.pt",
+    "original_global_step": 5000,
+    "original_stage": "STAGE_C",
+    "trajectory_h_rel_l2": 1.009059488773346,
+    "trajectory_momentum_rel_l2": 3.0238814055919647,
+    "mean_wet_iou": 0.3600536845624447,
+    "debris_front_mae_km": 12.055103945877104,
+    "mixture_volume_relative_error": 0.2410390382305189,
+    "momentum_guard_activation_fraction": 6.636603597836515e-06,
+    "momentum_guard_activation_steps": 399,
+    "validation_subset_hash": "2fa9bba795702cf7c06ee1a6c0b9dd42e011a4c034244a37e78c351c05f46f28",
+    "validation_status": "FINITE",
+    "finite_rollout": true,
+    "J_val": 3.6999269637778007
+  },
+  "checkpoint_agreement": "PASS"
+}

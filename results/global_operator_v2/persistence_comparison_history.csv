@@ -3,3 +3,10 @@ global_step,stage,primary_metrics_better_than_persistence,persistence_baseline_w
 4000,STAGE_B,2,True
 5000,STAGE_C,2,True
 6000,STAGE_C,2,True
+8000,STAGE_C,2,True
+9000,STAGE_D,2,True
+10000,STAGE_D,2,True
+11000,STAGE_D,3,False
+12000,STAGE_D,3,False
+13000,STAGE_D,3,False
+14000,STAGE_D,3,False

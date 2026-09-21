@@ -1,0 +1,11 @@
+{
+  "architecture": {
+    "depth": 4,
+    "modes": 24,
+    "width": 32
+  },
+  "best_val_score": 3.6605661650797976,
+  "config_hash": "3f9e57573794c4489df85744de8be3a96198ef8d5c31e6344bec5176de6f716e",
+  "sha256": "a23d243628124a7259ee68c400fd277e2804a08ce086b508f503f42f47841745",
+  "source_checkpoint": "E:\\Alfred\\Documents\\JiLong-PDE\\jilong_ei_work\\models\\global_operator_v2\\best_candidate.pt"
+}

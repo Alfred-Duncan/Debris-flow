@@ -1,0 +1,13 @@
+{
+  "trajectory_h_rel_l2": 1.008696934580803,
+  "trajectory_momentum_rel_l2": 2.9567309260368346,
+  "mean_wet_iou": 0.3597991243004799,
+  "debris_front_mae_km": 11.912151311910051,
+  "mixture_volume_relative_error": 0.2465214494664388,
+  "momentum_guard_activation_fraction": 6.549084419186596e-06,
+  "momentum_guard_activation_steps": 995,
+  "validation_subset_hash": "c1557e70515909b8b56afa9fc96aa22a3119a88c8350c70aa2c9dbb1c3bf3f11",
+  "validation_status": "FINITE",
+  "finite_rollout": true,
+  "J_val": 3.6605661650797976
+}

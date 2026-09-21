@@ -1,0 +1,36 @@
+{
+  "training_to_freeze": "COMPLETE",
+  "state": "LEGACY_TEST",
+  "freeze_manifest_hash_matches_best": true,
+  "selected_checkpoint": {
+    "global_step": 5000,
+    "stage": "STAGE_C",
+    "K": 4,
+    "subset_J_val": 3.6999269637778007,
+    "frozen_sha256": "a23d243628124a7259ee68c400fd277e2804a08ce086b508f503f42f47841745"
+  },
+  "frozen_20_case_VAL_CONFIRM": {
+    "trajectory_h_rel_l2": 1.008696934580803,
+    "trajectory_momentum_rel_l2": 2.9567309260368346,
+    "trajectory_c_rel_l2": 1.6621865510940552,
+    "trajectory_ice_rel_l2": 1.0698482125997544,
+    "trajectory_dz_rel_l2": 1.1218518614768982,
+    "mean_wet_iou": 0.3597991243004799,
+    "final_wet_iou": 0.22046705111861226,
+    "mixture_volume_relative_error": 0.24652144946643878,
+    "debris_front_mae_km": 11.912151311910051,
+    "debris_front_final_error_km": 3.2430004596710207,
+    "momentum_guard_activation_fraction": 6.549084419186596e-06,
+    "momentum_guard_activation_steps": 49.75
+  },
+  "persistence_better_count": "2/5",
+  "momentum_runaway": {
+    "real_runaway": true,
+    "first_runaway_step": 1,
+    "hu_guard": 5.704876160681266,
+    "hv_guard": 4.953362815618561,
+    "speed_q9999": 84.68283180999788,
+    "guard_activation_fraction": 6.549084419186596e-06
+  },
+  "post_freeze": "NOT_RUN"
+}
