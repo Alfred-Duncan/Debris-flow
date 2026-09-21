@@ -23,6 +23,15 @@ def save_last(model,opt,sched,tr,norm,state):
  save_checkpoint(path=FORMAL/'last.pt',model=model,optimizer=opt,scheduler=sched,step=state.global_step,transform=tr,config=CFG,normalizer=norm,stage=state.current_stage,best_metric=state.best_val_score,stage_step=state.stage_step,stage_updates_total=state.stage_updates_total,architecture=state.architecture,best_checkpoint_path=state.best_checkpoint_path,stage_best_score=state.stage_best_score)
 def save_resume_pair(model,opt,sched,tr,norm,state):
  save_last(model,opt,sched,tr,norm,state);save_state(FORMAL/'run_state.json',state)
+def rollback_state_to_last_checkpoint(state):
+ """Keep run_state resumable if an exception lands between checkpoint cadences."""
+ path=FORMAL/'last.pt'
+ if not path.exists():return state
+ checkpoint=torch.load(path,map_location='cpu',weights_only=False)
+ state.current_stage=checkpoint['stage_name'];state.stage_step=checkpoint['stage_step'];state.global_step=checkpoint['global_step'];state.stage_updates_total=checkpoint['stage_updates_total'];state.architecture=checkpoint['architecture']
+ state.best_val_score=checkpoint.get('best_val_score',checkpoint.get('best_metric'));state.best_checkpoint_path=checkpoint.get('best_checkpoint_path');state.stage_best_score=checkpoint.get('stage_best_score')
+ checkpoint_agreement(state,checkpoint)
+ return state
 def enter_stage(model,opt,sched,tr,norm,state,stage):
  state.current_stage=stage;state.stage_step=0;state.stage_best_score=None
  config=next((item for item in state.effective_curriculum if item['stage']==stage),None)
@@ -124,7 +133,7 @@ def formal(stop_after_freeze=False):
   source=FORMAL/'best_candidate.pt';freeze_best_candidate(source,FORMAL/'best.pt',FORMAL/'FREEZE_MANIFEST.json',{'config_hash':state.config_hash,'architecture':state.architecture,'best_val_score':state.best_val_score});done(state,PipelineStage.FREEZE);save_state(FORMAL/'run_state.json',state)
   if stop_after_freeze:return
  except Exception as exc:
-  record_failure(ROOT,state,exc,FORMAL/'last.pt');save_state(FORMAL/'run_state.json',state);raise
+  record_failure(ROOT,state,exc,FORMAL/'last.pt');rollback_state_to_last_checkpoint(state);save_state(FORMAL/'run_state.json',state);raise
 def main(a):
  if a.dry_run:print(json.dumps({'stage_graph':[x.value for x in CORE],'feature_count':len(feature_names()),'formal_training_started':False},indent=2));return
  if a.plan:print(json.dumps({'planned_stages':[x.value for x in PipelineStage],'architecture':{'width':32,'modes':24,'depth':4},'formal_training_started':False},indent=2));return
