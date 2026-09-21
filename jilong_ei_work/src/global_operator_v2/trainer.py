@@ -51,6 +51,10 @@ def train_stage(model,optimizer,scheduler,state,updates,batch_for_step,loss_for_
         if on_update:on_update(state,details,checkpoint_every)
     return state
 
+def is_improvement(candidate,best):
+    """Strict ordering prevents a later worse validation from replacing best."""
+    return best is None or candidate<best
+
 def rollout_loss(model, transform, normalizer, previous, current, targets, static, params, times, active, cell_area, amp_dtype=None, gradient_checkpointing=True):
     """Closed loop: targets are future distinct GT frames, inputs after k1 are predictions."""
     losses=[];amps=[];pred=current;steps=len(targets)

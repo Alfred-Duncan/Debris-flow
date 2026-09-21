@@ -1,21 +1,16 @@
 {
   "status": "PASS",
-  "passed": 14,
-  "total": 14,
+  "passed": 9,
+  "total": 9,
   "checks": {
-    "no_not_implemented": true,
-    "no_formal_handler_placeholder": true,
-    "physical_ice_component": true,
-    "capacity_oom_handling": true,
+    "formal_dispatch": true,
+    "capacity_real_closure": true,
     "capacity_result_applied": true,
-    "stateless_sampler": true,
-    "scheduler_effective_total": true,
-    "streaming_validation": true,
-    "strict_validation_score": true,
-    "atomic_checkpoint": true,
-    "freeze_copies_candidate": true,
-    "final_holdout_lock": true,
-    "shutdown_guard": true,
-    "final_holdout_isolated": true
+    "scheduler_after_capacity": true,
+    "train_stage_called": true,
+    "validation_streaming": true,
+    "accumulators_independent": true,
+    "front_not_constant": true,
+    "freeze_called": true
   }
 }
