@@ -14,10 +14,11 @@ def project_physical(x,dry:float=MOMENTUM_DRY_THRESHOLD_M):
     is deliberately no separate-total constraint.  Concentrations remain
     meaningful in shallow retained ML cells and are never erased by this pass.
     """
-    y=x.clone();y[:,0].clamp_(min=0);y[:,3:5].clamp_(0,1)
-    y[:,4]=torch.minimum(y[:,4],y[:,3])
-    drymask=y[:,0:1]<dry;y[:,1:3]*=(~drymask).to(y.dtype)
-    return y
+    # Construct a fresh tensor: indexed in-place writes here invalidate the
+    # decoded rollout graph during capacity/backward probes on CUDA.
+    h=x[:,0:1].clamp(min=0);c=x[:,3:4].clamp(0,1);ice=torch.minimum(x[:,4:5].clamp(0,1),c)
+    momentum=x[:,1:3]*(h>=dry).to(x.dtype)
+    return torch.cat((h,momentum,c,ice,x[:,5:6]),dim=1)
 def teacher_weight(current,target,active,dry:float=STORAGE_WET_THRESHOLD_M):
     a=active if active.ndim==4 else active[:,None];wet=((current[:,0]>=dry)|(target[:,0]>=dry))[:,None].float();return a.float()*(.1+.9*wet),wet
 def state_loss(pred_t,target_t,current_p,target_p,active):

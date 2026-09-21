@@ -47,10 +47,13 @@ def train_stage(model,optimizer,scheduler,state,updates,batch_for_step,loss_for_
         if torch.cuda.is_available():torch.cuda.synchronize()
         started=time.perf_counter()
         batch=batch_for_step(state.global_step)
-        optimizer.zero_grad(set_to_none=True);loss,details=loss_for_batch(batch);loss.backward()
+        optimizer.zero_grad(set_to_none=True);loss,details=loss_for_batch(batch)
+        if not torch.isfinite(loss):raise RuntimeError(f'NONFINITE_TRAINING_LOSS stage={state.current_stage} global_step={state.global_step}')
+        loss.backward()
+        if any(not torch.isfinite(parameter.grad).all() for parameter in model.parameters() if parameter.grad is not None):raise RuntimeError(f'NONFINITE_GRADIENT stage={state.current_stage} global_step={state.global_step}')
         torch.nn.utils.clip_grad_norm_(model.parameters(),1.0);optimizer.step();scheduler.step()
         if torch.cuda.is_available():torch.cuda.synchronize()
-        details['step_seconds']=time.perf_counter()-started
+        details=dict(details);details['total_loss']=loss.detach();details['step_seconds']=time.perf_counter()-started
         state.stage_step+=1;state.global_step+=1
         if on_update:on_update(state,details,checkpoint_every)
     return state

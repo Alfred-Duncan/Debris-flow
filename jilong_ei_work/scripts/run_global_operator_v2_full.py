@@ -62,6 +62,12 @@ def _capacity_loss(store,static,tr,norm,device):
  return closure
 def _save_subset(rows,train_rows):
  subset=select_fixed_val_subset(rows,8,20260920,train_rows);path=ROOT/'configs/global_operator_v2_val_subset.csv';subset.to_csv(path,index=False);return subset
+def _record_validation(state,summary,is_global_best,is_stage_best):
+ RESULTS.mkdir(parents=True,exist_ok=True);path=RESULTS/'validation_history.csv';row={'global_step':state.global_step,'stage':state.current_stage,'trajectory_h_rel_l2':summary['trajectory_h_rel_l2'],'trajectory_momentum_rel_l2':summary['trajectory_momentum_rel_l2'],'mean_wet_iou':summary['mean_wet_iou'],'debris_front_mae_km':summary['debris_front_mae_km'],'mixture_volume_relative_error':summary['mixture_volume_relative_error'],'J_val':summary['J_val'],'is_global_best':is_global_best,'is_stage_best':is_stage_best};new=not path.exists()
+ with path.open('a',newline='') as handle:
+  writer=csv.DictWriter(handle,fieldnames=row.keys());
+  if new:writer.writeheader()
+  writer.writerow(row)
 def _stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows,static,tr,norm,device,stage):
  assert set(val_subset_rows.scenario_id)==set(val_subset_store.rows.scenario_id)
  config=next(item for item in state.effective_curriculum if item['stage']==stage);state.stage_updates_total=config['updates'];save_resume_pair(model,opt,sched,tr,norm,state)
@@ -73,7 +79,7 @@ def _stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows
  def updated(current,details,cadence):
   if current.global_step%250==0:save_resume_pair(model,opt,sched,tr,norm,current)
   if current.global_step%50==0:
-   RESULTS.mkdir(parents=True,exist_ok=True);path=RESULTS/'training_log.csv';new=not path.exists();row={'global_step':current.global_step,'stage':stage,'stage_step':current.stage_step,'K':config['k'],'total_loss':float(details['multi']),'state_loss':float(details['state']),'wet_loss':float(details['wet']),'integral_loss':float(details['integral']),'amplitude_guard':float(details['amplitude_guard']),'learning_rate':opt.param_groups[0]['lr'],'step_seconds':float(details.get('step_seconds',float('nan'))),'peak_vram_gib':float(torch.cuda.max_memory_allocated()/1024**3)}
+   RESULTS.mkdir(parents=True,exist_ok=True);path=RESULTS/'training_log.csv';new=not path.exists();row={'global_step':current.global_step,'stage':stage,'stage_step':current.stage_step,'K':config['k'],'total_loss':float(details['total_loss']),'multi_loss':float(details['multi']),'one_step_anchor':float(details['one_step_anchor']),'state_loss':float(details['state']),'wet_loss':float(details['wet']),'integral_loss':float(details['integral']),'amplitude_guard':float(details['amplitude_guard']),'learning_rate':opt.param_groups[0]['lr'],'step_seconds':float(details.get('step_seconds',float('nan'))),'peak_vram_gib':float(torch.cuda.max_memory_allocated()/1024**3)}
    with path.open('a',newline='') as handle:
     writer=csv.DictWriter(handle,fieldnames=row.keys());
     if new:writer.writeheader()
@@ -81,10 +87,12 @@ def _stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows
   if current.global_step%500==0:validate_one_step(model,val_subset_store,tr,norm,device,val_subset_rows,times_s=(120,300,600,900,1200))
   if current.global_step%1000==0:
    records,summary=validate_all_val(model,val_subset_store,tr,norm,device,rows=val_subset_rows,steps=144);score=summary['J_val'];global_best=current.best_val_score
-   if is_improvement(score,global_best):
+   global_improved=is_improvement(score,global_best);stage_improved=is_improvement(score,current.stage_best_score)
+   if global_improved:
     current.best_val_score=score;current.best_checkpoint_path=str(FORMAL/'best_candidate.pt');save_checkpoint(path=FORMAL/'best_candidate.pt',model=model,optimizer=opt,scheduler=sched,step=current.global_step,transform=tr,config=CFG,normalizer=norm,stage=current.current_stage,best_metric=score,stage_step=current.stage_step,stage_updates_total=current.stage_updates_total,architecture=current.architecture,best_checkpoint_path=current.best_checkpoint_path,stage_best_score=current.stage_best_score);save_state(FORMAL/'run_state.json',current)
-   if is_improvement(score,current.stage_best_score):
+   if stage_improved:
     current.stage_best_score=score;save_checkpoint(path=FORMAL/f'{stage.lower()}_best.pt',model=model,optimizer=opt,scheduler=sched,step=current.global_step,transform=tr,config=CFG,normalizer=norm,stage=current.current_stage,best_metric=score,stage_step=current.stage_step,stage_updates_total=current.stage_updates_total,architecture=current.architecture,best_checkpoint_path=current.best_checkpoint_path,stage_best_score=current.stage_best_score);save_state(FORMAL/'run_state.json',current)
+   _record_validation(current,summary,global_improved,stage_improved)
  train_stage(model,opt,sched,state,config['updates'],batch,loss,on_update=updated)
  save_resume_pair(model,opt,sched,tr,norm,state)
 def formal(stop_after_freeze=False):

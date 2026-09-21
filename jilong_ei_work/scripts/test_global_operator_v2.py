@@ -18,6 +18,7 @@ def main():
  p=project_physical(torch.tensor([[[[-1.]],[[1.]],[[1.]],[[2.]],[[2.]],[[.2]]]]));assert p[:,0].item()==0 and p[:,1:3].abs().sum()==0 and torch.allclose(p[:,3],torch.tensor([[[1.]]])) and torch.allclose(p[:,4],torch.tensor([[[1.]]])) and torch.allclose(p[:,5],torch.tensor([[[.2]]]))
  valid=project_physical(torch.tensor([[[[1.]],[[0.]],[[0.]],[[1.]],[[.2]],[[0.]]]]));assert valid[:,3].item()==1 and abs(valid[:,4].item()-.2)<1e-6
  capped=project_physical(torch.tensor([[[[1.]],[[0.]],[[0.]],[[.3]],[[.7]],[[0.]]]]));assert abs(capped[:,3].item()-.3)<1e-6 and abs(capped[:,4].item()-.3)<1e-6
+ grad_input=torch.randn((1,6,2,2),requires_grad=True);project_physical(grad_input).square().mean().backward();assert grad_input.grad is not None and torch.isfinite(grad_input.grad).all()
  st=PipelineState('x','h',current_stage='STAGE_B',stage_step=500,global_step=2500,stage_updates_total=2000);checkpoint_agreement(st,{'stage_name':'STAGE_B','stage_step':500,'global_step':2500,'stage_updates_total':2000,'config_hash':'h','architecture':None});done(st,PipelineStage.STAGE_B);assert st.current_stage=='STAGE_C'
  out={'status':'PASS','transform_roundtrip':'PASS','zero_preservation':'PASS','integral_loss':'PASS','amplitude_guard':'PASS','feature_count':'PASS','source_forcing':'PASS','physical_projection':'PASS','future_window':'PASS','checkpoint_resume_semantics':'PASS','state_machine':'PASS'}; (ROOT/'reports/GLOBAL_V2_UNIT_TESTS.json').write_text(json.dumps(out,indent=2));print(json.dumps(out,indent=2))
 if __name__=='__main__':main()
