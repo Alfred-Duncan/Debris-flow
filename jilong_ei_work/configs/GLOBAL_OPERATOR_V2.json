@@ -14,7 +14,7 @@
   "validation_score": {"trajectory_h_rel_l2":0.40,"trajectory_momentum_rel_l2":0.20,"one_minus_mean_wet_iou":0.25,"debris_front_mae_normalized":0.10,"mixture_volume_relative_error_normalized":0.05,"front_normalization_km":0.5,"volume_normalization":0.10},
   "gradient_checkpointing": true,
   "stabilization": {
-    "delta_normalization": {"quantile": 0.995, "floor": 0.000001, "max_cells": 512, "samples_per_train_case": 12},
+    "delta_normalization": {"quantile": 0.995, "floor": 0.000001, "max_cells": 512, "samples_per_case": 12},
     "delta_bound": {"quantile": 0.999, "safety_factor": 1.2, "minimum_coverage": 0.999},
     "teacher_weighting": {"dry_active_weight": 0.02, "wet_weight": 1.0, "strong_change_weight": 2.0, "change_quantile": 0.90, "source_weight": 2.0},
     "sampler": {"source_active_fraction": 0.20, "early_fraction": 0.20, "uniform_fraction": 0.60, "source_starts_s": [0, 10, 20], "early_start_range_s": [30, 120]},
