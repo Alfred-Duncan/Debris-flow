@@ -97,6 +97,11 @@ def _record_validation(state,summary,is_global_best,is_stage_best):
  safe_append_csv(RESULTS/'validation_history.csv',row)
 def _record_horizons(state,stage,rows):
  for row in rows:safe_append_csv(RESULTS/'horizon_history.csv',{'global_step':state.global_step,'stage':stage,**row})
+def finalize_periodic_validation(state,stage,horizons,summary,is_global_best,is_stage_best,worse=None):
+ """Persist all step evidence before applying a terminal quality decision."""
+ _record_horizons(state,stage,horizons);_record_validation(state,summary,is_global_best,is_stage_best)
+ if not summary.get('finite_rollout') and state.global_step>=2000:raise RuntimeError('EARLY_TRAINING_QUALITY_FAILURE NONFINITE_ROLLOUT')
+ if summary.get('finite_rollout') and state.global_step>=2000 and worse is not None and worse>=3:raise RuntimeError('EARLY_TRAINING_QUALITY_FAILURE PERSISTENCE_COLLAPSE')
 def _stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows,static,tr,norm,delta_norm,device,stage,persistence_summary):
  assert set(val_subset_rows.scenario_id)==set(val_subset_store.rows.scenario_id)
  config=next(item for item in state.effective_curriculum if item['stage']==stage);state.stage_updates_total=config['updates'];save_resume_pair(model,opt,sched,tr,norm,state);active=static[:,1:2];stage_has_finite=[False]
@@ -117,20 +122,18 @@ def _stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows
    safe_append_csv(RESULTS/'training_log.csv',row)
   if current.global_step%500==0:validate_one_step(model,val_subset_store,tr,norm,device,val_subset_rows,times_s=(120,300,600,900,1200))
   if current.global_step%1000==0:
-   records,summary=validate_all_val(model,val_subset_store,tr,norm,device,rows=val_subset_rows,steps=144);_record_horizons(current,stage,validate_horizon_ladder(model,val_subset_store,tr,norm,device,val_subset_rows))
+   records,summary=validate_all_val(model,val_subset_store,tr,norm,device,rows=val_subset_rows,steps=144);horizons=validate_horizon_ladder(model,val_subset_store,tr,norm,device,val_subset_rows)
    if not summary.get('finite_rollout'):
-    _record_validation(current,summary,False,False)
-    if current.global_step>=2000:raise RuntimeError('EARLY_TRAINING_QUALITY_FAILURE NONFINITE_ROLLOUT')
+    finalize_periodic_validation(current,stage,horizons,summary,False,False)
     return
    stage_has_finite[0]=True;score=summary['J_val'];global_best=current.best_val_score;global_improved=is_improvement(score,global_best);stage_improved=is_improvement(score,current.stage_best_score)
    primary=('trajectory_h_rel_l2','trajectory_momentum_rel_l2','mean_wet_iou','mixture_volume_relative_error','debris_front_mae_km');worse=sum((summary[k]>=persistence_summary[k] if k!='mean_wet_iou' else summary[k]<=persistence_summary[k]) for k in primary)
    summary['primary_metrics_better_than_persistence']=len(primary)-worse
-   if current.global_step>=2000 and worse>=3:raise RuntimeError('EARLY_TRAINING_QUALITY_FAILURE PERSISTENCE_COLLAPSE')
    if global_improved:
     current.best_val_score=score;current.best_checkpoint_path=str(FORMAL/'best_candidate.pt');save_checkpoint(path=FORMAL/'best_candidate.pt',model=model,optimizer=opt,scheduler=sched,step=current.global_step,transform=tr,config=CFG,normalizer=norm,stage=current.current_stage,best_metric=score,stage_step=current.stage_step,stage_updates_total=current.stage_updates_total,architecture=current.architecture,best_checkpoint_path=current.best_checkpoint_path,stage_best_score=current.stage_best_score);save_state(FORMAL/'run_state.json',current)
    if stage_improved:
     current.stage_best_score=score;save_checkpoint(path=FORMAL/f'{stage.lower()}_best.pt',model=model,optimizer=opt,scheduler=sched,step=current.global_step,transform=tr,config=CFG,normalizer=norm,stage=current.current_stage,best_metric=score,stage_step=current.stage_step,stage_updates_total=current.stage_updates_total,architecture=current.architecture,best_checkpoint_path=current.best_checkpoint_path,stage_best_score=current.stage_best_score);save_state(FORMAL/'run_state.json',current)
-   _record_validation(current,summary,global_improved,stage_improved)
+   finalize_periodic_validation(current,stage,horizons,summary,global_improved,stage_improved,worse)
  train_stage(model,opt,sched,state,config['updates'],batch,loss,on_update=updated)
  if not stage_has_finite[0]:raise RuntimeError('NO_FINITE_VALIDATION_CANDIDATE')
  save_resume_pair(model,opt,sched,tr,norm,state)
