@@ -15,7 +15,9 @@ def main():
  a=x.clone();b=x.flip(-1);b[:,0]=a[:,0];b[:,3:5]=a[:,3:5];assert integral_loss(a,b,active,900)[0]<1e-8
  norm=FeatureNormalizer(0,1,1,1,[0]*5,[1]*5);static=torch.zeros((1,6,1,2));static[:,1]=1;static[:,2]=1;params=torch.ones((1,5));params[:,2]=1;features=build_features(x,x,static,params,torch.tensor([0.]),tr,norm);assert features.shape[1]==len(feature_names())==35 and features[:,32].nonzero().shape[0]>0
  late=build_features(x,x,static,params,torch.tensor([1.]),tr,norm);assert late[:,32].abs().sum()==0
- p=project_physical(torch.tensor([[[[-1.]],[[1.]],[[1.]],[[2.]],[[2.]],[[.2]]]]));assert p[:,0].item()==0 and p[:,1:5].abs().sum()==0 and torch.allclose(p[:,5],torch.tensor([[[.2]]]))
- st=PipelineState('x','h',current_stage='STAGE_B',stage_step=500,global_step=2500);checkpoint_agreement(st,{'stage_name':'STAGE_B','stage_step':500,'global_step':2500,'config_hash':'h','architecture':None});done(st,PipelineStage.STAGE_B);assert st.current_stage=='STAGE_C'
+ p=project_physical(torch.tensor([[[[-1.]],[[1.]],[[1.]],[[2.]],[[2.]],[[.2]]]]));assert p[:,0].item()==0 and p[:,1:3].abs().sum()==0 and torch.allclose(p[:,3],torch.tensor([[[1.]]])) and torch.allclose(p[:,4],torch.tensor([[[1.]]])) and torch.allclose(p[:,5],torch.tensor([[[.2]]]))
+ valid=project_physical(torch.tensor([[[[1.]],[[0.]],[[0.]],[[1.]],[[.2]],[[0.]]]]));assert valid[:,3].item()==1 and abs(valid[:,4].item()-.2)<1e-6
+ capped=project_physical(torch.tensor([[[[1.]],[[0.]],[[0.]],[[.3]],[[.7]],[[0.]]]]));assert abs(capped[:,3].item()-.3)<1e-6 and abs(capped[:,4].item()-.3)<1e-6
+ st=PipelineState('x','h',current_stage='STAGE_B',stage_step=500,global_step=2500,stage_updates_total=2000);checkpoint_agreement(st,{'stage_name':'STAGE_B','stage_step':500,'global_step':2500,'stage_updates_total':2000,'config_hash':'h','architecture':None});done(st,PipelineStage.STAGE_B);assert st.current_stage=='STAGE_C'
  out={'status':'PASS','transform_roundtrip':'PASS','zero_preservation':'PASS','integral_loss':'PASS','amplitude_guard':'PASS','feature_count':'PASS','source_forcing':'PASS','physical_projection':'PASS','future_window':'PASS','checkpoint_resume_semantics':'PASS','state_machine':'PASS'}; (ROOT/'reports/GLOBAL_V2_UNIT_TESTS.json').write_text(json.dumps(out,indent=2));print(json.dumps(out,indent=2))
 if __name__=='__main__':main()

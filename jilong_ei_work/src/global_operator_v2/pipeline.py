@@ -9,7 +9,7 @@ class PipelineStage(str,Enum):
 ORDER=list(PipelineStage)
 @dataclass
 class PipelineState:
- pipeline_version:str;config_hash:str;architecture:dict|None=None;current_stage:str='PRECHECK';stage_step:int=0;global_step:int=0;stage_updates_total:int=0;best_val_score:float|None=None;best_checkpoint_path:str|None=None;effective_curriculum:list[dict]=field(default_factory=list);max_safe_k:int|None=None;total_planned_updates:int=0;stage_best_score:float|None=None;completed_stages:list[str]=field(default_factory=list);final_holdout_generated:bool=False;final_holdout_unsealed:bool=False;legacy_test_done:bool=False;final_holdout_done:bool=False;h0_done:bool=False;runtime_done:bool=False;final_report_done:bool=False
+ pipeline_version:str;config_hash:str;architecture:dict|None=None;current_stage:str='PRECHECK';stage_step:int=0;global_step:int=0;stage_updates_total:int=0;best_val_score:float|None=None;best_checkpoint_path:str|None=None;effective_curriculum:list[dict]=field(default_factory=list);max_safe_k:int|None=None;total_planned_updates:int=0;stage_best_score:float|None=None;skipped_stages:dict[str,str]=field(default_factory=dict);completed_stages:list[str]=field(default_factory=list);final_holdout_generated:bool=False;final_holdout_unsealed:bool=False;legacy_test_done:bool=False;final_holdout_done:bool=False;h0_done:bool=False;runtime_done:bool=False;final_report_done:bool=False
 def atomic_json(path:Path,obj):
  path.parent.mkdir(parents=True,exist_ok=True);fd,tmp=tempfile.mkstemp(dir=path.parent,suffix='.tmp');os.close(fd);Path(tmp).write_text(json.dumps(obj,indent=2));os.replace(tmp,path)
 def load_state(path:Path,default:PipelineState):return PipelineState(**json.loads(path.read_text())) if path.exists() else default
@@ -37,6 +37,7 @@ def apply_capacity_result(state,probe):
  state.effective_curriculum=curriculum
  state.max_safe_k=max(safe)
  state.total_planned_updates=sum(item['updates'] for item in curriculum)
+ state.skipped_stages={stage:'MEMORY_LIMIT' for stage in ('STAGE_A','STAGE_B','STAGE_C','STAGE_D') if stage not in effective_stage_names(state)}
  return state
 def effective_stage_names(state):
  return [item['stage'] for item in state.effective_curriculum]
@@ -52,3 +53,11 @@ def next_effective_stage(state,current_stage):
   return stages[index+1] if index+1<len(stages) else 'VAL_CONFIRM'
  if current_stage=='VAL_CONFIRM':return 'FREEZE'
  return None
+def training_sample_for_step(seed,global_step,n_scenarios,k,n_time_states=145):
+ import numpy as np
+ if n_scenarios<1 or k<1 or n_time_states<k+1:raise ValueError('invalid training sampler dimensions')
+ r=np.random.default_rng(np.random.SeedSequence([seed,global_step]));i=int(r.integers(n_scenarios));ti=int(r.integers(0,n_time_states-k));return {'scenario_index':i,'time_index':ti,'time_s':ti*10}
+def build_scheduler(optimizer,warmup_steps,total_updates):
+ import math,torch
+ if warmup_steps<1 or total_updates<1:raise ValueError('scheduler requires positive update counts')
+ return torch.optim.lr_scheduler.LambdaLR(optimizer,lambda step:(step+1)/warmup_steps if step<warmup_steps else .5*(1+math.cos(math.pi*min((step-warmup_steps)/max(total_updates-warmup_steps,1),1))))

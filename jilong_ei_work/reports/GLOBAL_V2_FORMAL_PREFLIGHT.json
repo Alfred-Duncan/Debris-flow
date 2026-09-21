@@ -1,0 +1,6 @@
+{
+  "status": "CODE_PREFLIGHT",
+  "cuda_available": true,
+  "feature_count": 35,
+  "formal_training_started": false
+}
