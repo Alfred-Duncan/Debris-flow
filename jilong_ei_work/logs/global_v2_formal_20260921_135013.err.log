@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\scripts\run_global_operator_v2_full.py", line 133, in <module>
+    p=argparse.ArgumentParser();g=p.add_mutually_exclusive_group(required=True);g.add_argument('--dry-run',action='store_true');g.add_argument('--plan',action='store_true');g.add_argument('--preflight',action='store_true');g.add_argument('--formal',action='store_true');p.add_argument('--stop-after-freeze',action='store_true');main(p.parse_args())
+                                                                                                                                                                                                                                                                                                                                        ~~~~^^^^^^^^^^^^^^^^
+  File "E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\scripts\run_global_operator_v2_full.py", line 130, in main
+    if a.formal:formal(a.stop_after_freeze);return
+                ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\scripts\run_global_operator_v2_full.py", line 103, in formal
+    probes=capacity_probe(model,_capacity_loss(store,static,tr,norm,dev));apply_capacity_result(state,probes);done(state,PipelineStage.CAPACITY_PROBE);save_state(FORMAL/'run_state.json',state)
+  File "E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\scripts\run_global_operator_v2_full.py", line 45, in capacity_probe
+    result=probe_fn(model,k,loss_fn);out.append(result)
+  File "E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\scripts\run_global_operator_v2_full.py", line 37, in probe_one_k
+    loss=loss_fn(k);loss.backward();torch.cuda.synchronize()
+                    ~~~~~~~~~~~~~^^
+  File "D:\Anaconda\Lib\site-packages\torch\_tensor.py", line 625, in backward
+    torch.autograd.backward(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        self, gradient, retain_graph, create_graph, inputs=inputs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Anaconda\Lib\site-packages\torch\autograd\__init__.py", line 354, in backward
+    _engine_run_backward(
+    ~~~~~~~~~~~~~~~~~~~~^
+        tensors,
+        ^^^^^^^^
+    ...<5 lines>...
+        accumulate_grad=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Anaconda\Lib\site-packages\torch\autograd\graph.py", line 841, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        t_outputs, *args, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )  # Calls into the C++ engine to run the backward pass
+    ^
+RuntimeError: one of the variables needed for gradient computation has been modified by an inplace operation: [torch.cuda.FloatTensor [1, 921, 882]], which is output 0 of AsStridedBackward0, is at version 5; expected version 2 instead. Hint: enable anomaly detection to find the operation that failed to compute its gradient, with torch.autograd.set_detect_anomaly(True).

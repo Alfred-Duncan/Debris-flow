@@ -1,0 +1,26 @@
+E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\scripts\run_global_operator_v2_full.py:82: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:837.)
+  RESULTS.mkdir(parents=True,exist_ok=True);path=RESULTS/'training_log.csv';new=not path.exists();row={'global_step':current.global_step,'stage':stage,'stage_step':current.stage_step,'K':config['k'],'total_loss':float(details['total_loss']),'multi_loss':float(details['multi']),'one_step_anchor':float(details['one_step_anchor']),'state_loss':float(details['state']),'wet_loss':float(details['wet']),'integral_loss':float(details['integral']),'amplitude_guard':float(details['amplitude_guard']),'learning_rate':opt.param_groups[0]['lr'],'step_seconds':float(details.get('step_seconds',float('nan'))),'peak_vram_gib':float(torch.cuda.max_memory_allocated()/1024**3)}
+Traceback (most recent call last):
+  File "E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\scripts\run_global_operator_v2_full.py", line 141, in <module>
+    p=argparse.ArgumentParser();g=p.add_mutually_exclusive_group(required=True);g.add_argument('--dry-run',action='store_true');g.add_argument('--plan',action='store_true');g.add_argument('--preflight',action='store_true');g.add_argument('--formal',action='store_true');p.add_argument('--stop-after-freeze',action='store_true');main(p.parse_args())
+                                                                                                                                                                                                                                                                                                                                        ~~~~^^^^^^^^^^^^^^^^
+  File "E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\scripts\run_global_operator_v2_full.py", line 138, in main
+    if a.formal:formal(a.stop_after_freeze);return
+                ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\scripts\run_global_operator_v2_full.py", line 118, in formal
+    next_stage=next_effective_stage(state,state.current_stage);_stage_training(model,opt,sched,state,store,val_subset_store,val_subset_rows,static,tr,norm,dev,state.current_stage);enter_stage(model,opt,sched,tr,norm,state,next_stage);continue
+                                                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\scripts\run_global_operator_v2_full.py", line 96, in _stage_training
+    train_stage(model,opt,sched,state,config['updates'],batch,loss,on_update=updated)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\src\global_operator_v2\trainer.py", line 58, in train_stage
+    if on_update:on_update(state,details,checkpoint_every)
+                 ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Alfred\Documents\JiLong-PDE\jilong_ei_work\scripts\run_global_operator_v2_full.py", line 83, in updated
+    with path.open('a',newline='') as handle:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'E:\\Alfred\\Documents\\JiLong-PDE\\jilong_ei_work\\results\\global_operator_v2\\training_log.csv'

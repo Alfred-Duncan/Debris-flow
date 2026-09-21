@@ -91,6 +91,6 @@
   "amp_policy": "DISABLED_FOR_SPECTRAL_KERNEL_COMPATIBILITY",
   "metric_parity_report_exists": true,
   "formal_training_started": false,
-  "mode": "PREFLIGHT",
+  "mode": "DRY_RUN",
   "shutdown_guard": "artifact-and-COMPLETE required"
 }

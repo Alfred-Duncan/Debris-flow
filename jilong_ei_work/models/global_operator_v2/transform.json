@@ -1,0 +1,1 @@
+{"h": {"kind": "log1p", "scale": 18.421875}, "hu": {"kind": "asinh", "scale": 183.2899169921875}, "hv": {"kind": "asinh", "scale": 274.0556335449219}, "c": {"kind": "identity"}, "ice": {"kind": "identity"}, "dz": {"kind": "asinh", "scale": 5.00390625}, "fit_scope": "TRAIN_ONLY"}

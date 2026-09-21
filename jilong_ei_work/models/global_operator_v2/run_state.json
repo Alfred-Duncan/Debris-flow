@@ -1,0 +1,53 @@
+{
+  "pipeline_version": "2.1-code-complete",
+  "config_hash": "6945a5fbf9977c25f8c514dc5f45f3e44cb4ddd68d884c3fde4402fdabc65a7f",
+  "architecture": {
+    "width": 32,
+    "modes": 24,
+    "depth": 4
+  },
+  "current_stage": "STAGE_C",
+  "stage_step": 1000,
+  "global_step": 5000,
+  "stage_updates_total": 4000,
+  "best_val_score": 4.219789001988321,
+  "best_checkpoint_path": "E:\\Alfred\\Documents\\JiLong-PDE\\jilong_ei_work\\models\\global_operator_v2\\best_candidate.pt",
+  "effective_curriculum": [
+    {
+      "stage": "STAGE_A",
+      "k": 1,
+      "updates": 2000
+    },
+    {
+      "stage": "STAGE_B",
+      "k": 2,
+      "updates": 2000
+    },
+    {
+      "stage": "STAGE_C",
+      "k": 4,
+      "updates": 4000
+    },
+    {
+      "stage": "STAGE_D",
+      "k": 6,
+      "updates": 6000
+    }
+  ],
+  "max_safe_k": 6,
+  "total_planned_updates": 14000,
+  "stage_best_score": null,
+  "skipped_stages": {},
+  "completed_stages": [
+    "PRECHECK",
+    "FIT_NORMALIZERS",
+    "CAPACITY_PROBE"
+  ],
+  "final_holdout_generated": false,
+  "final_holdout_unsealed": false,
+  "legacy_test_done": false,
+  "final_holdout_done": false,
+  "h0_done": false,
+  "runtime_done": false,
+  "final_report_done": false
+}

@@ -1,13 +1,7 @@
 {
-  "status": "RUNTIME_ARTIFACTS_MISSING",
+  "status": "CODE_PREFLIGHT",
   "cuda_available": true,
   "feature_count": 35,
   "formal_training_started": false,
-  "missing_artifacts": [
-    "E:\\Alfred\\Documents\\JiLong-PDE\\.github_stage_global\\jilong_ei_work\\data\\downloads\\park_v2\\inputs\\upper30h.npz",
-    "E:\\Alfred\\Documents\\JiLong-PDE\\.github_stage_global\\jilong_ei_work\\data\\downloads\\park_v2\\inputs\\upper30h.json",
-    "E:\\Alfred\\Documents\\JiLong-PDE\\.github_stage_global\\jilong_ei_work\\data\\downloads\\park_v2\\inputs\\upper30h_transects.json",
-    "E:\\Alfred\\Documents\\JiLong-PDE\\.github_stage_global\\jilong_ei_work\\outputs\\park_v2_h0\\spinup\\final_state.npz",
-    "scenario_directories:0/200"
-  ]
+  "missing_artifacts": []
 }
