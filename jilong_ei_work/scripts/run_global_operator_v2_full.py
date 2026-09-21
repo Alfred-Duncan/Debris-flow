@@ -68,8 +68,11 @@ def formal(shutdown=False):
   stage_done(state,name,state)
  if shutdown and state['final_report_done']:subprocess.run(['shutdown.exe','/s','/t','60'],check=True)
 def main(a):
- if a.dry_run:print(json.dumps(verify_layout(),indent=2));return
+ if a.dry_run or a.preflight:
+  report=verify_layout();report.update({'formal_training_started':False,'mode':'PREFLIGHT' if a.preflight else 'DRY_RUN','shutdown_guard':'artifact-and-COMPLETE required'});(ROOT/'reports/GLOBAL_V2_FORMAL_DRY_RUN.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2));return
+ if a.plan:
+  print(json.dumps({'current_resume_stage':state_io().get('current_stage','PRECHECK'),'planned_architecture':'width32/modes24/depth4; width48/modes24 fallback only after Stage C underfit','curriculum':'A K1, B K2, C K4, D K6 only if capacity-safe','validation':'one-step/500, 8-case full/1000, all-20 after curriculum','holdout':'generate only after FREEZE; evaluate exactly once lock','shutdown':'only COMPLETE plus required artifacts'},indent=2));return
  if a.formal:formal(a.shutdown_on_success);return
  raise SystemExit('Use --dry-run or --formal.')
 if __name__=='__main__':
- p=argparse.ArgumentParser();g=p.add_mutually_exclusive_group(required=True);g.add_argument('--dry-run',action='store_true');g.add_argument('--formal',action='store_true');p.add_argument('--shutdown-on-success',action='store_true');main(p.parse_args())
+ p=argparse.ArgumentParser();g=p.add_mutually_exclusive_group(required=True);g.add_argument('--dry-run',action='store_true');g.add_argument('--preflight',action='store_true');g.add_argument('--plan',action='store_true');g.add_argument('--formal',action='store_true');p.add_argument('--shutdown-on-success',action='store_true');main(p.parse_args())

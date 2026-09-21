@@ -1,0 +1,17 @@
+{
+  "status": "CODE_NOT_READY_FOR_FORMAL_EXECUTION",
+  "base_commit": "ef0cb32af1c655535aebf28041c2382f4da569c8",
+  "formal_training_executed": false,
+  "full_grid_capacity_probe_executed": false,
+  "final_holdout_generated": false,
+  "unit_tests": "PASS",
+  "dz_audit": "PASS_THRESHOLD_AWARE",
+  "metric_parity": "PASS",
+  "dry_run": "PASS",
+  "plan_and_preflight": "PASS",
+  "future_command": "python scripts/run_global_operator_v2_full.py --formal",
+  "shutdown_guard": "PASS",
+  "blockers": [
+    "Formal post-freeze evaluators (LEGACY_TEST, final holdout, H0, runtime, figures, report) still need artifact-producing implementations; no readiness claim is made from boolean flags."
+  ]
+}

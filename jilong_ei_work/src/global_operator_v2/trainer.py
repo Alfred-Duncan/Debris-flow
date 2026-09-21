@@ -17,9 +17,9 @@ def choose_amp(device: torch.device):
     # BF16 first and FP16+GradScaler second here.
     return False,None
 
-def save_checkpoint(path, model, optimizer, scheduler, step, transform, config, normalizer=None, stage=None, best_metric=None):
+def save_checkpoint(path, model, optimizer, scheduler, step, transform, config, normalizer=None, stage=None, best_metric=None, stage_step=None, stage_updates_total=None, architecture=None):
     torch.save({"model":model.state_dict(),"optimizer":optimizer.state_dict(),"scheduler":scheduler.state_dict() if scheduler else None,
-                "step":step,"stage":stage,"stage_step":step,"global_step":step,"best_metric":best_metric,"transform":transform.to_dict(),"feature_normalizer":normalizer.to_dict() if normalizer else None,"config":config,"torch_rng":torch.get_rng_state(),"numpy_rng":np.random.get_state(),"python_rng":random.getstate(),
+                "checkpoint_version":"2.2","step":step,"stage_name":stage,"stage_step":stage_step,"stage_updates_total":stage_updates_total,"global_step":step,"best_metric":best_metric,"best_checkpoint_path":None,"transform":transform.to_dict(),"feature_normalizer":normalizer.to_dict() if normalizer else None,"config":config,"config_hash":__import__('hashlib').sha256(__import__('json').dumps(config,sort_keys=True).encode()).hexdigest(),"architecture":architecture,"torch_rng":torch.get_rng_state(),"numpy_rng":np.random.get_state(),"python_rng":random.getstate(),
                 "cuda_rng":torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None},path)
 
 def restore_checkpoint(path, model, optimizer=None, scheduler=None):

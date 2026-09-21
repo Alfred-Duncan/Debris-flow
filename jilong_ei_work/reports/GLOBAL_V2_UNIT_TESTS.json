@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "transform_roundtrip": "PASS",
+  "zero_preservation": "PASS",
+  "integral_loss": "PASS",
+  "amplitude_guard": "PASS",
+  "feature_count": "PASS",
+  "source_forcing": "PASS",
+  "physical_projection": "PASS",
+  "future_window": "PASS",
+  "checkpoint_resume_semantics": "PASS",
+  "state_machine": "PASS"
+}
