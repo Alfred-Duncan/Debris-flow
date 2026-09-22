@@ -21,6 +21,7 @@ def pick_front2(layout,truth,active,route):
     debris=((truth[0,0]>.1)&(truth[0,3]>.05)&active[0,0].bool()).cpu().numpy();front=route[debris].max();zone=np.isfinite(route)&(np.abs(route-front)<=1000)
     return sorted([p for p in layout.eligible if zone[p.r0:p.r1,p.c0:p.c1].any()],key=lambda p:(-int(zone[p.r0:p.r1,p.c0:p.c1].sum()),p.patch_id))[:2]
 def classify(x):return 'strong_positive' if x>=.2 else 'positive' if x>0 else ('severely_harmful' if x<=-.2 else ('harmful' if x<=-.05 else 'neutral'))
+@torch.no_grad()
 def main(a):
     if not torch.cuda.is_available():raise RuntimeError('CUDA_REQUIRED')
     dev=torch.device('cuda');out=ROOT/'results/local_corrector_patch_audit';out.mkdir(parents=True,exist_ok=True)
