@@ -41,8 +41,9 @@ def core(value: torch.Tensor, layout: PatchLayout, halo: int = HALO) -> torch.Te
 
 
 def local_features(global_features: torch.Tensor, encoded_provisional: torch.Tensor,
-                   encoded_current: torch.Tensor, scales, patches, layout: PatchLayout) -> torch.Tensor:
-    scale = torch.as_tensor(scales, device=encoded_provisional.device,
+                   encoded_current: torch.Tensor, global_delta_scales, patches, layout: PatchLayout) -> torch.Tensor:
+    """Features use Global delta scales, never Local target-normalization scales."""
+    scale = torch.as_tensor(global_delta_scales, device=encoded_provisional.device,
                             dtype=encoded_provisional.dtype)[None, :, None, None]
     transition = (encoded_provisional - encoded_current) / scale
     full = torch.cat((global_features, encoded_provisional, transition), dim=1)

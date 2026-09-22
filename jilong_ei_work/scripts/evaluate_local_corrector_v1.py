@@ -36,7 +36,7 @@ def learned_execute(label,budget,rows,layout,global_model,local_model,transform,
             provisional=predict(global_model,previous,current,static,params,time+step/144.,transform,normalizer,active)
             selected=select_random(layout,count,SEED+case_index*1000+step)
             features=build_features(previous,current,static,params,torch.tensor([time+step/144.],device=device),transform,normalizer)
-            corrected_t,_,_=apply_learned_correction(local_model,features,transform.encode(provisional),transform.encode(current),selected,layout,normalization['scales'],normalization['bounds'],active,global_model)
+            corrected_t,_,_=apply_learned_correction(local_model,features,transform.encode(provisional),transform.encode(current),selected,layout,delta.scales,normalization['scales'],normalization['bounds'],active,global_model)
             corrected=project_physical(transform.decode(corrected_t),active)
             metric.add(corrected,truth_current,truth_next,transform);append_station(pred_series,(step+1)*10,station_row(corrected,z0,transects));append_station(truth_series,(step+1)*10,station_row(truth_next,z0,transects))
             coverage.append(layout.selected_active_fraction(selected));timeline.append({'method':label,'scenario_id':row.scenario_id,'time_s':(step+1)*10,'budget_fraction':budget,'selected_patch_ids':';'.join(map(str,[p.patch_id for p in selected]))})

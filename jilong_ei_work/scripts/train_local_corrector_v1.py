@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
+import shutil
 import sys
 from pathlib import Path
 
@@ -18,6 +19,7 @@ from src.global_operator_v2.losses import project_physical
 from src.global_operator_v2.oracle_refinement import PatchLayout, oracle_patch_scores, select_random
 from src.local_corrector.model import JilongLocalCorrector
 from src.local_corrector.trainer import apply_learned_correction, correction_loss
+from src.local_corrector.v1_1 import restore_local_rng, snapshot_local_rng, true_front_patch
 from scripts.run_global_v2_oracle_refinement import load_model, predict
 
 SEED = 20260920
@@ -41,7 +43,7 @@ def _choose_mode(rng, step):
     return str(rng.choice(names, p=probs))
 
 
-def _pick_training_patches(layout, provisional_t, truth_t, provisional_p, truth_p, active, delta, rng):
+def _pick_training_patches(layout, provisional_t, truth_t, provisional_p, truth_p, active, delta, rng, route_chainage_m=None):
     """TRAIN_ONLY_PATCH_SAMPLER: 4 random, 2 error, 1 front, 1 FP wet."""
     eligible = list(layout.eligible)
     selected = []
@@ -55,13 +57,8 @@ def _pick_training_patches(layout, provisional_t, truth_t, provisional_p, truth_
         add(eligible[int(index)])
         if len(selected) >= 6:
             break
-    # Truth-front proxy: highest truth-wet density is a deterministic eligible
-    # front candidate; no such signal is used at deployment.
-    wet = truth_p[0, 0].ge(.05).detach().cpu().numpy()
-    front_rank = sorted(eligible, key=lambda p: (-int(wet[p.r0:p.r1, p.c0:p.c1].sum()), p.patch_id))
-    for p in front_rank:
-        if wet[p.r0:p.r1, p.c0:p.c1].any():
-            add(p); break
+    front=true_front_patch(layout,truth_p,active,route_chainage_m) if route_chainage_m is not None else None
+    if front is not None:add(front)
     fp = (provisional_p[0, 0].ge(.05) & truth_p[0, 0].lt(.05)).detach().cpu().numpy()
     fp_rank = sorted(eligible, key=lambda p: (-int(fp[p.r0:p.r1, p.c0:p.c1].sum()), p.patch_id))
     for p in fp_rank:
@@ -76,7 +73,7 @@ def _pick_training_patches(layout, provisional_t, truth_t, provisional_p, truth_
 
 @torch.no_grad()
 def _burn(mode, row, store, params, static, active, global_model, local_model, transform, normalizer,
-          normalization, layout, device, rng, target_t):
+          normalization, delta, layout, device, rng, target_t):
     """Construct a no-future-leakage state at target_t from an older truth pair."""
     if mode == "teacher" or target_t == 0:
         previous = _tensor(store.frame(row, max(0, target_t - 10)), device)
@@ -92,23 +89,24 @@ def _burn(mode, row, store, params, static, active, global_model, local_model, t
         if mode == "refined":
             features = build_features(previous, current, static, params, torch.tensor([fraction], device=device), transform, normalizer)
             patches = select_random(layout, layout.count_for_budget(.10), SEED + int(row.design_index) * 100000 + target_t * 10 + burn_step)
-            encoded, _, _ = apply_learned_correction(local_model, features, transform.encode(provisional), transform.encode(current), patches, layout, normalization["scales"], normalization["bounds"], active, global_model)
+            encoded, _, _ = apply_learned_correction(local_model, features, transform.encode(provisional), transform.encode(current), patches, layout, delta.scales, normalization["scales"], normalization["bounds"], active, global_model)
             provisional = project_physical(transform.decode(encoded), active)
         previous, current = current, provisional
     return previous, current
 
 
-def _save(path, model, optimizer, scheduler, update, best_score=None):
+def _save(path, model, optimizer, scheduler, update, best_score=None, rng=None):
     state = {"model": model.state_dict(), "optimizer": optimizer.state_dict(), "scheduler": scheduler.state_dict(),
              "update": int(update), "phase": _phase(max(update - 1, 0)), "best_score": best_score,
              "python_rng": random.getstate(), "numpy_rng": np.random.get_state(), "torch_rng": torch.get_rng_state(),
              "cuda_rng": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None}
+    if rng is not None:state['local_rng_state']=snapshot_local_rng(rng)
     temporary = path.with_suffix(".tmp")
     torch.save(state, temporary)
     temporary.replace(path)
 
 
-def train(smoke=False, resume=False, total_updates=None):
+def train(smoke=False, resume=False, total_updates=None, version='v1'):
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA_REQUIRED")
     random.seed(SEED); np.random.seed(SEED); torch.manual_seed(SEED); torch.cuda.manual_seed_all(SEED)
@@ -116,7 +114,7 @@ def train(smoke=False, resume=False, total_updates=None):
     rows = scenario_rows("TRAIN")
     if len(rows) != 160 or not set(rows["split"]).issubset({"TRAIN"}) or rows.scenario_id.str.contains("TEST|H0", case=False).any():
         raise RuntimeError("TRAIN_SCOPE_REQUIRED")
-    out = ROOT / "models/local_corrector_v1"
+    out = ROOT / f"models/local_corrector_{version}"
     normalization = json.loads((out / "correction_normalization.json").read_text())
     if normalization.get("fit_scope") != "TRAIN_ONLY":
         raise RuntimeError("LOCAL_NORMALIZATION_NOT_TRAIN_ONLY")
@@ -139,28 +137,29 @@ def train(smoke=False, resume=False, total_updates=None):
         random.setstate(ck["python_rng"]); np.random.set_state(ck["numpy_rng"]); torch.set_rng_state(ck["torch_rng"])
         if ck.get("cuda_rng") is not None: torch.cuda.set_rng_state_all(ck["cuda_rng"])
         start = int(ck["update"])
-    rng = np.random.default_rng(SEED + start)
-    log_path = ROOT / "results/local_corrector_v1/training_log.jsonl"; log_path.parent.mkdir(parents=True, exist_ok=True)
+    rng = restore_local_rng(ck['local_rng_state']) if resume and ck.get('local_rng_state') is not None else np.random.default_rng(SEED + start)
+    log_path = ROOT / f"results/local_corrector_{version}/training_log.jsonl"; log_path.parent.mkdir(parents=True, exist_ok=True)
+    with np.load(INPUT) as source:route_chainage_m=np.asarray(source['route_chainage_m'],np.float32)
     for update in range(start, total):
         model.train(); mode = _choose_mode(rng, update); index = int(rng.integers(len(rows))); row = rows.iloc[index]
         target_t = int(rng.integers(0, 144)) * 10
         params = _tensor(np.asarray([row[p] for p in ("volume_scale", "ice_fraction", "erosion_K", "n_debris", "dep_tau_s")], np.float32), device)
-        previous, current = _burn(mode, row, store, params, static, active, global_model, model, transform, normalizer, normalization, layout, device, rng, target_t)
+        previous, current = _burn(mode, row, store, params, static, active, global_model, model, transform, normalizer, normalization, delta, layout, device, rng, target_t)
         truth = _tensor(store.frame(row, target_t + 10), device)
         fraction = target_t / 1440.
         with torch.no_grad():
             provisional = predict(global_model, previous, current, static, params, fraction, transform, normalizer, active)
             features = build_features(previous, current, static, params, torch.tensor([fraction], device=device), transform, normalizer)
-            patches = _pick_training_patches(layout, transform.encode(provisional), transform.encode(truth), provisional, truth, active, delta, rng)
+            patches = _pick_training_patches(layout, transform.encode(provisional), transform.encode(truth), provisional, truth, active, delta, rng, route_chainage_m)
         optimizer.zero_grad(set_to_none=True)
-        loss, details = correction_loss(model, features, transform.encode(provisional), transform.encode(truth), transform.encode(current), provisional, truth, patches, layout, normalization["scales"], normalization["bounds"], active, delta.change_threshold, global_model)
+        loss, details = correction_loss(model, features, transform.encode(provisional), transform.encode(truth), transform.encode(current), provisional, truth, patches, layout, delta.scales, normalization["scales"], normalization["bounds"], active, delta.change_threshold, global_model)
         if not torch.isfinite(loss):
-            _save(last, model, optimizer, scheduler, update)
+            _save(last, model, optimizer, scheduler, update, rng=rng)
             raise RuntimeError("NONFINITE_LOCAL_LOSS")
         loss.backward()
         grad = float(torch.nn.utils.clip_grad_norm_(model.parameters(), 1.).detach())
         if not np.isfinite(grad):
-            _save(last, model, optimizer, scheduler, update)
+            _save(last, model, optimizer, scheduler, update, rng=rng)
             raise RuntimeError("NONFINITE_LOCAL_GRADIENT")
         optimizer.step(); scheduler.step()
         record = {"update": update + 1, "phase": _phase(update), "state_mode": mode, "loss": float(loss.detach()), "grad_norm": grad,
@@ -169,7 +168,8 @@ def train(smoke=False, resume=False, total_updates=None):
             print(json.dumps(record), flush=True)
             with log_path.open("a", encoding="utf8") as handle: handle.write(json.dumps(record) + "\n")
         if (update + 1) % 500 == 0 or update + 1 == total:
-            _save(last, model, optimizer, scheduler, update + 1)
+            _save(last, model, optimizer, scheduler, update + 1, rng=rng)
+            if version != 'v1':shutil.copy2(last,out/f'candidate_{update+1:04d}.pt')
     return last
 
 
