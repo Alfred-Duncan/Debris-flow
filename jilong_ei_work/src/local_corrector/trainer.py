@@ -14,16 +14,24 @@ def bounded_correction(raw: torch.Tensor, scales, bounds) -> tuple[torch.Tensor,
     return encoded, encoded / scale
 
 
+def apply_momentum_state_guard(encoded: torch.Tensor, global_model=None) -> torch.Tensor:
+    """Apply the frozen Global absolute-state momentum envelope, if present."""
+    if global_model is None or not bool(getattr(global_model, "momentum_state_guard", False)):
+        return encoded
+    guard = global_model.momentum_state_bounds[None, :, None, None].to(encoded)
+    return torch.cat((encoded[:, :1], encoded[:, 1:3].clamp(-guard, guard), encoded[:, 3:]), dim=1)
+
+
 def apply_learned_correction(model, features, encoded_provisional, encoded_current, patches, layout,
-                             global_delta_scales, local_correction_scales, local_correction_bounds, active, global_model=None):
+                             global_delta_scales, local_correction_scales, local_correction_bounds, active, global_model=None,
+                             apply_momentum_guard=True):
     """Infer fixed-shape patches, then make a core-only transformed update."""
     inputs = local_features(features, encoded_provisional, encoded_current, global_delta_scales, patches, layout)
     raw = model(inputs)
     correction, normalized = bounded_correction(core(raw, layout), local_correction_scales, local_correction_bounds)
     corrected = apply_core(encoded_provisional, correction, patches, layout, active)
-    if global_model is not None and bool(getattr(global_model, "momentum_state_guard", False)):
-        guard = global_model.momentum_state_bounds[None, :, None, None].to(corrected)
-        corrected = torch.cat((corrected[:, :1], corrected[:, 1:3].clamp(-guard, guard), corrected[:, 3:]), dim=1)
+    if apply_momentum_guard:
+        corrected = apply_momentum_state_guard(corrected, global_model)
     nb = torch.as_tensor(local_correction_bounds, device=raw.device, dtype=raw.dtype)[None, :, None, None] / torch.as_tensor(local_correction_scales, device=raw.device, dtype=raw.dtype)[None, :, None, None]
     saturation = (raw.abs() >= nb).float().mean((0, 2, 3))
     return corrected, normalized, saturation
