@@ -29,7 +29,7 @@ def main():
     assert concentration_fractions(np.array([1.,3.,6.]))['top50_fraction']==.9
     # Teacher-only change/newly-wet semantics: static dry space cannot claim
     # an artificial IoU=1, and prediction magnitude cannot create a mask.
-    m=StreamingMetrics(mask,np.zeros((17,19),np.float32),.1);cur=torch.zeros_like(pred);target=torch.zeros_like(pred);target[:,0,0,0]=.06
+    m=StreamingMetrics(mask,np.zeros((17,19),np.float32),.1);cur=torch.zeros_like(pred);target=torch.zeros_like(pred);target[:,0,0,0]=.06;target[:,1:,0,0]=1.
     noisy=torch.ones_like(pred)*100
     m.add(torch.zeros_like(pred),cur,target,IdentityTransform());r=m.result()
     assert r['__new_truth']==1 and r['__new_intersection']==0 and r['newly_wet_iou']==0.
