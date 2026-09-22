@@ -93,13 +93,13 @@ def execute_method(label, budget, kind, rows, layout, model, transform, normaliz
             if kind=='Persistence': provisional=current; selected=()
             else:
                 provisional=predict(model,previous,current,static,params,time+step/144.,transform,normalizer,active)
-                if kind=='OraclePerfect':
+                if kind in {'OraclePerfect','SmoothOracleV2'}:
                     scores,total,masses=oracle_patch_scores(transform.encode(provisional),transform.encode(truth_next),provisional,truth_next,active,layout,delta.scales)
                     selected=select_oracle(layout,scores,count)
                     fractions=concentration_fractions(scores); concentration.append({'method':label,'scenario_id':row.scenario_id,'time_s':(step+1)*10,'total_normalized_error':total,**fractions,**masses})
                 elif kind=='RandomPerfect': selected=select_random(layout,count,20260920+case_index*1000+step)
                 else: selected=()
-            corrected=project_physical(correct_cores(provisional,truth_next,selected,layout,active),active) if selected else provisional
+            corrected=project_physical(correct_cores(provisional,truth_next,selected,layout,active,smooth=(kind=='SmoothOracleV2')),active) if selected else provisional
             metric.add(corrected,truth_current,truth_next,transform)
             append_station(predicted_station,(step+1)*10,station_row(corrected,z0,transects));append_station(teacher_station,(step+1)*10,station_row(truth_next,z0,transects))
             if kind!='Persistence':

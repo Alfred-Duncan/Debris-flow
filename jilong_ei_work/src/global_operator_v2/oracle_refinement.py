@@ -103,10 +103,21 @@ def select_random(layout: PatchLayout, count: int, seed: int) -> tuple[Patch, ..
 
 
 def correct_cores(provisional: torch.Tensor, truth_next: torch.Tensor, selected: tuple[Patch, ...],
-                  layout: PatchLayout, active: torch.Tensor) -> torch.Tensor:
+                  layout: PatchLayout, active: torch.Tensor, smooth: bool=False) -> torch.Tensor:
     """Perfect CORE-only correction; inactive cells retain physical projection mask."""
-    mask = layout.masks(selected, provisional.device)[None, None] & active.bool()
-    return torch.where(mask, truth_next, provisional)
+    if not smooth:
+        mask = layout.masks(selected, provisional.device)[None, None] & active.bool()
+        return torch.where(mask, truth_next, provisional)
+    # Core-only separable cosine taper: unity in the centre and a nonzero
+    # 0.25 blend at the core boundary; no halo receives target information.
+    weight=torch.zeros_like(provisional[:,0:1])
+    for patch in selected:
+        hr,hw=patch.r1-patch.r0,patch.c1-patch.c0
+        rr=torch.linspace(0,1,hr,device=provisional.device);cc=torch.linspace(0,1,hw,device=provisional.device)
+        taper=.25+.75*torch.sin(torch.pi*rr)[:,None]*torch.sin(torch.pi*cc)[None,:]
+        weight[:,:,patch.r0:patch.r1,patch.c0:patch.c1]=taper
+    weight=weight*active.to(weight.dtype)
+    return provisional*(1-weight)+truth_next*weight
 
 
 def concentration_fractions(scores: np.ndarray, fractions=(.01, .05, .10, .20, .30, .50)) -> dict[str, float]:
