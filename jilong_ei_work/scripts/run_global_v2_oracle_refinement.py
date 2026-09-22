@@ -116,8 +116,18 @@ def summarize(rows,station_rows):
     numeric=defaultdict(list)
     for row in rows:
         for key,value in row.items():
-            if key not in {'method','scenario_id'} and isinstance(value,(int,float,np.floating)):numeric[key].append(value)
-    out={key:finite_mean(values) for key,values in numeric.items()};out.update(aggregate_station(station_rows));return out
+            if key not in {'method','scenario_id'} and not key.startswith('__') and isinstance(value,(int,float,np.floating)):numeric[key].append(value)
+    out={key:finite_mean(values) for key,values in numeric.items()}
+    # Dynamic-region and newly-wet metrics are explicitly one global
+    # case-time-cell accumulation, never an average of small-mask ratios.
+    for name in STATE_NAMES:
+        num=sum(float(row[f'__change_num_{name}']) for row in rows);den=sum(float(row[f'__change_den_{name}']) for row in rows)
+        out[f'change_region_{name}_rel_l2']=math.sqrt(num/max(den,1e-12))
+    momentum_num=sum(float(row['__change_num_hu'])+float(row['__change_num_hv']) for row in rows);momentum_den=sum(float(row['__change_den_hu'])+float(row['__change_den_hv']) for row in rows)
+    out['change_region_momentum_rel_l2']=math.sqrt(momentum_num/max(momentum_den,1e-12))
+    intersection=sum(int(row['__new_intersection']) for row in rows);union=sum(int(row['__new_union']) for row in rows);pred=sum(int(row['__new_pred']) for row in rows);truth=sum(int(row['__new_truth']) for row in rows)
+    out['newly_wet_iou']=intersection/union if union else float('nan');out['newly_wet_precision']=intersection/pred if pred else float('nan');out['newly_wet_recall']=intersection/truth if truth else float('nan')
+    out.update(aggregate_station(station_rows));return out
 
 def relative_improvements(summary, frozen):
     reduction=lambda key:100*(frozen[key]-summary[key])/abs(frozen[key]) if math.isfinite(summary.get(key,float('nan'))) and abs(frozen[key])>1e-12 else float('nan')

@@ -186,4 +186,11 @@ class StreamingMetrics:
                     "front_zone_h_rel_l2": self._rel(self.front_num["h"], self.front_den["h"]),
                     "front_zone_momentum_rel_l2": self._rel(self.front_num["momentum"], self.front_den["momentum"]),
                     "front_zone_wet_iou": self.front_wet_sum / max(self.front_wet_count, 1)})
+        # Raw dynamic counts are persisted so cross-case summaries can use the
+        # requested one global numerator/denominator rather than mean ratios.
+        for name in STATE_NAMES:
+            out[f"__change_num_{name}"] = self.change_num[name]
+            out[f"__change_den_{name}"] = self.change_den[name]
+        out.update({"__new_intersection":self.new_intersection,"__new_union":self.new_union,
+                    "__new_pred":self.new_pred,"__new_truth":self.new_truth})
         return out
