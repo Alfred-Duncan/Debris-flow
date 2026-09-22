@@ -24,7 +24,7 @@ def classify(x):return 'strong_positive' if x>=.2 else 'positive' if x>0 else ('
 def main(a):
     if not torch.cuda.is_available():raise RuntimeError('CUDA_REQUIRED')
     dev=torch.device('cuda');out=ROOT/'results/local_corrector_patch_audit';out.mkdir(parents=True,exist_ok=True)
-    manifest=json.loads((ROOT/'results/local_corrector_v1_1/validation_manifest.json').read_text());ids=manifest['patch_val_case_ids'];times=manifest['transition_times']
+    manifest=json.loads((ROOT/'results/local_corrector_v1_1/validation_manifest.json').read_text(encoding='utf-8-sig'));ids=manifest['patch_val_case_ids'];times=manifest['transition_times']
     rows=scenario_rows('VAL');rows=rows[rows.scenario_id.isin(ids)].sort_values('scenario_id').reset_index(drop=True)
     if len(rows)!=8 or set(rows['split'])!={'VAL'} or rows.scenario_id.str.contains('TEST|H0|HOLDOUT',case=False).any():raise RuntimeError('AUDIT_VAL_SCOPE_REQUIRED')
     global_model,tr,norm,delta,_=load_model(dev);static_np,_=static_and_exogenous(INPUT);static=ten(static_np,dev);active=static[:,1:2];layout=PatchLayout(static_np[1]);route=np.load(INPUT)['route_chainage_m']
