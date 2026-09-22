@@ -67,23 +67,25 @@ class PatchLayout:
         return mask
 
 
-def oracle_patch_scores(pred_t: torch.Tensor, truth_t: torch.Tensor, truth_current: torch.Tensor,
+def oracle_patch_scores(pred_t: torch.Tensor, truth_t: torch.Tensor, pred_physical: torch.Tensor,
                         truth_next: torch.Tensor, active: torch.Tensor, layout: PatchLayout,
-                        delta_scales: list[float] | torch.Tensor) -> tuple[np.ndarray, float]:
-    """Immediate teacher-normalized error mass in each eligible core.
+                        delta_scales: list[float] | torch.Tensor) -> tuple[np.ndarray, float, dict[str,float]]:
+    """Symmetric GT upper-bound score, including false-positive propagation.
 
-    Scores use only active, teacher-relevant cells.  Padding is never
-    represented by a patch core and cannot affect either rankings or totals.
+    h/hu/hv/dz always score on active cells. c/ice score on union-wet cells,
+    so dry-background composition is ignored but a false-positive wet region
+    is never invisible to the Oracle ranking.
     """
     scale = torch.as_tensor(delta_scales, dtype=pred_t.dtype, device=pred_t.device)[None, :, None, None]
-    teacher_relevant = ((truth_current[:, 0:1] >= .03) | (truth_next[:, 0:1] >= .03) |
-                        ((truth_next[:, 5:6] - truth_current[:, 5:6]).abs() > 1e-8))
-    relevant = teacher_relevant & active.bool()
-    cell_error = ((pred_t - truth_t) / scale).square().mean(1)[0] * relevant[:, 0].to(pred_t.dtype)
+    error=((pred_t-truth_t)/scale).square(); a=active.bool();union_wet=a & ((pred_physical[:,0:1]>=.03)|(truth_next[:,0:1]>=.03))
+    always=error[:,(0,1,2,5)].sum(1);composition=error[:,(3,4)].sum(1)
+    count=4+2*union_wet[:,0].to(error.dtype);cell_error=(always+composition*union_wet[:,0])/count*a[:,0].to(error.dtype)
     scores = np.zeros(len(layout.eligible), dtype=np.float64)
     for index, patch in enumerate(layout.eligible):
         scores[index] = float(cell_error[patch.r0:patch.r1, patch.c0:patch.c1].sum().detach().cpu())
-    return scores, float(cell_error.sum().detach().cpu())
+    truth_wet=(truth_next[:,0]>=.05)&a[:,0];pred_wet=(pred_physical[:,0]>=.05)&a[:,0]
+    masses={"error_mass_true_wet":float((cell_error*truth_wet).sum().detach().cpu()),"error_mass_false_positive_wet":float((cell_error*((~truth_wet)&pred_wet)).sum().detach().cpu()),"error_mass_both_dry":float((cell_error*((~truth_wet)&(~pred_wet))).sum().detach().cpu())}
+    return scores, float(cell_error.sum().detach().cpu()), masses
 
 
 def select_oracle(layout: PatchLayout, scores: np.ndarray, count: int) -> tuple[Patch, ...]:
@@ -132,6 +134,7 @@ class StreamingMetrics:
         self.front_wet_sum = 0.; self.front_wet_count = 0
         self.volume_errors = []; self.front_errors = []; self.final_front_error = float("nan")
         self.new_intersection = 0; self.new_union = 0; self.new_pred = 0; self.new_truth = 0
+        self.fp_wet = 0; self.pred_wet_count = 0; self.truth_wet_count = 0
 
     @staticmethod
     def _rel(num, den): return math.sqrt(num / max(den, 1e-12))
@@ -152,6 +155,7 @@ class StreamingMetrics:
             self.change_num[name] += float((((p[index] - target[index]).square()) * changed).sum().detach().cpu())
             self.change_den[name] += float(((target[index].square()) * changed).sum().detach().cpu())
         p_wet, t_wet = p[0] >= STORAGE_WET_THRESHOLD_M, target[0] >= STORAGE_WET_THRESHOLD_M
+        self.fp_wet += int((p_wet & ~t_wet & active).sum().item()); self.pred_wet_count += int((p_wet&active).sum().item());self.truth_wet_count += int((t_wet&active).sum().item())
         iou = self._iou(p_wet, t_wet, active)
         if math.isfinite(iou): self.wet_sum += iou; self.wet_count += 1; self.final_wet_iou = iou
         teacher_dry = cur[0] < .05; truth_new = teacher_dry & (target[0] >= .05) & active; pred_new = teacher_dry & (p[0] >= .05) & active
@@ -185,6 +189,7 @@ class StreamingMetrics:
                     "newly_wet_iou": self.new_intersection / self.new_union if self.new_union else float("nan"),
                     "newly_wet_precision": self.new_intersection / self.new_pred if self.new_pred else float("nan"),
                     "newly_wet_recall": self.new_intersection / self.new_truth if self.new_truth else float("nan"),
+                    "false_positive_wet_fraction":self.fp_wet/max(self.pred_wet_count,1),"wet_overprediction_ratio":self.pred_wet_count/max(self.truth_wet_count,1),
                     "front_zone_h_rel_l2": self._rel(self.front_num["h"], self.front_den["h"]),
                     "front_zone_momentum_rel_l2": self._rel(self.front_num["momentum"], self.front_den["momentum"]),
                     "front_zone_wet_iou": self.front_wet_sum / max(self.front_wet_count, 1)})

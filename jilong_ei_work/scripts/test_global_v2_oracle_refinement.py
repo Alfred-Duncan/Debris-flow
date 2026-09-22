@@ -24,7 +24,7 @@ def main():
     assert select_oracle(layout,np.ones(len(layout.eligible)),k)==tuple(layout.eligible[:k])
     # Inactive padding/cells never score; teacher-only relevant change is required.
     current=torch.zeros_like(pred);target=torch.zeros_like(pred);target[:,:,0,0]=1
-    value,total=oracle_patch_scores(pred,target,current,target,mask,layout,[1]*6)
+    value,total,_=oracle_patch_scores(pred,target,pred,target,mask,layout,[1]*6)
     assert total>0 and np.isclose(value.sum(),total)
     assert concentration_fractions(np.array([1.,3.,6.]))['top50_fraction']==.9
     # Teacher-only change/newly-wet semantics: static dry space cannot claim
@@ -36,6 +36,14 @@ def main():
     assert r['__change_den_h']>0 and r['__change_den_h']<target[:,0].numel()
     m_noisy=StreamingMetrics(mask,np.zeros((17,19),np.float32),.1);m_noisy.add(noisy,cur,target,IdentityTransform())
     assert m_noisy.result()['__change_den_h']==r['__change_den_h']
+    # Symmetric score catches false-positive wetness, momentum and dz even
+    # when truth is dry; dry composition alone remains intentionally ignored.
+    dry=torch.zeros_like(pred);wet=dry.clone();wet[:,0,0,0]=.2
+    _,total,_=oracle_patch_scores(wet,dry,wet,dry,mask,layout,[1]*6);assert total>0
+    momentum=dry.clone();momentum[:,1,0,0]=1;_,total,_=oracle_patch_scores(momentum,dry,momentum,dry,mask,layout,[1]*6);assert total>0
+    dz=dry.clone();dz[:,5,0,0]=1;_,total,_=oracle_patch_scores(dz,dry,dz,dry,mask,layout,[1]*6);assert total>0
+    composition=dry.clone();composition[:,3:5,0,0]=1;_,total,_=oracle_patch_scores(composition,dry,composition,dry,mask,layout,[1]*6);assert total==0
+    wet_truth=dry.clone();wet_truth[:,0,0,0]=.1;_,total,_=oracle_patch_scores(composition,wet_truth,wet_truth,wet_truth,mask,layout,[1]*6);assert total>0
     # The runner's explicit state handoff is the closed-loop contract; guard
     # it structurally without loading the 8-GB runtime dataset in unit tests.
     runner=(ROOT/'scripts/run_global_v2_oracle_refinement.py').read_text()

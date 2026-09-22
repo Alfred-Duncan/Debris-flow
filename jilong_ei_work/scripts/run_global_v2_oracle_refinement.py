@@ -23,7 +23,7 @@ from src.global_operator_v2.oracle_refinement import (PatchLayout, StreamingMetr
 from src.global_operator_v2.trainer import restore_checkpoint
 from src.global_operator_v2.transforms import PhysicalTransform, FeatureNormalizer, DeltaNormalization
 
-FORMAL=ROOT/'models/global_operator_v2'; OUT=ROOT/'results/oracle_refinement'; REPORT=ROOT/'reports/ORACLE_REFINEMENT_FEASIBILITY.json'
+FORMAL=ROOT/'models/global_operator_v2'; OUT=ROOT/'results/oracle_refinement_v2'; REPORT=ROOT/'reports/ORACLE_REFINEMENT_FEASIBILITY_V2.json'
 BASELINE_KEYS=('trajectory_h_rel_l2','trajectory_momentum_rel_l2','mean_wet_iou','mixture_volume_relative_error','debris_front_mae_km')
 DISCLAIMER='OraclePerfect uses ground-truth target fields for both patch ranking and perfect local replacement. It is an upper-bound feasibility diagnostic only. RandomPerfect also uses truth replacement and is non-deployable.'
 
@@ -94,9 +94,9 @@ def execute_method(label, budget, kind, rows, layout, model, transform, normaliz
             else:
                 provisional=predict(model,previous,current,static,params,time+step/144.,transform,normalizer,active)
                 if kind=='OraclePerfect':
-                    scores,total=oracle_patch_scores(transform.encode(provisional),transform.encode(truth_next),truth_current,truth_next,active,layout,delta.scales)
+                    scores,total,masses=oracle_patch_scores(transform.encode(provisional),transform.encode(truth_next),provisional,truth_next,active,layout,delta.scales)
                     selected=select_oracle(layout,scores,count)
-                    fractions=concentration_fractions(scores); concentration.append({'method':label,'scenario_id':row.scenario_id,'time_s':(step+1)*10,'total_normalized_error':total,**fractions})
+                    fractions=concentration_fractions(scores); concentration.append({'method':label,'scenario_id':row.scenario_id,'time_s':(step+1)*10,'total_normalized_error':total,**fractions,**masses})
                 elif kind=='RandomPerfect': selected=select_random(layout,count,20260920+case_index*1000+step)
                 else: selected=()
             corrected=project_physical(correct_cores(provisional,truth_next,selected,layout,active),active) if selected else provisional
@@ -153,7 +153,7 @@ def main(args):
     frozen_cases,frozen_stations,frozen_summary=reproduce(model,transform,normalizer,delta,static,active,route,z0,transects,device,rows)
     if args.reproduce_only:print(json.dumps({'frozen_reproduction':'PASS',**{k:frozen_summary[k] for k in BASELINE_KEYS}},indent=2));return
     all_case=list(frozen_cases);all_station=list(frozen_stations);all_concentration=[];all_timeline=[]; summaries={'FrozenGlobal':frozen_summary}
-    methods=[('Persistence',0.,'Persistence'),('RandomPerfect_B05',.05,'RandomPerfect'),('RandomPerfect_B10',.10,'RandomPerfect'),('RandomPerfect_B20',.20,'RandomPerfect'),('OraclePerfect_B05',.05,'OraclePerfect'),('OraclePerfect_B10',.10,'OraclePerfect'),('OraclePerfect_B20',.20,'OraclePerfect')]
+    methods=[('Persistence',0.,'Persistence'),('RandomPerfect_B05',.05,'RandomPerfect'),('RandomPerfect_B10',.10,'RandomPerfect'),('RandomPerfect_B20',.20,'RandomPerfect'),('OraclePerfectV2_B05',.05,'OraclePerfect'),('OraclePerfectV2_B10',.10,'OraclePerfect'),('OraclePerfectV2_B20',.20,'OraclePerfect')]
     for label,budget,kind in methods:
         cases,stations,concentration,timeline=execute_method(label,budget,kind,rows,layout,model,transform,normalizer,delta,static,active,route,z0,transects,device)
         all_case.extend(cases);all_station.extend(stations);all_concentration.extend(concentration);all_timeline.extend(timeline);summaries[label]=summarize(cases,stations)
@@ -162,13 +162,18 @@ def main(args):
     pd.DataFrame(all_case).to_csv(OUT/'case_metrics.csv',index=False)
     dynamic=[{k:v for k,v in row.items() if k in {'method','scenario_id'} or k.startswith('change_region_') or k.startswith('newly_wet') or k.startswith('front_zone_')} for row in all_case]
     pd.DataFrame(dynamic).to_csv(OUT/'dynamic_region_metrics.csv',index=False);pd.DataFrame(all_station).to_csv(OUT/'station_metrics.csv',index=False);pd.DataFrame(all_concentration).to_csv(OUT/'error_concentration.csv',index=False);pd.DataFrame(all_timeline).to_csv(OUT/'patch_budget_timeline.csv',index=False)
+    decomposition=[]
+    for row in all_concentration:
+        total=max(float(row['total_normalized_error']),1e-30);decomposition.append({k:row[k] for k in ('method','scenario_id','time_s')}|{'true_wet_error_fraction':row['error_mass_true_wet']/total,'false_positive_error_fraction':row['error_mass_false_positive_wet']/total,'both_dry_error_fraction':row['error_mass_both_dry']/total})
+    pd.DataFrame(decomposition).to_csv(OUT/'error_support_decomposition.csv',index=False)
     method_rows=[]
     for label,summary in summaries.items():method_rows.append({'method':label,**{k:v for k,v in summary.items() if k!='relative_to_frozen'}})
     pd.DataFrame(method_rows).to_csv(OUT/'method_summary.csv',index=False)
     oracle_concentration={}
     for key in ('top5_fraction','top10_fraction','top20_fraction'):
         values=[row[key] for row in all_concentration];oracle_concentration[key]={'mean':finite_mean(values),'median':float(np.median(values)) if values else float('nan')}
-    report={'study':'JILONG ORACLE LOCAL-REFINEMENT FEASIBILITY STUDY','disclaimer':DISCLAIMER,'frozen_reproduction':'PASS','checkpoint':{'global_step':checkpoint['global_step'],'stage':checkpoint['stage_name'],'architecture':checkpoint['architecture']},'layout':{'grid':'16x16','eligible_patches':len(layout.eligible),'active_cell_count':layout.active_cell_count,'pad_shape':[layout.pad_height,layout.pad_width],'core_shape':[layout.core_height,layout.core_width],'budgets':{f'{int(b*100)}%':layout.count_for_budget(b) for b in (.05,.10,.20)}},'error_concentration':oracle_concentration,'methods':summaries}
+    support={key:{'mean':finite_mean([row[key] for row in decomposition]),'median':float(np.median([row[key] for row in decomposition]))} for key in ('true_wet_error_fraction','false_positive_error_fraction','both_dry_error_fraction')}
+    report={'study':'JILONG ORACLE LOCAL-REFINEMENT FEASIBILITY STUDY V2','disclaimer':DISCLAIMER,'frozen_reproduction':'PASS','checkpoint':{'global_step':checkpoint['global_step'],'stage':checkpoint['stage_name'],'architecture':checkpoint['architecture']},'layout':{'grid':'16x16','eligible_patches':len(layout.eligible),'active_cell_count':layout.active_cell_count,'pad_shape':[layout.pad_height,layout.pad_width],'core_shape':[layout.core_height,layout.core_width],'budgets':{f'{int(b*100)}%':layout.count_for_budget(b) for b in (.05,.10,.20)}},'error_concentration':oracle_concentration,'error_support_decomposition':support,'methods':summaries}
     REPORT.write_text(json.dumps(report,indent=2,allow_nan=True));print(json.dumps({'frozen_reproduction':'PASS','eligible_patches':len(layout.eligible),'report':str(REPORT)},indent=2))
 
 if __name__=='__main__':
