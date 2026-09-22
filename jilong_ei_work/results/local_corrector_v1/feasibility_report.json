@@ -1,0 +1,9 @@
+{
+  "study": "JILONG LOCAL CORRECTOR V1",
+  "evaluation_scope": "VAL_ONLY_20_CASES",
+  "inference_policy": "DETERMINISTIC_RANDOM_FIXED_BUDGET",
+  "ground_truth_in_learned_inference": false,
+  "randomperfect": "UPPER_BOUND_DIAGNOSTIC_ONLY",
+  "local_corrector_feasibility": "WEAK",
+  "rationale": "B10 improves change-region h, change-region momentum, mixture volume, and peak-Q error, but degrades wet IoU, false-positive wet fraction, and front MAE. B20 improves dynamic errors but consistently degrades wet extent, false-positive flooding, volume, front, arrival, and peak-Q metrics. The predefined STRONG criteria are not met; no selector, RL, TEST, H0, or holdout evaluation was performed."
+}
