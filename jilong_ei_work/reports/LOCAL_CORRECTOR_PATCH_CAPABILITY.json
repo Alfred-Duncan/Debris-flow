@@ -1,0 +1,17 @@
+{
+  "best_update": 4000,
+  "checkpoint_evolution": {
+    "2000": {"random_positive": 0.5885416666666666, "high_error_positive": 0.6197916666666666, "fp_wet_positive": 0.5052083333333334},
+    "4000": {"random_positive": 0.5833333333333334, "high_error_positive": 0.5104166666666666, "fp_wet_positive": 0.8958333333333334},
+    "6000": {"random_positive": 0.3125, "high_error_positive": 0.14583333333333334, "fp_wet_positive": 0.8125}
+  },
+  "best4000": {
+    "random_positive": 0.5833333333333334,
+    "high_error_positive": 0.5104166666666666,
+    "fp_wet_positive": 0.8958333333333334,
+    "true_front": "unavailable: no valid route-front overlap in the fixed manifest"
+  },
+  "patch_corrector_capability": "WEAK",
+  "engineering_selector_ready": "NO",
+  "conclusion": "The FP-wet anti-overwet behavior is reliable at best@4000, but high-error patches do not exceed random patches and no true-front samples were available. This does not establish targeted patch-correction capability."
+}
