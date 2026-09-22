@@ -160,10 +160,12 @@ class StreamingMetrics:
         volume_p = float((p[0] * active).sum().detach().cpu()) * self.cell_area; volume_t = float((target[0] * active).sum().detach().cpu()) * self.cell_area
         self.volume_errors.append(abs(volume_p - volume_t) / max(abs(volume_t), 1.))
         p_front = debris_front(p.detach().cpu().numpy(), self.route); t_front = debris_front(target.detach().cpu().numpy(), self.route)
-        if math.isfinite(t_front):
-            if math.isfinite(p_front): error = abs(p_front - t_front)
-            else: error = self.route_length_km
+        # Match production validation semantics exactly: both missing fronts
+        # are excluded, while one missing front receives route-length penalty.
+        if math.isfinite(t_front) or math.isfinite(p_front):
+            error = abs(p_front - t_front) if math.isfinite(t_front) and math.isfinite(p_front) else self.route_length_km
             self.front_errors.append(error); self.final_front_error = error
+        if math.isfinite(t_front):
             zone = active & torch.from_numpy(np.isfinite(self.route) & (np.abs(self.route - t_front * 1000.) <= 1000.)).to(active.device)
             for key, indices in (("h", (0,)), ("momentum", (1, 2))):
                 self.front_num[key] += float(((p[list(indices)] - target[list(indices)]).square() * zone).sum().detach().cpu())
