@@ -78,10 +78,12 @@ def aggregate_station(rows):
     keys=('arrival_error_s','peak_Q_relative_error','peak_Qdebris_relative_error','peak_hmax_relative_error','peak_stage_absolute_error','wet_width_relative_error')
     return {({'arrival_error_s':'arrival_MAE_s'}.get(key,key)):finite_mean([row[key] for row in rows]) for key in keys}|{'missed_arrival_count':int(sum(bool(row['missed_arrival']) for row in rows)),'truth_no_arrival_count':int(sum(row['truth_arrival_time_s'] is None for row in rows))}
 
-def execute_method(label, budget, kind, rows, layout, model, transform, normalizer, delta, static, active, route, z0, transects, device):
+def execute_method(label, budget, kind, rows, layout, model, transform, normalizer, delta, static, active, route, z0, transects, device,
+                   case_index_column: str | None = None):
     """One streaming method through all VAL cases; no predicted frame is retained."""
     store=FrameStore(rows); per_case=[]; station_rows=[]; concentration=[]; timeline=[]
-    for case_index,(_,row) in enumerate(rows.iterrows()):
+    for local_case_index,(_,row) in enumerate(rows.iterrows()):
+        case_index=int(row[case_index_column]) if case_index_column is not None else local_case_index
         index=int(np.where(store.rows.scenario_id.eq(row.scenario_id))[0][0]);previous,current,_,params,time,_=store.sample(index,0)
         tensor=lambda x:torch.from_numpy(np.asarray(x)).unsqueeze(0).to(device)
         previous,current,params=tensor(previous),tensor(current),tensor(params)
