@@ -42,6 +42,7 @@ def load_model(device):
     restore_checkpoint(FORMAL/'best.pt',model); model.eval()
     return model,transform,normalizer,delta,checkpoint
 
+@torch.no_grad()
 def predict(model, previous, current, static, params, time_fraction, transform, normalizer, active):
     encoded=transform.encode(current)
     features=build_features(previous,current,static,params,torch.tensor([time_fraction],device=current.device),transform,normalizer)
