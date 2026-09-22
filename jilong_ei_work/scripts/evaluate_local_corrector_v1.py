@@ -54,10 +54,11 @@ def main(args):
     if not torch.cuda.is_available():raise RuntimeError('CUDA_REQUIRED')
     device=torch.device('cuda');rows=scenario_rows('VAL')
     if len(rows)!=20 or not set(rows['split']).issubset({'VAL'}) or rows.scenario_id.str.contains('TEST|H0|HOLDOUT',case=False).any():raise RuntimeError('VAL_SCOPE_REQUIRED')
+    if args.limit:rows=rows.iloc[:int(args.limit)].reset_index(drop=True)
     global_model,transform,normalizer,delta,_=load_model(device);static_np,_=static_and_exogenous(INPUT);static=tensor(static_np,device);active=static[:,1:2];layout=PatchLayout(static_np[1])
-    normalization=json.loads((ROOT/'models/local_corrector_v1/correction_normalization.json').read_text())
+    model_dir=ROOT/f'models/local_corrector_{args.version}'; normalization=json.loads((model_dir/'correction_normalization.json').read_text())
     if normalization.get('fit_scope')!='TRAIN_ONLY':raise RuntimeError('LOCAL_NORMALIZATION_NOT_TRAIN_ONLY')
-    local=JilongLocalCorrector(47).to(device);checkpoint=torch.load(ROOT/'models/local_corrector_v1/best.pt',map_location=device,weights_only=False);local.load_state_dict(checkpoint['model']);local.eval()
+    local=JilongLocalCorrector(47).to(device);checkpoint=torch.load(model_dir/args.checkpoint,map_location=device,weights_only=False);local.load_state_dict(checkpoint['model']);local.eval()
     with np.load(INPUT) as data:route=np.asarray(data['route_chainage_m'],np.float32)
     z0=static_np[0];transects=load_transects(ROOT/'data/downloads/park_v2/inputs/upper30h_transects.json')
     methods={};all_cases=[];all_stations=[];all_timeline=[]
@@ -65,11 +66,11 @@ def main(args):
     for budget in (.10,.20):
         label=f'LearnedRandom_B{int(budget*100):02d}';cases,stations,timeline=learned_execute(label,budget,rows,layout,global_model,local,transform,normalizer,delta,normalization,static,active,route,z0,transects,device);methods[label]=summarize(cases,stations);all_cases+=cases;all_stations+=stations;all_timeline+=timeline
         perfect=f'RandomPerfect_B{int(budget*100):02d}';cases,stations,_,timeline2=execute_method(perfect,budget,'RandomPerfect',rows,layout,global_model,transform,normalizer,delta,static,active,route,z0,transects,device);methods[perfect]=summarize(cases,stations);all_cases+=cases;all_stations+=stations;all_timeline+=timeline2
-    out=ROOT/'results/local_corrector_v1';out.mkdir(parents=True,exist_ok=True);pd.DataFrame(all_cases).to_csv(out/'final_case_metrics.csv',index=False);pd.DataFrame(all_stations).to_csv(out/'final_station_metrics.csv',index=False);pd.DataFrame(all_timeline).to_csv(out/'patch_ids_timeline.csv',index=False)
+    out=ROOT/f'results/local_corrector_{args.version}';out.mkdir(parents=True,exist_ok=True);pd.DataFrame(all_cases).to_csv(out/'final_case_metrics.csv',index=False);pd.DataFrame(all_stations).to_csv(out/'final_station_metrics.csv',index=False);pd.DataFrame(all_timeline).to_csv(out/'patch_ids_timeline.csv',index=False)
     pd.DataFrame([{'method':name,**values} for name,values in methods.items()]).to_csv(out/'final_method_summary.csv',index=False)
     gaps=[]
     for amount in ('10','20'):gaps.append({'budget':f'B{amount}',**gap(methods['FrozenGlobal'],methods[f'LearnedRandom_B{amount}'],methods[f'RandomPerfect_B{amount}'])})
     pd.DataFrame(gaps).to_csv(out/'gap_recovery.csv',index=False);(out/'final_report.json').write_text(json.dumps({'normalization_scope':'TRAIN_ONLY','methods':methods,'gap_recovery':gaps,'local_parameters':local.parameter_count},indent=2,allow_nan=True));print(json.dumps({'status':'PASS','output':str(out),'local_parameters':local.parameter_count},indent=2))
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--final',action='store_true');main(parser.parse_args())
+    parser=argparse.ArgumentParser();parser.add_argument('--final',action='store_true');parser.add_argument('--version',default='v1');parser.add_argument('--checkpoint',default='best.pt');parser.add_argument('--limit',type=int);main(parser.parse_args())

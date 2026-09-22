@@ -1,0 +1,33 @@
+﻿{
+    "seed":  20260920,
+    "patch_val_case_ids":  [
+                               "JILONG_EI_0009",
+                               "JILONG_EI_0019",
+                               "JILONG_EI_0029",
+                               "JILONG_EI_0039",
+                               "JILONG_EI_0049",
+                               "JILONG_EI_0059",
+                               "JILONG_EI_0069",
+                               "JILONG_EI_0079"
+                           ],
+    "rollout_val_case_ids":  [
+                                 "JILONG_EI_0009",
+                                 "JILONG_EI_0019",
+                                 "JILONG_EI_0029",
+                                 "JILONG_EI_0039"
+                             ],
+    "transition_times":  [
+                             0,
+                             10,
+                             20,
+                             30,
+                             60,
+                             120,
+                             240,
+                             480,
+                             720,
+                             960,
+                             1200,
+                             1430
+                         ]
+}

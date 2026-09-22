@@ -1,0 +1,6 @@
+{
+  "scope": "20 existing VAL cases only",
+  "methods": ["FrozenGlobal", "LearnedRandom_B10", "RandomPerfect_B10", "LearnedRandom_B20", "RandomPerfect_B20"],
+  "overwet_stability": "PASS",
+  "feasibility": "WEAK"
+}

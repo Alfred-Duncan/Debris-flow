@@ -1,0 +1,11 @@
+{
+  "study": "JILONG LOCAL CORRECTOR V1.1",
+  "best_update": 4000,
+  "J2000": 3.65761657344656,
+  "J4000": 1.3349838032774,
+  "J6000": 1.5329714999996,
+  "overwet_stability": "PASS",
+  "local_corrector_feasibility": "WEAK",
+  "scope": "VAL_ONLY; deterministic Random B10/B20; no TEST, H0, holdout, selector, or RL",
+  "rationale": "V1.1 reduces B20 false-positive wet fraction and wet-overprediction relative to V1, satisfying the stability diagnostic. However, both budgets retain engineering degradation in volume/front/peak-Q relative to FrozenGlobal, so the fixed feasibility criteria are not met."
+}

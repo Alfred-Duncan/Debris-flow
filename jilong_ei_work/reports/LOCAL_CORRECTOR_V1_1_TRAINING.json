@@ -1,0 +1,7 @@
+{
+  "updates": 6000,
+  "architecture": {"width": 64, "blocks": 6, "halo": 8, "core": [58, 56]},
+  "normalization": {"reused_from_v1": true, "fit_scope": "TRAIN_ONLY"},
+  "best_update": 4000,
+  "development_scores": {"J2000": 3.65761657344656, "J4000": 1.3349838032774, "J6000": 1.5329714999996}
+}
