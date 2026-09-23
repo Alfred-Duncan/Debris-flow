@@ -1,0 +1,19 @@
+{
+  "version": "EngineeringROI-v1",
+  "wet_threshold_m": 0.05,
+  "debris_front_h_threshold_m": 0.10,
+  "debris_front_c_threshold": 0.05,
+  "front_half_width_m": 1000.0,
+  "shallow_margin_upper_h_m": 0.15,
+  "budgets": [0.05, 0.10, 0.20],
+  "components": ["dynamic", "predicted_front", "support_risk", "engineering_section"],
+  "weights": {"dynamic": 0.25, "predicted_front": 0.25, "support_risk": 0.25, "engineering_section": 0.25},
+  "normalization": "positive_percentile_rank",
+  "candidate_rule": "support_overlap_and_positive_score",
+  "diversity_rule": "nonadjacent_first_then_fill",
+  "tie_break": "patch_id_ascending",
+  "global_model": "frozen",
+  "local_model": "best_update_4000",
+  "support_guard": "current_or_global_provisional_wet",
+  "truth_in_roi_scoring": false
+}
