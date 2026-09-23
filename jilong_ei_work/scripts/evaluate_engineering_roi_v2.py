@@ -145,8 +145,11 @@ def v2_transition(
         return raw_transformed
     raw_transformed, local_seconds = timed_cuda(local_writeback, device)
     def support_and_momentum():
+        # Physical proposal is telemetry-only; transformed writeback stays unchanged.
+        raw_local_physical = project_physical(transform.decode(raw_transformed), metadata.active)
         support_written, support_telemetry = apply_support_guard(
             encoded_provisional, raw_transformed, current, provisional, metadata.active,
+            local_corrected_physical=raw_local_physical,
         )
         return apply_momentum_state_guard(support_written, global_model), support_telemetry
     (momentum_written, support_telemetry), support_seconds = timed_cuda(support_and_momentum, device)
@@ -256,7 +259,6 @@ def write_method_outputs(run_out, label, cases, stations, timeline, timing_parts
         "mean_case_wall_runtime_seconds": float(np.mean([p["case_wall_runtime_seconds"] for p in parts])),
         "mean_selected_patch_count": float(frame.selected_count.mean()), "mean_active_coverage": float(frame.actual_active_fraction.mean()),
         "mean_consecutive_overlap": float(frame.selected_patch_consecutive_overlap_fraction.mean()),
-        "mean_depth_guard_activation": float(frame.depth_guard_activation_fraction.mean()),
         "mean_support_fraction": float(frame.support_fraction.mean()), "mean_blocked_local_change_fraction": float(frame.blocked_local_change_fraction.mean()),
         "mean_blocked_wet_creation_count": float(frame.blocked_wet_creation_count.mean()), "mean_raw_local_new_wet_fraction": float(frame.raw_local_new_wet_fraction.mean()),
         "mean_depth_guard_activation_fraction": float(frame.depth_guard_activation_fraction.mean()),

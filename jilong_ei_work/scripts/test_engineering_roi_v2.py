@@ -18,6 +18,7 @@ from src.global_operator_v2.oracle_refinement import PatchLayout
 from src.local_corrector.depth_envelope_guard import apply_depth_envelope_guard
 from src.local_corrector.engineering_roi import build_roi_static_metadata, compute_support_risk_component
 from src.local_corrector.engineering_roi_v2 import initial_temporal_state, load_engineering_roi_v2_config, select_engineering_roi_v2
+from src.local_corrector.support_guard import apply_support_guard
 from scripts import evaluate_engineering_roi_v2 as evaluator
 from scripts.audit_engineering_roi_v1_failure_mechanism import _associations, persistence
 
@@ -106,6 +107,24 @@ def test_persistence_fixture():
     assert coverage["total_selections"] == 100 and coverage["unique_patch_fraction"] == .4
 
 
+def test_support_guard_physical_telemetry():
+    active = torch.ones(1, 1, 1, 1, dtype=torch.bool); current = torch.zeros(1, 6, 1, 1); provisional = current.clone()
+    encoded_global = torch.zeros_like(current); encoded_local = encoded_global.clone(); encoded_local[:, :1] = .01
+    physical_local = current.clone(); physical_local[:, :1] = .10
+    _, telemetry = apply_support_guard(encoded_global, encoded_local, current, provisional, active, local_corrected_physical=physical_local)
+    assert telemetry["blocked_wet_creation_count"] == 1 and telemetry["raw_local_new_wet_fraction"] == 1.0
+
+
+def test_support_guard_encoded_physical_disagreement_and_invariance():
+    active = torch.ones(1, 1, 1, 1, dtype=torch.bool); current = torch.zeros(1, 6, 1, 1); provisional = current.clone()
+    encoded_global = torch.zeros_like(current); encoded_local = encoded_global.clone(); encoded_local[:, :1] = .20
+    physical_local = current.clone(); physical_local[:, :1] = .01
+    old_written, old_telemetry = apply_support_guard(encoded_global, encoded_local, current, provisional, active)
+    new_written, new_telemetry = apply_support_guard(encoded_global, encoded_local, current, provisional, active, local_corrected_physical=physical_local)
+    assert torch.equal(old_written, new_written)
+    assert old_telemetry["blocked_wet_creation_count"] == 1 and new_telemetry["blocked_wet_creation_count"] == 0 and new_telemetry["raw_local_new_wet_fraction"] == 0.0
+
+
 def test_timing_contract_and_telemetry_schema():
     timing = {"method": "EngineeringROI_v2_B10", "scenario_id": "case", "case_wall_runtime_seconds": 1.0, **{key: [1.0] * 144 for key in evaluator.TIMING_STEP_KEYS}}
     assert evaluator.validate_case_timing_record(timing) == timing
@@ -150,13 +169,15 @@ def test_cuda_timing_and_transition_order():
         evaluator.v2_transition(value, value, value, value, value, metadata, {}, .1, None, "EngineeringROI_v2", None, None, delta, {"scales": [1.] * 6, "bounds": [1.] * 6}, None, None, 0., Transform(), None, None, torch.device("cpu"))
     finally:
         for name, value in originals.items(): setattr(evaluator, name, value)
-    assert order == ["select", "local", "support", "momentum", "decode", "depth", "project"]
+    assert order == ["select", "local", "decode", "project", "support", "momentum", "decode", "depth", "project"]
+    assert "local_corrected_physical=raw_local_physical" in inspect.getsource(evaluator.v2_transition)
 
 
 def main():
     config, _ = load_engineering_roi_v2_config(ROOT / "configs/engineering_roi_v2.json")
     test_config_and_signature(config); test_support_risk_boundaries(config)
     test_selection_temporal_and_diversity(config); test_depth_envelope(); test_persistence_fixture()
+    test_support_guard_physical_telemetry(); test_support_guard_encoded_physical_disagreement_and_invariance()
     test_timing_contract_and_telemetry_schema(); test_association_and_single_source_contract(); test_cuda_timing_and_transition_order()
     print("PASS EngineeringROI-v2 synthetic selector, refresh, envelope, and audit tests")
 

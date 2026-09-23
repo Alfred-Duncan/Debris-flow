@@ -39,10 +39,12 @@ def main():
     ordered = [transition.index(name) for name in ("select_engineering_roi_v2(", "apply_learned_correction(", "apply_support_guard(", "apply_momentum_state_guard(", "transform.decode(momentum_written)", "apply_depth_envelope_guard(", "project_physical(physical")]
     require(ordered == sorted(ordered), "TRANSITION_GUARD_ORDER_INVALID")
     require(transition.count("timed_cuda(") == 4, "CUDA_MODULE_TIMING_MISSING")
+    require("raw_local_physical" in transition and "local_corrected_physical=raw_local_physical" in transition, "SUPPORT_TELEMETRY_NOT_PHYSICAL")
     require("v2_transition(" in execution and execution.index("v2_transition(") < execution.index("truth_current ="), "TRUTH_ISOLATION_INVALID")
     for forbidden in ("apply_learned_correction(", "apply_support_guard(", "apply_momentum_state_guard(", "apply_depth_envelope_guard("):
         require(forbidden not in execution, "DUPLICATE_PRODUCTION_WRITEBACK")
     require(all(name in evaluator.TIMELINE_COLUMNS for name in ("support_fraction", "blocked_local_change_fraction", "raw_local_new_wet_fraction")), "SUPPORT_TELEMETRY_DROPPED")
+    require("mean_depth_guard_activation\"" not in inspect.getsource(evaluator.write_method_outputs), "DUPLICATE_DEPTH_SUMMARY")
     require("LOCAL_CHECKPOINT_MUST_BE_BEST_4000" in inspect.getsource(evaluator.main) and "LOCAL_NORMALIZATION_NOT_TRAIN_ONLY" in inspect.getsource(evaluator.main), "FROZEN_LOCAL_GUARDS_MISSING")
     source = (ROOT / "scripts/evaluate_engineering_roi_v2.py").read_text().lower()
     require("optimizer" not in source and ".backward(" not in source, "TRAINING_OPERATION_PRESENT")
