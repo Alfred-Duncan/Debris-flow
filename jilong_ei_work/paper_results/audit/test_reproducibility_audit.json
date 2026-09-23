@@ -1,0 +1,8 @@
+{
+  "max_case_abs_diff": 0.0,
+  "max_station_abs_diff": 0.0,
+  "max_timeline_nontiming_abs_diff": 0.0,
+  "scenario_id": "JILONG_EI_0010",
+  "selected_patch_ids_exact_equal": true,
+  "status": "PASS"
+}

@@ -1,0 +1,18 @@
+{
+  "methods": {
+    "FrozenGlobal": {
+      "case_count": 20,
+      "runtime_seconds_mean": 13.16020850000059,
+      "timeline_rows": 0
+    },
+    "RiskTemporal_B10": {
+      "case_count": 20,
+      "runtime_seconds_mean": 23.6522199250001,
+      "timeline_rows": 2880
+    }
+  },
+  "risktemporal_depth_guard_activation": 0.0,
+  "risktemporal_temporal_overlap": 0.0,
+  "rollout_stability": "PASS: all 40 method-case rollouts reached 144 steps with finite retained metrics",
+  "status": "PASS"
+}

@@ -1,0 +1,15 @@
+experiment_name,split,method,budget,checkpoint_global,checkpoint_local,deployable,ablation_type,scenario_count,result_path,commit,notes
+RiskTemporal B05,VAL,RiskTemporal-v1,0.05,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,budget sensitivity,20,results/engineering_roi_v2/runs/RiskTemporal_B05,146184d1fbbf366c0c9c40066a56753b398b10f4,frozen final candidate
+RiskTemporal B10,VAL,RiskTemporal-v1,0.1,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,primary final configuration,20,results/engineering_roi_v2/runs/RiskTemporal_B10,146184d1fbbf366c0c9c40066a56753b398b10f4,frozen final candidate
+RiskTemporal B20,VAL,RiskTemporal-v1,0.2,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,budget sensitivity,20,results/engineering_roi_v2/runs/RiskTemporal_B20,146184d1fbbf366c0c9c40066a56753b398b10f4,frozen final candidate
+FrozenGlobal,VAL,FrozenGlobal,0.0,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,baseline,20,results/engineering_roi_v1,historical frozen result,historical frozen VAL result
+SupportRiskOnly_B10,VAL,SupportRiskOnly_B10,0.1,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,baseline,20,results/engineering_roi_v1,historical frozen result,historical frozen VAL result
+EngineeringROI_B10,VAL,EngineeringROI_B10,0.1,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,failure mechanism,20,results/engineering_roi_v1,historical frozen result,historical frozen VAL result
+DynamicOnly_B10,VAL,DynamicOnly_B10,0.1,best.pt step5000/STAGE_C/K=4,best.pt update4000,False,failure mechanism,20,results/engineering_roi_v1,historical frozen result,historical frozen VAL result
+RandomAll_B10,VAL,RandomAll_B10,0.1,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,baseline,20,results/engineering_roi_v1,historical frozen result,historical frozen VAL result
+SupportRisk_Base_B10,VAL,SupportRisk_Base_B10,0.1,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,ablation,20,results/engineering_roi_v2,historical frozen result,historical frozen VAL result
+SupportRisk_Temporal_B10,VAL,SupportRisk_Temporal_B10,0.1,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,ablation,20,results/engineering_roi_v2,historical frozen result,historical frozen VAL result
+SupportRisk_DepthGuard_B10,VAL,SupportRisk_DepthGuard_B10,0.1,best.pt step5000/STAGE_C/K=4,best.pt update4000,False,negative ablation,20,results/engineering_roi_v2,historical frozen result,historical frozen VAL result
+Frozen Global,TEST,FrozenGlobal,0.0,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,baseline,20,paper_results/test/frozen_global,146184d1fbbf366c0c9c40066a56753b398b10f4,untouched TEST
+RiskTemporal B10,TEST,RiskTemporal-v1,0.1,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,primary final configuration,20,paper_results/test/risktemporal_b10,146184d1fbbf366c0c9c40066a56753b398b10f4,untouched TEST
+PARK_V2_H0,H0,FrozenGlobal + RiskTemporal-v1 B10,0.1,best.pt step5000/STAGE_C/K=4,best.pt update4000,True,historical application,1,paper_results/h0,146184d1fbbf366c0c9c40066a56753b398b10f4,event-constrained numerical-reference demonstration

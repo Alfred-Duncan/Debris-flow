@@ -1,0 +1,8 @@
+{
+  "global_checkpoint": "models/global_operator_v2/best.pt",
+  "global_sha256": "a23d243628124a7259ee68c400fd277e2804a08ce086b508f503f42f47841745",
+  "local_checkpoint": "models/local_corrector_v1_1/best.pt",
+  "local_normalization_sha256": "5616b023ed75fe30dfb040f11d03e121c92558de6fe93c9d5a8aabff61217f31",
+  "local_sha256": "906c49c9c2a21e453c029ceaba54a3a2cf176bd874a47e1927ab09347f2c389b",
+  "status": "PASS"
+}

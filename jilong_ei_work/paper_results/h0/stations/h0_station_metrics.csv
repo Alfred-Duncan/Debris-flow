@@ -1,0 +1,7 @@
+station,arrival_time_s,truth_arrival_time_s,arrival_error_s,missed_arrival,peak_Q_relative_error,peak_Qdebris_relative_error,peak_hmax_relative_error,peak_stage_absolute_error,wet_width_relative_error,method,scenario_id
+gyirong_cctv_arrival,20.0,370.0,350.0,False,0.9032773449710364,0.9548621687094021,0.9602272727272727,0.0,0.6666666666666666,FrozenGlobal,PARK_V2_H0
+rasuwagadhi_signal_loss,10.0,390.0,380.0,False,0.92903972789276,0.9945547201811024,0.9382299270072992,33.763427734375,0.7777777777777778,FrozenGlobal,PARK_V2_H0
+syabrubesi_signal_loss,330.0,1030.0,700.0,False,0.008320210516750961,0.8525019494372179,0.927880658436214,30.01953125,0.6,FrozenGlobal,PARK_V2_H0
+gyirong_cctv_arrival,20.0,370.0,350.0,False,0.9158546517084982,0.9633054771924624,0.9536872723494657,0.0,0.6666666666666666,RiskTemporal_B10,PARK_V2_H0
+rasuwagadhi_signal_loss,10.0,390.0,380.0,False,0.884553050529775,0.976913970035412,0.8692941373282106,32.5323486328125,0.7777777777777778,RiskTemporal_B10,PARK_V2_H0
+syabrubesi_signal_loss,330.0,1030.0,700.0,False,0.5111663608056558,0.948763647335334,0.927880658436214,30.01953125,0.6,RiskTemporal_B10,PARK_V2_H0

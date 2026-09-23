@@ -1,0 +1,10 @@
+{
+  "implementation": {
+    "frozen_evaluator_sha256": "8b27d9ec2b5f50780ee8c0881b81e05fc9b0a15fe6c4ba62f14401ad2e9a20f0",
+    "streaming_metrics_sha256": "d52bb580bbdcf1c0aa2525711d230718dedeb6a85358439486cf20cd52854714"
+  },
+  "runtime_contract": "CUDA-synchronized step timing through the same frozen evaluator functions",
+  "status": "PASS",
+  "test_specific_selector_or_metric_config": false,
+  "test_truth_in_roi_scoring": false
+}

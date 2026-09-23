@@ -6,6 +6,10 @@ physics smoke frame -> dense tensor adapter -> untrained global operator -> manu
 
 It is not a D-Claw workspace and does not claim a validated event reconstruction.
 
+## Frozen paper release
+
+Final method: **RiskTemporal-v1 B10**. B05/B10/B20 are budget sensitivity; SupportRisk/Temporal/DepthGuard are ablations; EngineeringROI-v1 and DynamicOnly are failure studies; Oracle/RandomPerfect are feasibility diagnostics; H0 is a historical numerical-reference application. See `FINAL_METHOD.md`, `FINAL_EXPERIMENTS.md`, `REPRODUCIBILITY.md`, and `paper_results/`.
+
 ## Setup
 
 The user-approved Conda base environment is used. Its tested runtime is Python 3.13 with PyTorch 2.9.0+cu130. The supplied environment file records the package family, but this workspace does not recreate base.

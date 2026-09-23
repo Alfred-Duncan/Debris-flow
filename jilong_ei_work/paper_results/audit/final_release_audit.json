@@ -1,0 +1,15 @@
+{
+  "audit_statuses": {
+    "checkpoint_audit.json": "PASS",
+    "data_split_audit.json": "PASS",
+    "frozen_configuration.json": "PASS",
+    "metric_audit.json": "PASS",
+    "test_integrity_audit.json": "PASS",
+    "test_reproducibility_audit.json": "PASS"
+  },
+  "frozen_algorithm_source_modified_since_final_code": false,
+  "large_model_or_checkpoint_copies_in_release": false,
+  "missing": [],
+  "status": "PASS",
+  "test_specific_tuning": false
+}

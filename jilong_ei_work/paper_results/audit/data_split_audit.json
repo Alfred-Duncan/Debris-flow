@@ -1,0 +1,13 @@
+{
+  "counts": {
+    "TEST": 20,
+    "TRAIN": 160,
+    "VAL": 20
+  },
+  "h0_id": "PARK_V2_H0",
+  "h0_independent_of_scenario_splits": true,
+  "status": "PASS",
+  "train_test_overlap": [],
+  "train_val_overlap": [],
+  "val_test_overlap": []
+}

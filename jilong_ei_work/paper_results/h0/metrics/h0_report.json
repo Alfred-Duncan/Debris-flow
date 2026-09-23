@@ -1,0 +1,20 @@
+{
+  "case_id": "PARK_V2_H0",
+  "methods": [
+    "FrozenGlobal",
+    "RiskTemporal-v1 B10"
+  ],
+  "not_claimed": [
+    "ground-truth disaster reconstruction",
+    "fully validated real event"
+  ],
+  "purpose": "historical anchor / event-constrained reconstruction against a high-fidelity numerical reference",
+  "reference": "PARK_V2_DOCUMENTED_REIMPLEMENTATION_REPRODUCED",
+  "risktemporal_depth_guard_activation": 0.0,
+  "risktemporal_temporal_overlap": 0.0,
+  "runtime_seconds": {
+    "FrozenGlobal": 15.722963300009724,
+    "RiskTemporal_B10": 27.07286460000614
+  },
+  "status": "PASS"
+}

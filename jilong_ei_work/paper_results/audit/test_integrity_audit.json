@@ -1,0 +1,18 @@
+{
+  "failure_reasons": {},
+  "metric_implementation": "same frozen streaming metrics as VAL",
+  "momentum_guard": "frozen implementation invoked",
+  "physical_projection": "frozen implementation invoked",
+  "required_test_methods": [
+    "FrozenGlobal",
+    "RiskTemporal_B10"
+  ],
+  "risktemporal_b10_budget": 0.1,
+  "risktemporal_budget_count": 19,
+  "status": "PASS",
+  "support_guard_telemetry_present": true,
+  "temporal_refresh_effective": true,
+  "test_cases_per_method": 20,
+  "test_specific_tuning": false,
+  "test_truth_used_by_selector": false
+}
