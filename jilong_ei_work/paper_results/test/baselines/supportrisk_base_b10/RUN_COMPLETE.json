@@ -1,0 +1,33 @@
+{
+  "code_sha": "146184d1fbbf366c0c9c40066a56753b398b10f4",
+  "completed_at_result_schema_version": 1,
+  "config_sha256": "fb5f2b08caf22610b1c8233bf1668c180fc27552d1dd7f818116bef6bfbd648a",
+  "global_checkpoint_sha256": "a23d243628124a7259ee68c400fd277e2804a08ce086b508f503f42f47841745",
+  "local_checkpoint_sha256": "906c49c9c2a21e453c029ceaba54a3a2cf176bd874a47e1927ab09347f2c389b",
+  "local_normalization_sha256": "5616b023ed75fe30dfb040f11d03e121c92558de6fe93c9d5a8aabff61217f31",
+  "method_label": "SupportRisk_Base_B10",
+  "scenario_count": 20,
+  "scenario_ids": [
+    "JILONG_EI_0010",
+    "JILONG_EI_0020",
+    "JILONG_EI_0030",
+    "JILONG_EI_0040",
+    "JILONG_EI_0050",
+    "JILONG_EI_0060",
+    "JILONG_EI_0070",
+    "JILONG_EI_0080",
+    "JILONG_EI_0090",
+    "JILONG_EI_0100",
+    "JILONG_EI_0110",
+    "JILONG_EI_0120",
+    "JILONG_EI_0130",
+    "JILONG_EI_0140",
+    "JILONG_EI_0150",
+    "JILONG_EI_0160",
+    "JILONG_EI_0170",
+    "JILONG_EI_0180",
+    "JILONG_EI_0190",
+    "JILONG_EI_0200"
+  ],
+  "scope": "FROZEN_BASELINE_TEST"
+}

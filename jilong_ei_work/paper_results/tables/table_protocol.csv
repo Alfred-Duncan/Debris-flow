@@ -1,0 +1,7 @@
+item,value
+final method,RiskTemporal-v1 B10
+selection budget,19 / 256 patches (10%)
+TEST cases,20 untouched scenarios
+final global operator,frozen; no retraining in this release
+v2A soft-support,negative ablation; REJECT
+v2B / v2C,not developed

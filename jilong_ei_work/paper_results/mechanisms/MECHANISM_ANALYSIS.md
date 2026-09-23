@@ -1,0 +1,70 @@
+# Mechanism analysis
+
+This is an exploratory case-level association analysis, not a causal mechanism claim. Telemetry is averaged over refresh times for each TEST scenario and correlated with paired improvement against FrozenGlobal.
+
+| telemetry                     | outcome                                             |   spearman_rho |   p_value |   n | interpretation                      |
+|:------------------------------|:----------------------------------------------------|---------------:|----------:|----:|:------------------------------------|
+| support_fraction              | trajectory_h_rel_l2_improvement_vs_frozen           |        -0.4737 |    0.0349 |  20 | exploratory association; not causal |
+| support_fraction              | trajectory_momentum_rel_l2_improvement_vs_frozen    |        -0.5805 |    0.0073 |  20 | exploratory association; not causal |
+| support_fraction              | change_region_h_rel_l2_improvement_vs_frozen        |         0.0466 |    0.8453 |  20 | exploratory association; not causal |
+| support_fraction              | change_region_momentum_rel_l2_improvement_vs_frozen |         0.4211 |    0.0645 |  20 | exploratory association; not causal |
+| support_fraction              | false_positive_wet_fraction_improvement_vs_frozen   |        -0.4015 |    0.0793 |  20 | exploratory association; not causal |
+| support_fraction              | mixture_volume_relative_error_improvement_vs_frozen |        -0.6075 |    0.0045 |  20 | exploratory association; not causal |
+| support_fraction              | debris_front_mae_km_improvement_vs_frozen           |         0.1008 |    0.6726 |  20 | exploratory association; not causal |
+| support_fraction              | final_wet_iou_improvement_vs_frozen                 |        -0.4827 |    0.0311 |  20 | exploratory association; not causal |
+| blocked_local_change_fraction | trajectory_h_rel_l2_improvement_vs_frozen           |        -0.0015 |    0.995  |  20 | exploratory association; not causal |
+| blocked_local_change_fraction | trajectory_momentum_rel_l2_improvement_vs_frozen    |        -0.7865 |    0      |  20 | exploratory association; not causal |
+| blocked_local_change_fraction | change_region_h_rel_l2_improvement_vs_frozen        |        -0.6812 |    0.0009 |  20 | exploratory association; not causal |
+| blocked_local_change_fraction | change_region_momentum_rel_l2_improvement_vs_frozen |        -0.2977 |    0.2023 |  20 | exploratory association; not causal |
+| blocked_local_change_fraction | false_positive_wet_fraction_improvement_vs_frozen   |        -0.0526 |    0.8256 |  20 | exploratory association; not causal |
+| blocked_local_change_fraction | mixture_volume_relative_error_improvement_vs_frozen |        -0.2782 |    0.235  |  20 | exploratory association; not causal |
+| blocked_local_change_fraction | debris_front_mae_km_improvement_vs_frozen           |        -0.4707 |    0.0362 |  20 | exploratory association; not causal |
+| blocked_local_change_fraction | final_wet_iou_improvement_vs_frozen                 |        -0.5233 |    0.0179 |  20 | exploratory association; not causal |
+| blocked_wet_creation_count    | trajectory_h_rel_l2_improvement_vs_frozen           |        -0.3609 |    0.118  |  20 | exploratory association; not causal |
+| blocked_wet_creation_count    | trajectory_momentum_rel_l2_improvement_vs_frozen    |         0.1789 |    0.4503 |  20 | exploratory association; not causal |
+| blocked_wet_creation_count    | change_region_h_rel_l2_improvement_vs_frozen        |         0.2752 |    0.2403 |  20 | exploratory association; not causal |
+| blocked_wet_creation_count    | change_region_momentum_rel_l2_improvement_vs_frozen |         0.2286 |    0.3324 |  20 | exploratory association; not causal |
+| blocked_wet_creation_count    | false_positive_wet_fraction_improvement_vs_frozen   |        -0.1579 |    0.5061 |  20 | exploratory association; not causal |
+| blocked_wet_creation_count    | mixture_volume_relative_error_improvement_vs_frozen |        -0.2887 |    0.217  |  20 | exploratory association; not causal |
+| blocked_wet_creation_count    | debris_front_mae_km_improvement_vs_frozen           |         0.0872 |    0.7146 |  20 | exploratory association; not causal |
+| blocked_wet_creation_count    | final_wet_iou_improvement_vs_frozen                 |         0.0571 |    0.8109 |  20 | exploratory association; not causal |
+| raw_local_new_wet_fraction    | trajectory_h_rel_l2_improvement_vs_frozen           |        -0.3609 |    0.118  |  20 | exploratory association; not causal |
+| raw_local_new_wet_fraction    | trajectory_momentum_rel_l2_improvement_vs_frozen    |         0.1789 |    0.4503 |  20 | exploratory association; not causal |
+| raw_local_new_wet_fraction    | change_region_h_rel_l2_improvement_vs_frozen        |         0.2752 |    0.2403 |  20 | exploratory association; not causal |
+| raw_local_new_wet_fraction    | change_region_momentum_rel_l2_improvement_vs_frozen |         0.2286 |    0.3324 |  20 | exploratory association; not causal |
+| raw_local_new_wet_fraction    | false_positive_wet_fraction_improvement_vs_frozen   |        -0.1579 |    0.5061 |  20 | exploratory association; not causal |
+| raw_local_new_wet_fraction    | mixture_volume_relative_error_improvement_vs_frozen |        -0.2887 |    0.217  |  20 | exploratory association; not causal |
+| raw_local_new_wet_fraction    | debris_front_mae_km_improvement_vs_frozen           |         0.0872 |    0.7146 |  20 | exploratory association; not causal |
+| raw_local_new_wet_fraction    | final_wet_iou_improvement_vs_frozen                 |         0.0571 |    0.8109 |  20 | exploratory association; not causal |
+| actual_active_fraction        | trajectory_h_rel_l2_improvement_vs_frozen           |        -0.0481 |    0.8403 |  20 | exploratory association; not causal |
+| actual_active_fraction        | trajectory_momentum_rel_l2_improvement_vs_frozen    |         0.1504 |    0.5269 |  20 | exploratory association; not causal |
+| actual_active_fraction        | change_region_h_rel_l2_improvement_vs_frozen        |         0.0917 |    0.7005 |  20 | exploratory association; not causal |
+| actual_active_fraction        | change_region_momentum_rel_l2_improvement_vs_frozen |        -0.191  |    0.4199 |  20 | exploratory association; not causal |
+| actual_active_fraction        | false_positive_wet_fraction_improvement_vs_frozen   |         0.2556 |    0.2767 |  20 | exploratory association; not causal |
+| actual_active_fraction        | mixture_volume_relative_error_improvement_vs_frozen |        -0.012  |    0.9599 |  20 | exploratory association; not causal |
+| actual_active_fraction        | debris_front_mae_km_improvement_vs_frozen           |        -0.1429 |    0.548  |  20 | exploratory association; not causal |
+| actual_active_fraction        | final_wet_iou_improvement_vs_frozen                 |         0.2436 |    0.3007 |  20 | exploratory association; not causal |
+| global_forward_runtime_ms     | trajectory_h_rel_l2_improvement_vs_frozen           |         0.3098 |    0.1838 |  20 | exploratory association; not causal |
+| global_forward_runtime_ms     | trajectory_momentum_rel_l2_improvement_vs_frozen    |         0.0752 |    0.7527 |  20 | exploratory association; not causal |
+| global_forward_runtime_ms     | change_region_h_rel_l2_improvement_vs_frozen        |        -0.0451 |    0.8502 |  20 | exploratory association; not causal |
+| global_forward_runtime_ms     | change_region_momentum_rel_l2_improvement_vs_frozen |        -0.1639 |    0.4899 |  20 | exploratory association; not causal |
+| global_forward_runtime_ms     | false_positive_wet_fraction_improvement_vs_frozen   |         0.0857 |    0.7194 |  20 | exploratory association; not causal |
+| global_forward_runtime_ms     | mixture_volume_relative_error_improvement_vs_frozen |         0.2902 |    0.2145 |  20 | exploratory association; not causal |
+| global_forward_runtime_ms     | debris_front_mae_km_improvement_vs_frozen           |         0.3699 |    0.1084 |  20 | exploratory association; not causal |
+| global_forward_runtime_ms     | final_wet_iou_improvement_vs_frozen                 |         0.2165 |    0.3591 |  20 | exploratory association; not causal |
+| local_correction_runtime_ms   | trajectory_h_rel_l2_improvement_vs_frozen           |         0.4707 |    0.0362 |  20 | exploratory association; not causal |
+| local_correction_runtime_ms   | trajectory_momentum_rel_l2_improvement_vs_frozen    |         0.0677 |    0.7768 |  20 | exploratory association; not causal |
+| local_correction_runtime_ms   | change_region_h_rel_l2_improvement_vs_frozen        |         0.0782 |    0.7431 |  20 | exploratory association; not causal |
+| local_correction_runtime_ms   | change_region_momentum_rel_l2_improvement_vs_frozen |        -0.0391 |    0.87   |  20 | exploratory association; not causal |
+| local_correction_runtime_ms   | false_positive_wet_fraction_improvement_vs_frozen   |         0.4842 |    0.0305 |  20 | exploratory association; not causal |
+| local_correction_runtime_ms   | mixture_volume_relative_error_improvement_vs_frozen |         0.3534 |    0.1264 |  20 | exploratory association; not causal |
+| local_correction_runtime_ms   | debris_front_mae_km_improvement_vs_frozen           |        -0.0331 |    0.8899 |  20 | exploratory association; not causal |
+| local_correction_runtime_ms   | final_wet_iou_improvement_vs_frozen                 |         0.2677 |    0.2539 |  20 | exploratory association; not causal |
+| support_guard_runtime_ms      | trajectory_h_rel_l2_improvement_vs_frozen           |         0.2135 |    0.366  |  20 | exploratory association; not causal |
+| support_guard_runtime_ms      | trajectory_momentum_rel_l2_improvement_vs_frozen    |        -0.0241 |    0.9198 |  20 | exploratory association; not causal |
+| support_guard_runtime_ms      | change_region_h_rel_l2_improvement_vs_frozen        |         0.2511 |    0.2855 |  20 | exploratory association; not causal |
+| support_guard_runtime_ms      | change_region_momentum_rel_l2_improvement_vs_frozen |        -0.0075 |    0.9749 |  20 | exploratory association; not causal |
+| support_guard_runtime_ms      | false_positive_wet_fraction_improvement_vs_frozen   |         0.2632 |    0.2623 |  20 | exploratory association; not causal |
+| support_guard_runtime_ms      | mixture_volume_relative_error_improvement_vs_frozen |         0.1534 |    0.5185 |  20 | exploratory association; not causal |
+| support_guard_runtime_ms      | debris_front_mae_km_improvement_vs_frozen           |         0.1639 |    0.4899 |  20 | exploratory association; not causal |
+| support_guard_runtime_ms      | final_wet_iou_improvement_vs_frozen                 |         0.2286 |    0.3324 |  20 | exploratory association; not causal |

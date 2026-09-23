@@ -1,0 +1,7 @@
+station,method,arrival_time_s,truth_arrival_time_s,arrival_error_s,missed_arrival
+gyirong_cctv_arrival,FrozenGlobal,20.0,370.0,350.0,False
+rasuwagadhi_signal_loss,FrozenGlobal,10.0,390.0,380.0,False
+syabrubesi_signal_loss,FrozenGlobal,330.0,1030.0,700.0,False
+gyirong_cctv_arrival,RiskTemporal_B10,20.0,370.0,350.0,False
+rasuwagadhi_signal_loss,RiskTemporal_B10,10.0,390.0,380.0,False
+syabrubesi_signal_loss,RiskTemporal_B10,330.0,1030.0,700.0,False

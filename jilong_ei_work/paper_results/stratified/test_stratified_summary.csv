@@ -1,0 +1,161 @@
+factor,outcome,spearman_rho,p_value,n,tertile,mean_improvement
+volume_scale,trajectory_h_rel_l2_improvement_vs_frozen,-0.4060150375939849,0.0756893721143978,20,,
+volume_scale,trajectory_h_rel_l2_improvement_vs_frozen,,,7,"(0.807, 0.949]",-0.09015738734042622
+volume_scale,trajectory_h_rel_l2_improvement_vs_frozen,,,6,"(0.949, 1.049]",-0.1290631580278777
+volume_scale,trajectory_h_rel_l2_improvement_vs_frozen,,,7,"(1.049, 1.188]",-0.1349575253124189
+volume_scale,trajectory_momentum_rel_l2_improvement_vs_frozen,-0.41804511278195483,0.06662156350962728,20,,
+volume_scale,trajectory_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.807, 0.949]",0.7646355976441187
+volume_scale,trajectory_momentum_rel_l2_improvement_vs_frozen,,,6,"(0.949, 1.049]",0.36510924366703607
+volume_scale,trajectory_momentum_rel_l2_improvement_vs_frozen,,,7,"(1.049, 1.188]",0.3086783188373192
+volume_scale,change_region_h_rel_l2_improvement_vs_frozen,0.21052631578947367,0.3729699095048,20,,
+volume_scale,change_region_h_rel_l2_improvement_vs_frozen,,,7,"(0.807, 0.949]",0.059711029813287624
+volume_scale,change_region_h_rel_l2_improvement_vs_frozen,,,6,"(0.949, 1.049]",0.06925146088726326
+volume_scale,change_region_h_rel_l2_improvement_vs_frozen,,,7,"(1.049, 1.188]",0.07396598276248391
+volume_scale,change_region_momentum_rel_l2_improvement_vs_frozen,0.5864661654135337,0.006570618371105349,20,,
+volume_scale,change_region_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.807, 0.949]",0.0017829278637448035
+volume_scale,change_region_momentum_rel_l2_improvement_vs_frozen,,,6,"(0.949, 1.049]",0.027918952040572643
+volume_scale,change_region_momentum_rel_l2_improvement_vs_frozen,,,7,"(1.049, 1.188]",0.043388755521535684
+volume_scale,false_positive_wet_fraction_improvement_vs_frozen,-0.4586466165413533,0.041954311609335423,20,,
+volume_scale,false_positive_wet_fraction_improvement_vs_frozen,,,7,"(0.807, 0.949]",0.041837815217398606
+volume_scale,false_positive_wet_fraction_improvement_vs_frozen,,,6,"(0.949, 1.049]",0.025456386143964133
+volume_scale,false_positive_wet_fraction_improvement_vs_frozen,,,7,"(1.049, 1.188]",0.021026432814952645
+volume_scale,mixture_volume_relative_error_improvement_vs_frozen,-0.4541353383458646,0.04427910416289474,20,,
+volume_scale,mixture_volume_relative_error_improvement_vs_frozen,,,7,"(0.807, 0.949]",0.028974733142168918
+volume_scale,mixture_volume_relative_error_improvement_vs_frozen,,,6,"(0.949, 1.049]",-0.07138362639018328
+volume_scale,mixture_volume_relative_error_improvement_vs_frozen,,,7,"(1.049, 1.188]",-0.07904986275138375
+volume_scale,debris_front_mae_km_improvement_vs_frozen,0.2541353383458646,0.2795976355152773,20,,
+volume_scale,debris_front_mae_km_improvement_vs_frozen,,,7,"(0.807, 0.949]",0.7448932214756258
+volume_scale,debris_front_mae_km_improvement_vs_frozen,,,6,"(0.949, 1.049]",0.40207400140258304
+volume_scale,debris_front_mae_km_improvement_vs_frozen,,,7,"(1.049, 1.188]",0.9316569508585852
+volume_scale,final_wet_iou_improvement_vs_frozen,-0.5338345864661653,0.0153370468002174,20,,
+volume_scale,final_wet_iou_improvement_vs_frozen,,,7,"(0.807, 0.949]",0.06204196203351723
+volume_scale,final_wet_iou_improvement_vs_frozen,,,6,"(0.949, 1.049]",0.04002478914546575
+volume_scale,final_wet_iou_improvement_vs_frozen,,,7,"(1.049, 1.188]",0.03897446870793881
+ice_fraction,trajectory_h_rel_l2_improvement_vs_frozen,-0.3383458646616541,0.1445260996635991,20,,
+ice_fraction,trajectory_h_rel_l2_improvement_vs_frozen,,,7,"(0.201, 0.217]",-0.1000039085822868
+ice_fraction,trajectory_h_rel_l2_improvement_vs_frozen,,,6,"(0.217, 0.251]",-0.13290448991155326
+ice_fraction,trajectory_h_rel_l2_improvement_vs_frozen,,,7,"(0.251, 0.292]",-0.12181843388455069
+ice_fraction,trajectory_momentum_rel_l2_improvement_vs_frozen,-0.8466165413533834,2.5220574871575744e-06,20,,
+ice_fraction,trajectory_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.201, 0.217]",1.1071025201112845
+ice_fraction,trajectory_momentum_rel_l2_improvement_vs_frozen,,,6,"(0.217, 0.251]",0.5537816960255344
+ice_fraction,trajectory_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.251, 0.292]",-0.19550784850855926
+ice_fraction,change_region_h_rel_l2_improvement_vs_frozen,-0.27518796992481204,0.2402830280811375,20,,
+ice_fraction,change_region_h_rel_l2_improvement_vs_frozen,,,7,"(0.201, 0.217]",0.07031477813377077
+ice_fraction,change_region_h_rel_l2_improvement_vs_frozen,,,6,"(0.217, 0.251]",0.0751123264289237
+ice_fraction,change_region_h_rel_l2_improvement_vs_frozen,,,7,"(0.251, 0.292]",0.05833863540629182
+ice_fraction,change_region_momentum_rel_l2_improvement_vs_frozen,-0.2270676691729323,0.3356744310134179,20,,
+ice_fraction,change_region_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.201, 0.217]",0.01904761861496628
+ice_fraction,change_region_momentum_rel_l2_improvement_vs_frozen,,,6,"(0.217, 0.251]",0.04455629950615
+ice_fraction,change_region_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.251, 0.292]",0.01186348122839076
+ice_fraction,false_positive_wet_fraction_improvement_vs_frozen,0.17142857142857143,0.4698861728108753,20,,
+ice_fraction,false_positive_wet_fraction_improvement_vs_frozen,,,7,"(0.201, 0.217]",0.03571060699725666
+ice_fraction,false_positive_wet_fraction_improvement_vs_frozen,,,6,"(0.217, 0.251]",0.0229023629566464
+ice_fraction,false_positive_wet_fraction_improvement_vs_frozen,,,7,"(0.251, 0.292]",0.029342803767081222
+ice_fraction,mixture_volume_relative_error_improvement_vs_frozen,-0.625563909774436,0.003178354611178857,20,,
+ice_fraction,mixture_volume_relative_error_improvement_vs_frozen,,,7,"(0.201, 0.217]",0.04456354744546498
+ice_fraction,mixture_volume_relative_error_improvement_vs_frozen,,,6,"(0.217, 0.251]",-0.0768105409635851
+ice_fraction,mixture_volume_relative_error_improvement_vs_frozen,,,7,"(0.251, 0.292]",-0.08998703599176396
+ice_fraction,debris_front_mae_km_improvement_vs_frozen,-0.4285714285714286,0.05937977468606565,20,,
+ice_fraction,debris_front_mae_km_improvement_vs_frozen,,,7,"(0.201, 0.217]",1.1578583710539585
+ice_fraction,debris_front_mae_km_improvement_vs_frozen,,,6,"(0.217, 0.251]",0.6505172007433115
+ice_fraction,debris_front_mae_km_improvement_vs_frozen,,,7,"(0.251, 0.292]",0.30574048755962807
+ice_fraction,final_wet_iou_improvement_vs_frozen,-0.23458646616541348,0.3194764651496698,20,,
+ice_fraction,final_wet_iou_improvement_vs_frozen,,,7,"(0.201, 0.217]",0.06096864494150019
+ice_fraction,final_wet_iou_improvement_vs_frozen,,,6,"(0.217, 0.251]",0.03869049512904765
+ice_fraction,final_wet_iou_improvement_vs_frozen,,,7,"(0.251, 0.292]",0.04119146638545707
+erosion_K,trajectory_h_rel_l2_improvement_vs_frozen,0.5909774436090225,0.006070153699275827,20,,
+erosion_K,trajectory_h_rel_l2_improvement_vs_frozen,,,7,"(0.00102, 0.00348]",-0.13656016786340514
+erosion_K,trajectory_h_rel_l2_improvement_vs_frozen,,,6,"(0.00348, 0.00462]",-0.12751560439015472
+erosion_K,trajectory_h_rel_l2_improvement_vs_frozen,,,7,"(0.00462, 0.00909]",-0.0898812193360597
+erosion_K,trajectory_momentum_rel_l2_improvement_vs_frozen,0.06616541353383458,0.7816639121085742,20,,
+erosion_K,trajectory_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.00102, 0.00348]",0.4857810636418384
+erosion_K,trajectory_momentum_rel_l2_improvement_vs_frozen,,,6,"(0.00348, 0.00462]",0.5115753007939859
+erosion_K,trajectory_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.00462, 0.00909]",0.4619905181593567
+erosion_K,change_region_h_rel_l2_improvement_vs_frozen,-0.1819548872180451,0.44262106677574986,20,,
+erosion_K,change_region_h_rel_l2_improvement_vs_frozen,,,7,"(0.00102, 0.00348]",0.06935444789081505
+erosion_K,change_region_h_rel_l2_improvement_vs_frozen,,,6,"(0.00348, 0.00462]",0.06946968365379326
+erosion_K,change_region_h_rel_l2_improvement_vs_frozen,,,7,"(0.00462, 0.00909]",0.06413551659935934
+erosion_K,change_region_momentum_rel_l2_improvement_vs_frozen,-0.20601503759398496,0.3835325530925867,20,,
+erosion_K,change_region_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.00102, 0.00348]",0.02598000734472178
+erosion_K,change_region_momentum_rel_l2_improvement_vs_frozen,,,6,"(0.00348, 0.00462]",0.030692399359891803
+erosion_K,change_region_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.00462, 0.00909]",0.016814435481142285
+erosion_K,false_positive_wet_fraction_improvement_vs_frozen,0.4766917293233082,0.03358407951093336,20,,
+erosion_K,false_positive_wet_fraction_improvement_vs_frozen,,,7,"(0.00102, 0.00348]",0.025098498947267456
+erosion_K,false_positive_wet_fraction_improvement_vs_frozen,,,6,"(0.00348, 0.00462]",0.022998786970639618
+erosion_K,false_positive_wet_fraction_improvement_vs_frozen,,,7,"(0.00462, 0.00909]",0.0398722626622191
+erosion_K,mixture_volume_relative_error_improvement_vs_frozen,0.2827067669172932,0.2271532851047362,20,,
+erosion_K,mixture_volume_relative_error_improvement_vs_frozen,,,7,"(0.00102, 0.00348]",-0.047495031360345386
+erosion_K,mixture_volume_relative_error_improvement_vs_frozen,,,6,"(0.00348, 0.00462]",-0.06243596045204063
+erosion_K,mixture_volume_relative_error_improvement_vs_frozen,,,7,"(0.00462, 0.00909]",-0.010249526195848842
+erosion_K,debris_front_mae_km_improvement_vs_frozen,-0.19548872180451127,0.40881908952023194,20,,
+erosion_K,debris_front_mae_km_improvement_vs_frozen,,,7,"(0.00102, 0.00348]",0.7040909008477068
+erosion_K,debris_front_mae_km_improvement_vs_frozen,,,6,"(0.00348, 0.00462]",0.6228874426059852
+erosion_K,debris_front_mae_km_improvement_vs_frozen,,,7,"(0.00462, 0.00909]",0.7831906075978738
+erosion_K,final_wet_iou_improvement_vs_frozen,0.41654135338345866,0.06770800324389113,20,,
+erosion_K,final_wet_iou_improvement_vs_frozen,,,7,"(0.00102, 0.00348]",0.04181398841962584
+erosion_K,final_wet_iou_improvement_vs_frozen,,,6,"(0.00348, 0.00462]",0.04336486799611581
+erosion_K,final_wet_iou_improvement_vs_frozen,,,7,"(0.00462, 0.00909]",0.056339517592701574
+n_debris,trajectory_h_rel_l2_improvement_vs_frozen,-0.13533834586466165,0.5694186911507699,20,,
+n_debris,trajectory_h_rel_l2_improvement_vs_frozen,,,7,"(0.013600000000000001, 0.0241]",-0.10568956274216533
+n_debris,trajectory_h_rel_l2_improvement_vs_frozen,,,6,"(0.0241, 0.027]",-0.14197437789877612
+n_debris,trajectory_h_rel_l2_improvement_vs_frozen,,,7,"(0.027, 0.0299]",-0.10835859002133828
+n_debris,trajectory_momentum_rel_l2_improvement_vs_frozen,-0.2706766917293233,0.24839056913669727,20,,
+n_debris,trajectory_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.013600000000000001, 0.0241]",0.7116396332893188
+n_debris,trajectory_momentum_rel_l2_improvement_vs_frozen,,,6,"(0.0241, 0.027]",0.33624911842094934
+n_debris,trajectory_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.027, 0.0299]",0.38641153340305046
+n_debris,change_region_h_rel_l2_improvement_vs_frozen,-0.37293233082706767,0.1053477229621267,20,,
+n_debris,change_region_h_rel_l2_improvement_vs_frozen,,,7,"(0.013600000000000001, 0.0241]",0.07148908568022203
+n_debris,change_region_h_rel_l2_improvement_vs_frozen,,,6,"(0.0241, 0.027]",0.070188678236965
+n_debris,change_region_h_rel_l2_improvement_vs_frozen,,,7,"(0.027, 0.0299]",0.061384597738662325
+n_debris,change_region_momentum_rel_l2_improvement_vs_frozen,-0.11729323308270674,0.6223789817630219,20,,
+n_debris,change_region_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.013600000000000001, 0.0241]",0.02003299860831642
+n_debris,change_region_momentum_rel_l2_improvement_vs_frozen,,,6,"(0.0241, 0.027]",0.0388603913792975
+n_debris,change_region_momentum_rel_l2_improvement_vs_frozen,,,7,"(0.027, 0.0299]",0.015760308200914192
+n_debris,false_positive_wet_fraction_improvement_vs_frozen,-0.593984962406015,0.005754247539586482,20,,
+n_debris,false_positive_wet_fraction_improvement_vs_frozen,,,7,"(0.013600000000000001, 0.0241]",0.046476462978371276
+n_debris,false_positive_wet_fraction_improvement_vs_frozen,,,6,"(0.0241, 0.027]",0.01880330230925714
+n_debris,false_positive_wet_fraction_improvement_vs_frozen,,,7,"(0.027, 0.0299]",0.022090428340871684
+n_debris,mixture_volume_relative_error_improvement_vs_frozen,-0.03308270676691729,0.889875964885619,20,,
+n_debris,mixture_volume_relative_error_improvement_vs_frozen,,,7,"(0.013600000000000001, 0.0241]",-0.02270437400480612
+n_debris,mixture_volume_relative_error_improvement_vs_frozen,,,6,"(0.0241, 0.027]",-0.087189274207686
+n_debris,mixture_volume_relative_error_improvement_vs_frozen,,,7,"(0.027, 0.0299]",-0.013823057475120656
+n_debris,debris_front_mae_km_improvement_vs_frozen,0.048120300751879695,0.8403389659546905,20,,
+n_debris,debris_front_mae_km_improvement_vs_frozen,,,7,"(0.013600000000000001, 0.0241]",0.6320981323138634
+n_debris,debris_front_mae_km_improvement_vs_frozen,,,6,"(0.0241, 0.027]",0.8546635020796535
+n_debris,debris_front_mae_km_improvement_vs_frozen,,,7,"(0.027, 0.0299]",0.6565181822971444
+n_debris,final_wet_iou_improvement_vs_frozen,-0.47518796992481205,0.03422725114507126,20,,
+n_debris,final_wet_iou_improvement_vs_frozen,,,7,"(0.013600000000000001, 0.0241]",0.06271931753202149
+n_debris,final_wet_iou_improvement_vs_frozen,,,6,"(0.0241, 0.027]",0.03756405357235672
+n_debris,final_wet_iou_improvement_vs_frozen,,,7,"(0.027, 0.0299]",0.040406315129242275
+dep_tau_s,trajectory_h_rel_l2_improvement_vs_frozen,0.1413533834586466,0.5522144386322418,20,,
+dep_tau_s,trajectory_h_rel_l2_improvement_vs_frozen,,,7,"(169.521, 268.742]",-0.11035141634148868
+dep_tau_s,trajectory_h_rel_l2_improvement_vs_frozen,,,6,"(268.742, 990.301]",-0.1457033908921316
+dep_tau_s,trajectory_h_rel_l2_improvement_vs_frozen,,,7,"(990.301, 2285.365]",-0.10050043957056738
+dep_tau_s,trajectory_momentum_rel_l2_improvement_vs_frozen,0.18496240601503755,0.4349861436228527,20,,
+dep_tau_s,trajectory_momentum_rel_l2_improvement_vs_frozen,,,7,"(169.521, 268.742]",0.3446033737004817
+dep_tau_s,trajectory_momentum_rel_l2_improvement_vs_frozen,,,6,"(268.742, 990.301]",0.2938335662105966
+dep_tau_s,trajectory_momentum_rel_l2_improvement_vs_frozen,,,7,"(990.301, 2285.365]",0.7898039806007614
+dep_tau_s,change_region_h_rel_l2_improvement_vs_frozen,0.04210526315789473,0.8600949015145793,20,,
+dep_tau_s,change_region_h_rel_l2_improvement_vs_frozen,,,7,"(169.521, 268.742]",0.0640161046366139
+dep_tau_s,change_region_h_rel_l2_improvement_vs_frozen,,,6,"(268.742, 990.301]",0.07043091737041697
+dep_tau_s,change_region_h_rel_l2_improvement_vs_frozen,,,7,"(990.301, 2285.365]",0.06864994523931159
+dep_tau_s,change_region_momentum_rel_l2_improvement_vs_frozen,-0.20902255639097742,0.3764723395871389,20,,
+dep_tau_s,change_region_momentum_rel_l2_improvement_vs_frozen,,,7,"(169.521, 268.742]",0.024529174384238406
+dep_tau_s,change_region_momentum_rel_l2_improvement_vs_frozen,,,6,"(268.742, 990.301]",0.03375663767421658
+dep_tau_s,change_region_momentum_rel_l2_improvement_vs_frozen,,,7,"(990.301, 2285.365]",0.015638778457918705
+dep_tau_s,false_positive_wet_fraction_improvement_vs_frozen,0.07518796992481201,0.7527267095067718,20,,
+dep_tau_s,false_positive_wet_fraction_improvement_vs_frozen,,,7,"(169.521, 268.742]",0.03400895338176373
+dep_tau_s,false_positive_wet_fraction_improvement_vs_frozen,,,6,"(268.742, 990.301]",0.016493500150771074
+dep_tau_s,false_positive_wet_fraction_improvement_vs_frozen,,,7,"(990.301, 2285.365]",0.036537768359038714
+dep_tau_s,mixture_volume_relative_error_improvement_vs_frozen,0.4421052631578947,0.05096470340964167,20,,
+dep_tau_s,mixture_volume_relative_error_improvement_vs_frozen,,,7,"(169.521, 268.742]",-0.06260544958892583
+dep_tau_s,mixture_volume_relative_error_improvement_vs_frozen,,,6,"(268.742, 990.301]",-0.07834382139715444
+dep_tau_s,mixture_volume_relative_error_improvement_vs_frozen,,,7,"(990.301, 2285.365]",0.018496201414257733
+dep_tau_s,debris_front_mae_km_improvement_vs_frozen,0.17593984962406017,0.45809865870248545,20,,
+dep_tau_s,debris_front_mae_km_improvement_vs_frozen,,,7,"(169.521, 268.742]",0.370442106089756
+dep_tau_s,debris_front_mae_km_improvement_vs_frozen,,,6,"(268.742, 990.301]",0.6772617105265475
+dep_tau_s,debris_front_mae_km_improvement_vs_frozen,,,7,"(990.301, 2285.365]",1.0702328869953426
+dep_tau_s,final_wet_iou_improvement_vs_frozen,0.10375939849624059,0.6633257542362446,20,,
+dep_tau_s,final_wet_iou_improvement_vs_frozen,,,7,"(169.521, 268.742]",0.04933905726655445
+dep_tau_s,final_wet_iou_improvement_vs_frozen,,,6,"(268.742, 990.301]",0.03499705091966144
+dep_tau_s,final_wet_iou_improvement_vs_frozen,,,7,"(990.301, 2285.365]",0.05598686338273386
