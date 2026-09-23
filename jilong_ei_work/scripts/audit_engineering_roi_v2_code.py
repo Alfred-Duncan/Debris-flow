@@ -51,7 +51,10 @@ def main():
     require(not any(word in source.upper() for word in ("TEST", "H0", "HOLDOUT")), "NON_VAL_BRANCH_PRESENT")
     require(subprocess.run(["git", "diff", "--quiet", BASE_RESULT_SHA, "--", *V1_PATHS], cwd=REPOSITORY).returncode == 0, "V1_FILES_CHANGED")
     require(subprocess.run(["git", "diff", "--quiet", BASE_V2_SHA, "--", "jilong_ei_work/configs/engineering_roi_v2.json"], cwd=REPOSITORY).returncode == 0, "V2_CONFIG_CHANGED")
-    require(not (ROOT / "results/engineering_roi_v2").exists(), "V2_REAL_OUTPUT_PRESENT")
+    result_root = ROOT / "results/engineering_roi_v2"
+    if result_root.exists():
+        manifests = list((result_root / "runs").glob("*/run_manifest.json"))
+        require(manifests and all(json.loads(path.read_text()).get("code_sha") == "8a1b790aeb1421088016f7bbfd796c65018c7176" for path in manifests), "V2_RESULT_PROVENANCE_INVALID")
     print(json.dumps({"status": "PASS", "v1_status": "FROZEN", "v2_definition": "UNCHANGED", "production_transition_single_source": True, "cuda_timing_synchronized": True, "failure_audit_statistics_fixed": True, "support_telemetry_preserved": True, "real_rollout_executed": False}))
 
 

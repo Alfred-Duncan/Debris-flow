@@ -48,6 +48,7 @@ METHODS = {
     "SupportRisk_Temporal": (0.10, True, False),
     "SupportRisk_DepthGuard": (0.10, False, True),
     "EngineeringROI_v2": (None, True, True),
+    "RiskTemporal": (None, True, False),
 }
 TIMELINE_COLUMNS = (
     "method", "scenario_id", "time_s", "budget", "selected_patch_ids",
@@ -178,7 +179,7 @@ def _checkpoint_provenance(path, checkpoint):
     }
 
 
-def manifest_for(label, method, budget, full_rows, rows, config_sha, code_sha, global_info, local_info, normalization, layout, shard_index, shard_count):
+def manifest_for(label, method, budget, full_rows, rows, config_sha, code_sha, global_info, local_info, normalization, layout, shard_index, shard_count, config_path="configs/engineering_roi_v2.json"):
     global_path = ROOT / "models/global_operator_v2/best.pt"
     local_path = ROOT / "models/local_corrector_v1_1/best.pt"
     norm_path = ROOT / "models/local_corrector_v1_1/correction_normalization.json"
@@ -188,7 +189,7 @@ def manifest_for(label, method, budget, full_rows, rows, config_sha, code_sha, g
         "full_scenario_ids": list(map(str, full_rows.scenario_id)),
         "assigned_scenario_ids": list(map(str, rows.scenario_id)), "shard_count": shard_count,
         "shard_index": shard_index, "partition_rule": "global_index_mod_shard_count",
-        "config_path": "configs/engineering_roi_v2.json", "config_sha256": config_sha,
+        "config_path": config_path, "config_sha256": config_sha,
         "engineering_roi_config_sha256": config_sha, "code_sha": code_sha,
         "global_checkpoint_path": str(global_path.relative_to(ROOT)),
         "global_checkpoint_sha256": sha256_file(global_path), "global_checkpoint_provenance": global_info,
@@ -308,7 +309,11 @@ def main(args):
         return merge_shards(args)
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA_REQUIRED")
-    config, config_sha = load_engineering_roi_v2_config(ROOT / "configs/engineering_roi_v2.json")
+    config_path = ROOT / ("configs/risk_temporal_final_v1.json" if args.method == "RiskTemporal" else "configs/engineering_roi_v2.json")
+    if args.method == "RiskTemporal":
+        raw = config_path.read_bytes(); config = json.loads(raw); config_sha = __import__("hashlib").sha256(raw).hexdigest()
+        if config.get("version") != "RiskTemporal-v1" or config.get("depth_envelope_guard") != "disabled" or config.get("temporal_refresh_steps") != 1 or config.get("temporal_fill_from_excluded") is not False: raise RuntimeError("RISK_TEMPORAL_CONFIG_INVALID")
+    else: config, config_sha = load_engineering_roi_v2_config(config_path)
     label = method_label(args.method, args.budget)
     full = scenario_rows("VAL")
     if len(full) != 20 or not set(full["split"]).issubset({"VAL"}):
@@ -331,7 +336,7 @@ def main(args):
     transects = load_transects(ROOT / "data/downloads/park_v2/inputs/upper30h_transects.json")
     metadata = build_roi_static_metadata(layout, active, route, build_section_mask(transects, static_np.shape[-2:]), device)
     code_sha = resolve_code_sha(args.source_code_sha, ROOT, require=True)
-    manifest = manifest_for(label, args.method, args.budget, full, rows, config_sha, code_sha, _checkpoint_provenance(ROOT / "models/global_operator_v2/best.pt", global_checkpoint), _checkpoint_provenance(model_dir / "best.pt", local_checkpoint), normalization, layout, args.shard_index, args.shard_count)
+    manifest = manifest_for(label, args.method, args.budget, full, rows, config_sha, code_sha, _checkpoint_provenance(ROOT / "models/global_operator_v2/best.pt", global_checkpoint), _checkpoint_provenance(model_dir / "best.pt", local_checkpoint), normalization, layout, args.shard_index, args.shard_count, str(config_path.relative_to(ROOT)))
     runner = lambda one: execute_cases(label, args.method, args.budget, one, layout, metadata, config, global_model, local, transform, normalizer, delta, normalization, static, route, static_np[0], transects, device)
     cases, stations, timeline, timing = cached_engineering_method(run_out, manifest, rows, runner, True, args.resume, expected_station_count=len(transects))
     write_method_outputs(run_out, label, cases, stations, timeline, timing, manifest)

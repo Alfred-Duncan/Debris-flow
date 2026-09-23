@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import inspect
+import json
 import sys
 import tempfile
 from pathlib import Path
@@ -37,6 +38,17 @@ def test_config_and_signature(config):
     assert config["temporal_refresh_steps"] == 1 and config["temporal_fill_from_excluded"] is False
     names = set(inspect.signature(select_engineering_roi_v2).parameters)
     assert not names.intersection({"truth", "target", "future", "local_prediction", "oracle_error"})
+
+
+def test_risk_temporal_final_registration():
+    final = json.loads((ROOT / "configs/risk_temporal_final_v1.json").read_text())
+    assert final["version"] == "RiskTemporal-v1" and final["depth_envelope_guard"] == "disabled"
+    assert final["temporal_refresh_steps"] == 1 and final["temporal_fill_from_excluded"] is False
+    assert evaluator.METHODS["RiskTemporal"] == (None, True, False)
+    for budget, label in ((.05, "RiskTemporal_B05"), (.10, "RiskTemporal_B10"), (.20, "RiskTemporal_B20")):
+        evaluator.validate_args("RiskTemporal", budget)
+        assert evaluator.method_label("RiskTemporal", budget) == label
+    assert evaluator.METHODS["SupportRisk_Temporal"][1:] == evaluator.METHODS["RiskTemporal"][1:]
 
 
 def test_support_risk_boundaries(config):
@@ -175,7 +187,7 @@ def test_cuda_timing_and_transition_order():
 
 def main():
     config, _ = load_engineering_roi_v2_config(ROOT / "configs/engineering_roi_v2.json")
-    test_config_and_signature(config); test_support_risk_boundaries(config)
+    test_config_and_signature(config); test_risk_temporal_final_registration(); test_support_risk_boundaries(config)
     test_selection_temporal_and_diversity(config); test_depth_envelope(); test_persistence_fixture()
     test_support_guard_physical_telemetry(); test_support_guard_encoded_physical_disagreement_and_invariance()
     test_timing_contract_and_telemetry_schema(); test_association_and_single_source_contract(); test_cuda_timing_and_transition_order()
