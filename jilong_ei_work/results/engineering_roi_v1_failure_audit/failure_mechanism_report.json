@@ -1,6 +1,5 @@
 {
   "no_new_model_execution": true,
-  "amplitude_accumulation": "NOT DIRECTLY OBSERVABLE FROM EXISTING V1 ARTIFACTS",
   "methods": [
     "RandomAll_B10",
     "RandomSupport_B10",
@@ -10,5 +9,62 @@
     "DynamicOnly_B10",
     "SupportRiskOnly_B10",
     "EngineeringROI_NoDiversity_B10"
-  ]
+  ],
+  "descriptive_associations": [
+    {
+      "metric": "trajectory_h_rel_l2",
+      "signal": "top10_share",
+      "pearson": 0.16570875226492612,
+      "spearman": 0.6020958630471409
+    },
+    {
+      "metric": "trajectory_h_rel_l2",
+      "signal": "consecutive_reselection_fraction",
+      "pearson": 0.22866194540499551,
+      "spearman": 0.8671246001368945
+    },
+    {
+      "metric": "trajectory_h_rel_l2",
+      "signal": "mean_selection_count_per_used_patch",
+      "pearson": 0.033025245075064796,
+      "spearman": 0.5829245003480142
+    },
+    {
+      "metric": "mixture_volume_relative_error",
+      "signal": "top10_share",
+      "pearson": 0.17078357692087484,
+      "spearman": 0.5470587675706888
+    },
+    {
+      "metric": "mixture_volume_relative_error",
+      "signal": "consecutive_reselection_fraction",
+      "pearson": 0.23614007033158174,
+      "spearman": 0.8201769035709544
+    },
+    {
+      "metric": "mixture_volume_relative_error",
+      "signal": "mean_selection_count_per_used_patch",
+      "pearson": 0.03581607864924081,
+      "spearman": 0.44787015048930406
+    },
+    {
+      "metric": "debris_front_mae_km",
+      "signal": "top10_share",
+      "pearson": -0.35216878501093557,
+      "spearman": -0.3659534697383009
+    },
+    {
+      "metric": "debris_front_mae_km",
+      "signal": "consecutive_reselection_fraction",
+      "pearson": -0.0696962107531228,
+      "spearman": -0.03093467637240876
+    },
+    {
+      "metric": "debris_front_mae_km",
+      "signal": "mean_selection_count_per_used_patch",
+      "pearson": 0.2311697400024225,
+      "spearman": -0.07065635961917774
+    }
+  ],
+  "amplitude_accumulation": "NOT DIRECTLY OBSERVABLE FROM EXISTING V1 ARTIFACTS"
 }
