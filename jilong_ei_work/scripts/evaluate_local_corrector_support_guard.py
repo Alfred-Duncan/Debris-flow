@@ -144,7 +144,10 @@ def merge_shards(args):
         if not (path/'final_case_metrics.csv').exists():raise RuntimeError(f'MISSING_SHARD_{index}')
         parts.append(path)
     cases=pd.concat([pd.read_csv(path/'final_case_metrics.csv') for path in parts],ignore_index=True);stations=pd.concat([pd.read_csv(path/'final_station_metrics.csv') for path in parts],ignore_index=True)
-    telemetry=pd.concat([pd.read_csv(path/'support_guard_telemetry.csv') for path in parts],ignore_index=True).to_dict('records')
+    telemetry=pd.concat([pd.read_csv(path/'support_guard_telemetry.csv') for path in parts],ignore_index=True)
+    # Shard-level ALL_VAL rows are useful locally but must not appear beside
+    # the single complete-VAL aggregate produced below.
+    telemetry=telemetry[telemetry.scenario_id.astype(str).ne('ALL_VAL')].to_dict('records')
     reports=[json.loads((path/'support_guard_report.json').read_text()) for path in parts];methods={}
     for method in cases.method.unique():methods[method]=summarize(cases[cases.method.eq(method)].to_dict('records'),stations[stations.method.eq(method)].to_dict('records'))
     timings=[]
