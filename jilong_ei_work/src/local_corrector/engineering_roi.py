@@ -101,17 +101,50 @@ def _validate_states(current,provisional,encoded_current,encoded_provisional,met
     if tuple(current.shape[-2:])!=tuple(metadata.patch_index_map.shape):raise ValueError("EngineeringROI static metadata shape mismatch")
 
 
-def compute_roi_components(current_physical: torch.Tensor, provisional_physical: torch.Tensor, encoded_current: torch.Tensor, encoded_provisional: torch.Tensor, global_delta_scales, metadata: ROIStaticMetadata, config: Mapping) -> dict:
-    """Vectorized four-component scoring with no teacher/target/future inputs."""
-    _validate_states(current_physical,provisional_physical,encoded_current,encoded_provisional,metadata);wet=float(config["wet_threshold_m"]);shallow=float(config["shallow_margin_upper_h_m"])
-    support=support_mask(current_physical,provisional_physical,metadata.active,wet);scales=torch.as_tensor(global_delta_scales,device=encoded_current.device,dtype=encoded_current.dtype)[None,:,None,None]
+def compute_support_candidates(current_physical, provisional_physical, metadata, wet_threshold):
+    support=support_mask(current_physical,provisional_physical,metadata.active,float(wet_threshold))
+    return support,patch_reduce_sum(support.to(torch.float64),metadata).to(torch.int64)
+
+
+def compute_dynamic_component(encoded_current, encoded_provisional, global_delta_scales, support, metadata):
+    scales=torch.as_tensor(global_delta_scales,device=encoded_current.device,dtype=encoded_current.dtype)[None,:,None,None]
     if scales.shape[1]!=6:raise ValueError("global_delta_scales must contain six values")
-    dynamic=(((encoded_provisional-encoded_current)/scales).square().mean(1,keepdim=True)).sqrt();h,c=provisional_physical[:,:1],provisional_physical[:,3:4];route=metadata.route_tensor
-    front_cells=(h[:,0]>float(config["debris_front_h_threshold_m"]))&(c[:,0]>float(config["debris_front_c_threshold"]))&torch.isfinite(route)[None];front_available=bool(front_cells.any().item());front_chainage=float(route[front_cells[0]].max().item()) if front_available else float("nan")
-    front_zone=((torch.abs(route[None,None]-front_chainage)<=float(config["front_half_width_m"]))&metadata.active&support) if front_available else torch.zeros_like(support);risk=metadata.active&(((current_physical[:,:1]<wet)&(h>=wet))|((h>=wet)&(h<shallow)))
-    support_overlap=patch_reduce_sum(support.to(torch.float64),metadata).to(torch.int64);dynamic_raw,_=patch_reduce_mean(dynamic,support,metadata);front_raw=patch_reduce_sum(front_zone.to(torch.float64),metadata)/metadata.active_counts.clamp_min(1);risk_raw=patch_reduce_sum(risk.to(torch.float64),metadata)/metadata.active_counts.clamp_min(1);section_overlap=patch_reduce_sum((metadata.section_mask[None,None]&support).to(torch.float64),metadata);section_raw=section_overlap/metadata.section_counts.clamp_min(1);section_raw=torch.where(metadata.section_counts>0,section_raw,torch.zeros_like(section_raw))
-    raw={"dynamic":dynamic_raw.detach().cpu().numpy().astype(np.float64),"predicted_front":front_raw.detach().cpu().numpy(),"support_risk":risk_raw.detach().cpu().numpy(),"engineering_section":section_raw.detach().cpu().numpy()};ranks={name:positive_percentile_rank(raw[name]) for name in COMPONENTS};base=sum(float(config["weights"][name])*ranks[name] for name in COMPONENTS);overlap=support_overlap.detach().cpu().numpy();candidates=(overlap>0)&(base>0)
-    return {"patches":tuple(metadata.layout.eligible),"patch_ids":metadata.patch_ids,"support_overlap":overlap,"raw":raw,"ranks":ranks,"base_score":base,"candidates":candidates,"predicted_front_chainage_m":front_chainage,"front_available":front_available}
+    dynamic=(((encoded_provisional-encoded_current)/scales).square().mean(1,keepdim=True)).sqrt()
+    return patch_reduce_mean(dynamic,support,metadata)[0]
+
+
+def compute_front_component(provisional_physical, support, metadata, config):
+    h,c=provisional_physical[:,:1],provisional_physical[:,3:4];route=metadata.route_tensor
+    cells=(h[:,0]>float(config['debris_front_h_threshold_m']))&(c[:,0]>float(config['debris_front_c_threshold']))&torch.isfinite(route)[None]
+    available=bool(cells.any().item());chainage=float(route[cells[0]].max().item()) if available else float('nan')
+    zone=(torch.abs(route[None,None]-chainage)<=float(config['front_half_width_m']))&metadata.active&support if available else torch.zeros_like(support)
+    return patch_reduce_sum(zone.to(torch.float64),metadata)/metadata.active_counts.clamp_min(1),chainage,available
+
+
+def compute_support_risk_component(current_physical, provisional_physical, metadata, config):
+    wet=float(config['wet_threshold_m']);shallow=float(config['shallow_margin_upper_h_m']);h=provisional_physical[:,:1]
+    risk=metadata.active&(((current_physical[:,:1]<wet)&(h>=wet))|((h>=wet)&(h<shallow)))
+    return patch_reduce_sum(risk.to(torch.float64),metadata)/metadata.active_counts.clamp_min(1)
+
+
+def compute_section_component(support, metadata):
+    numerator=patch_reduce_sum((metadata.section_mask[None,None]&support).to(torch.float64),metadata);raw=numerator/metadata.section_counts.clamp_min(1)
+    return torch.where(metadata.section_counts>0,raw,torch.zeros_like(raw))
+
+
+def _as_numpy(value):return value.detach().cpu().numpy().astype(np.float64)
+
+
+def _info_from_components(metadata,support_overlap,raw,front_chainage=float('nan'),front_available=False):
+    overlap=support_overlap.detach().cpu().numpy();ranks={name:positive_percentile_rank(value) for name,value in raw.items()};base=sum(.25*ranks[name] for name in COMPONENTS) if set(raw)==set(COMPONENTS) else None
+    return {'patches':tuple(metadata.layout.eligible),'patch_ids':metadata.patch_ids,'support_overlap':overlap,'raw':raw,'ranks':ranks,'base_score':base,'candidates':(overlap>0)&(base>0) if base is not None else None,'predicted_front_chainage_m':front_chainage,'front_available':front_available}
+
+
+def compute_roi_components(current_physical: torch.Tensor, provisional_physical: torch.Tensor, encoded_current: torch.Tensor, encoded_provisional: torch.Tensor, global_delta_scales, metadata: ROIStaticMetadata, config: Mapping) -> dict:
+    """Vectorized full EngineeringROI-v1 scoring with no teacher/target/future inputs."""
+    _validate_states(current_physical,provisional_physical,encoded_current,encoded_provisional,metadata);support,overlap=compute_support_candidates(current_physical,provisional_physical,metadata,config['wet_threshold_m'])
+    dynamic=compute_dynamic_component(encoded_current,encoded_provisional,global_delta_scales,support,metadata);front,chainage,available=compute_front_component(provisional_physical,support,metadata,config);risk=compute_support_risk_component(current_physical,provisional_physical,metadata,config);section=compute_section_component(support,metadata)
+    return _info_from_components(metadata,overlap,{'dynamic':_as_numpy(dynamic),'predicted_front':_as_numpy(front),'support_risk':_as_numpy(risk),'engineering_section':_as_numpy(section)},chainage,available)
 
 
 def _reference_compute_roi_components(current_physical,provisional_physical,encoded_current,encoded_provisional,global_delta_scales,metadata,config) -> dict:
@@ -138,17 +171,34 @@ def _diverse(indices,scores,patches,maximum):
     return chosen,first,len(chosen)-first
 
 
+def _nan_telemetry():return {f'mean_selected_{name}_rank':float('nan') for name in ('dynamic','front','support_risk','section')}
+
+
+def _selection_telemetry(metadata,selected,selected_indices,maximum,candidate_count,first,second,info,computed):
+    ranks=info.get('ranks',{});telemetry=_nan_telemetry();mapping={'dynamic':'dynamic','front':'predicted_front','support_risk':'support_risk','section':'engineering_section'}
+    for target,component in mapping.items():
+        if component in computed:telemetry[f'mean_selected_{target}_rank']=float(np.mean(ranks[component][selected_indices])) if selected_indices else 0.
+    base=info.get('base_score');return {'budget_fraction':float(maximum/metadata.layout.count_for_budget(.20)) if False else None,'budget_max_count':maximum,'candidate_count':candidate_count,'selected_count':len(selected),'actual_active_fraction':metadata.layout.selected_active_fraction(selected),'predicted_front_chainage_m':info.get('predicted_front_chainage_m',float('nan')),'front_available':info.get('front_available',False),'mean_selected_dynamic_rank':telemetry['mean_selected_dynamic_rank'],'mean_selected_front_rank':telemetry['mean_selected_front_rank'],'mean_selected_support_risk_rank':telemetry['mean_selected_support_risk_rank'],'mean_selected_section_rank':telemetry['mean_selected_section_rank'],'mean_selected_base_score':float(np.mean(base[selected_indices])) if base is not None and selected_indices else float('nan'),'selected_section_patch_count':int(sum(ranks['engineering_section'][index]>0 for index in selected_indices)) if 'engineering_section' in ranks else float('nan'),'first_pass_count':first,'second_pass_count':second}
+
+
 def select_engineering_roi(current_physical,provisional_physical,encoded_current,encoded_provisional,global_delta_scales,metadata,config,budget_fraction,strategy="engineering_roi",seed=None):
     if strategy not in STRATEGIES:raise ValueError("ENGINEERING_ROI_STRATEGY_INVALID")
     if float(budget_fraction) not in tuple(map(float,config['budgets'])):raise ValueError("ENGINEERING_ROI_BUDGET_INVALID")
-    info=compute_roi_components(current_physical,provisional_physical,encoded_current,encoded_provisional,global_delta_scales,metadata,config);patches,maximum=info['patches'],metadata.layout.count_for_budget(budget_fraction)
+    patches,maximum=tuple(metadata.layout.eligible),metadata.layout.count_for_budget(budget_fraction);computed=set();info={'patches':patches}
     if strategy=='random_all':selected=tuple(select_random(metadata.layout,maximum,int(seed)));selected_indices=[next(i for i,p in enumerate(patches) if p.patch_id==value.patch_id) for value in selected];first,second=len(selected),0;candidate_count=len(metadata.layout.eligible)
     elif strategy=='random_support':
-        candidates=np.flatnonzero(info['support_overlap']>0);candidates=np.asarray(sorted(candidates,key=lambda index:patches[int(index)].patch_id),dtype=int);rng=np.random.default_rng(int(seed));picks=rng.choice(candidates,size=min(maximum,len(candidates)),replace=False) if len(candidates) else np.empty(0,dtype=int);selected_indices=sorted(map(int,picks),key=lambda index:patches[index].patch_id);selected=tuple(patches[index] for index in selected_indices);first,second=len(selected),0;candidate_count=len(candidates)
+        support,overlap=compute_support_candidates(current_physical,provisional_physical,metadata,config['wet_threshold_m']);info=_info_from_components(metadata,overlap,{});candidates=np.flatnonzero(info['support_overlap']>0);candidates=np.asarray(sorted(candidates,key=lambda index:patches[int(index)].patch_id),dtype=int);rng=np.random.default_rng(int(seed));picks=rng.choice(candidates,size=min(maximum,len(candidates)),replace=False) if len(candidates) else np.empty(0,dtype=int);selected_indices=sorted(map(int,picks),key=lambda index:patches[index].patch_id);selected=tuple(patches[index] for index in selected_indices);first,second=len(selected),0;candidate_count=len(candidates)
     else:
-        key={'dynamic_only':'dynamic','front_only':'predicted_front','support_risk_only':'support_risk','section_only':'engineering_section'}.get(strategy);scores=info['ranks'][key] if key else info['base_score'];candidates=np.flatnonzero((info['support_overlap']>0)&(scores>0));candidate_count=len(candidates)
+        if strategy in ('engineering_roi','engineering_roi_no_diversity'):info=compute_roi_components(current_physical,provisional_physical,encoded_current,encoded_provisional,global_delta_scales,metadata,config);computed=set(COMPONENTS);scores=info['base_score']
+        else:
+            support,overlap=compute_support_candidates(current_physical,provisional_physical,metadata,config['wet_threshold_m']);key={'dynamic_only':'dynamic','front_only':'predicted_front','support_risk_only':'support_risk','section_only':'engineering_section'}[strategy]
+            if key=='dynamic':value=compute_dynamic_component(encoded_current,encoded_provisional,global_delta_scales,support,metadata);info=_info_from_components(metadata,overlap,{key:_as_numpy(value)})
+            elif key=='predicted_front':value,chainage,available=compute_front_component(provisional_physical,support,metadata,config);info=_info_from_components(metadata,overlap,{key:_as_numpy(value)},chainage,available)
+            elif key=='support_risk':value=compute_support_risk_component(current_physical,provisional_physical,metadata,config);info=_info_from_components(metadata,overlap,{key:_as_numpy(value)})
+            else:value=compute_section_component(support,metadata);info=_info_from_components(metadata,overlap,{key:_as_numpy(value)})
+            computed={key};scores=info['ranks'][key]
+        candidates=np.flatnonzero((info['support_overlap']>0)&(scores>0));candidate_count=len(candidates)
         if strategy=='engineering_roi_no_diversity':selected_indices=_ordered(candidates,scores,patches)[:maximum];first,second=len(selected_indices),0
         else:selected_indices,first,second=_diverse(candidates,scores,patches,maximum)
         selected=tuple(patches[index] for index in selected_indices)
-    average=lambda name:float(np.mean(info['ranks'][name][selected_indices])) if selected_indices else 0.
-    return selected,{"budget_fraction":float(budget_fraction),"budget_max_count":maximum,"candidate_count":candidate_count,"selected_count":len(selected),"actual_active_fraction":metadata.layout.selected_active_fraction(selected),"predicted_front_chainage_m":info['predicted_front_chainage_m'],"front_available":info['front_available'],"mean_selected_dynamic_rank":average('dynamic'),"mean_selected_front_rank":average('predicted_front'),"mean_selected_support_risk_rank":average('support_risk'),"mean_selected_section_rank":average('engineering_section'),"mean_selected_base_score":float(np.mean(info['base_score'][selected_indices])) if selected_indices else 0.,"selected_section_patch_count":int(sum(info['ranks']['engineering_section'][index]>0 for index in selected_indices)),"first_pass_count":first,"second_pass_count":second}
+    telemetry=_selection_telemetry(metadata,selected,selected_indices,maximum,candidate_count,first,second,info,computed);telemetry['budget_fraction']=float(budget_fraction);return selected,telemetry
