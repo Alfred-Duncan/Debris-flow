@@ -55,10 +55,13 @@ TIMELINE_COLUMNS = (
     "candidate_count", "selected_count", "actual_active_fraction",
     "mean_selected_support_risk_rank", "first_pass_count", "second_pass_count",
     "selected_patch_consecutive_overlap_count", "selected_patch_consecutive_overlap_fraction",
+    "support_cell_count", "support_fraction", "blocked_local_change_cell_count",
+    "blocked_local_change_fraction", "blocked_wet_creation_count", "raw_local_new_wet_fraction",
     "depth_guard_activation_fraction", "depth_guard_mean_abs_clip_m",
     "depth_guard_max_abs_clip_m", "global_forward_runtime_ms", "roi_scoring_runtime_ms",
     "local_correction_runtime_ms", "support_guard_runtime_ms", "depth_guard_runtime_ms",
 )
+TIMING_STEP_KEYS = ("global_steps_ms", "roi_steps_ms", "local_steps_ms", "support_steps_ms", "depth_steps_ms")
 
 
 def validate_args(method: str, budget: float) -> None:
@@ -96,43 +99,72 @@ def _zero_depth_telemetry() -> dict[str, float]:
     }
 
 
+def validate_case_timing_record(record):
+    """Reject ambiguous or incomplete timing cache payloads before aggregation."""
+    if not isinstance(record, dict) or "parts" in record:
+        raise RuntimeError("V2_TIMING_CACHE_SCHEMA_INVALID")
+    if not record.get("scenario_id"):
+        raise RuntimeError("V2_CASE_TIMING_INVALID")
+    try:
+        wall = float(record["case_wall_runtime_seconds"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise RuntimeError("V2_CASE_TIMING_INVALID") from error
+    if not np.isfinite(wall):
+        raise RuntimeError("V2_CASE_TIMING_INVALID")
+    for key in TIMING_STEP_KEYS:
+        values = record.get(key)
+        if not isinstance(values, list) or len(values) != 144:
+            raise RuntimeError("V2_CASE_TIMING_INVALID")
+        try:
+            if not np.isfinite(np.asarray(values, dtype=float)).all():
+                raise RuntimeError("V2_CASE_TIMING_INVALID")
+        except (TypeError, ValueError) as error:
+            raise RuntimeError("V2_CASE_TIMING_INVALID") from error
+    return record
+
+
 def v2_transition(
     previous, current, provisional, encoded_current, encoded_provisional, metadata, config,
     budget, state, method, local, layout, delta, normalization, static, params, time_value,
-    transform, normalizer, global_model,
+    transform, normalizer, global_model, device,
 ):
     """Run the complete deterministic V2 writeback chain before teacher access."""
     _, use_temporal, use_depth = METHODS[method]
-    selected, next_state, selection = select_engineering_roi_v2(
-        current, provisional, metadata, config, budget, state, temporal_refresh=use_temporal
+    (selected, next_state, selection), roi_seconds = timed_cuda(
+        lambda: select_engineering_roi_v2(current, provisional, metadata, config, budget, state, temporal_refresh=use_temporal), device
     )
-    if selected:
-        features = build_features(
-            previous, current, static, params, torch.tensor([time_value], device=current.device),
-            transform, normalizer,
-        )
+    def local_writeback():
+        if not selected:
+            return encoded_provisional
+        features = build_features(previous, current, static, params, torch.tensor([time_value], device=current.device), transform, normalizer)
         raw_transformed, _, _ = apply_learned_correction(
-            local, features, encoded_provisional, encoded_current, selected, layout,
-            delta.scales, normalization["scales"], normalization["bounds"], metadata.active,
-            global_model, apply_momentum_guard=False,
+            local, features, encoded_provisional, encoded_current, selected, layout, delta.scales,
+            normalization["scales"], normalization["bounds"], metadata.active, global_model,
+            apply_momentum_guard=False,
         )
-    else:
-        raw_transformed = encoded_provisional
-    raw_physical = project_physical(transform.decode(raw_transformed), metadata.active)
-    support_written, support_telemetry = apply_support_guard(
-        encoded_provisional, raw_transformed, current, provisional, metadata.active,
-        local_corrected_physical=raw_physical,
-    )
-    momentum_written = apply_momentum_state_guard(support_written, global_model)
-    pre_envelope_physical = transform.decode(momentum_written)
-    if use_depth:
-        envelope_physical, depth_telemetry = apply_depth_envelope_guard(
-            current, provisional, pre_envelope_physical, metadata.active
+        return raw_transformed
+    raw_transformed, local_seconds = timed_cuda(local_writeback, device)
+    def support_and_momentum():
+        support_written, support_telemetry = apply_support_guard(
+            encoded_provisional, raw_transformed, current, provisional, metadata.active,
         )
-    else:
-        envelope_physical, depth_telemetry = pre_envelope_physical, _zero_depth_telemetry()
-    corrected = project_physical(envelope_physical, metadata.active)
-    return corrected, selected, next_state, selection | depth_telemetry | support_telemetry
+        return apply_momentum_state_guard(support_written, global_model), support_telemetry
+    (momentum_written, support_telemetry), support_seconds = timed_cuda(support_and_momentum, device)
+    def depth_and_projection():
+        physical = transform.decode(momentum_written)
+        if use_depth:
+            physical, depth_telemetry = apply_depth_envelope_guard(current, provisional, physical, metadata.active)
+        else:
+            depth_telemetry = _zero_depth_telemetry()
+        return project_physical(physical, metadata.active), depth_telemetry
+    (corrected, depth_telemetry), depth_seconds = timed_cuda(depth_and_projection, device)
+    timing = {
+        "roi_scoring_runtime_ms": 1000 * roi_seconds,
+        "local_correction_runtime_ms": 1000 * local_seconds,
+        "support_guard_runtime_ms": 1000 * support_seconds,
+        "depth_guard_runtime_ms": 1000 * depth_seconds,
+    }
+    return corrected, selected, next_state, selection | support_telemetry | depth_telemetry, timing
 
 
 def _checkpoint_provenance(path, checkpoint):
@@ -170,84 +202,68 @@ def manifest_for(label, method, budget, full_rows, rows, config_sha, code_sha, g
 
 @torch.no_grad()
 def execute_cases(label, method, budget, rows, layout, metadata, config, global_model, local, transform, normalizer, delta, normalization, static, route, z0, transects, device):
+    if len(rows) != 1:
+        raise RuntimeError("V2_CASE_RUNNER_REQUIRES_EXACTLY_ONE_SCENARIO")
     store = FrameStore(rows)
-    cases, stations, timeline, parts = [], [], [], []
-    for local_index, (_, row) in enumerate(rows.iterrows()):
-        case_index = int(row.get("__global_case_index", local_index))
-        store_index = int(np.where(store.rows.scenario_id.eq(row.scenario_id))[0][0])
-        previous, current, _, params, time0, _ = store.sample(store_index, 0)
-        previous, current, params = tensor(previous, device), tensor(current, device), tensor(params, device)
-        metric = StreamingMetrics(metadata.active, route, delta.change_threshold)
-        predicted, teacher = [], []
-        append_station(predicted, 0, station_row(current, z0, transects))
-        append_station(teacher, 0, station_row(current, z0, transects))
-        temporal_state = initial_temporal_state()  # Mandatory per-scenario reset.
-        timings = {key: [] for key in ("global", "roi", "local", "support", "depth")}
-        counts, coverage = [], []
-        started = time.perf_counter()
-        for step in range(144):
-            provisional, global_elapsed = timed_cuda(
-                lambda: predict(global_model, previous, current, static, params, time0 + step / 144.0, transform, normalizer, metadata.active), device
-            )
-            encoded_current, encoded_provisional = transform.encode(current), transform.encode(provisional)
-            transition_started = time.perf_counter()
-            selected, next_state, selection = select_engineering_roi_v2(
-                current, provisional, metadata, config, budget, temporal_state,
-                temporal_refresh=METHODS[method][1],
-            )
-            roi_elapsed = time.perf_counter() - transition_started
-            local_started = time.perf_counter()
-            # Reuse the already selected patches without recomputing ROI scores.
-            if selected:
-                features = build_features(previous, current, static, params, torch.tensor([time0 + step / 144.0], device=device), transform, normalizer)
-                raw_transformed, _, _ = apply_learned_correction(local, features, encoded_provisional, encoded_current, selected, layout, delta.scales, normalization["scales"], normalization["bounds"], metadata.active, global_model, apply_momentum_guard=False)
-            else:
-                raw_transformed = encoded_provisional
-            local_elapsed = time.perf_counter() - local_started
-            raw_physical = project_physical(transform.decode(raw_transformed), metadata.active)
-            support_started = time.perf_counter()
-            support_written, support_telemetry = apply_support_guard(encoded_provisional, raw_transformed, current, provisional, metadata.active, local_corrected_physical=raw_physical)
-            momentum_written = apply_momentum_state_guard(support_written, global_model)
-            support_elapsed = time.perf_counter() - support_started
-            depth_started = time.perf_counter()
-            physical = transform.decode(momentum_written)
-            if METHODS[method][2]:
-                physical, depth_telemetry = apply_depth_envelope_guard(current, provisional, physical, metadata.active)
-            else:
-                depth_telemetry = _zero_depth_telemetry()
-            corrected = project_physical(physical, metadata.active)
-            depth_elapsed = time.perf_counter() - depth_started
-            temporal_state = next_state
-            # Prediction, selection, and all writeback guards precede teacher materialization.
-            truth_current = tensor(store.frame(row, step * 10), device)
-            truth_next = tensor(store.frame(row, (step + 1) * 10), device)
-            metric.add(corrected, truth_current, truth_next, transform)
-            append_station(predicted, (step + 1) * 10, station_row(corrected, z0, transects))
-            append_station(teacher, (step + 1) * 10, station_row(truth_next, z0, transects))
-            timeline.append(selection | depth_telemetry | support_telemetry | {
-                "method": label, "scenario_id": row.scenario_id, "time_s": (step + 1) * 10,
-                "budget": f"B{int(budget * 100):02d}", "selected_patch_ids": ";".join(str(p.patch_id) for p in selected),
-                "global_forward_runtime_ms": 1000 * global_elapsed, "roi_scoring_runtime_ms": 1000 * roi_elapsed,
-                "local_correction_runtime_ms": 1000 * local_elapsed, "support_guard_runtime_ms": 1000 * support_elapsed,
-                "depth_guard_runtime_ms": 1000 * depth_elapsed,
-            })
-            timings["global"].append(1000 * global_elapsed); timings["roi"].append(1000 * roi_elapsed)
-            timings["local"].append(1000 * local_elapsed); timings["support"].append(1000 * support_elapsed); timings["depth"].append(1000 * depth_elapsed)
-            counts.append(len(selected)); coverage.append(selection["actual_active_fraction"])
-            previous, current = current, corrected
-        wall = time.perf_counter() - started
-        cases.append(metric.result() | {"method": label, "scenario_id": row.scenario_id, "budget_fraction": budget, "budget_max_count": layout.count_for_budget(budget), "selected_patch_count": float(np.mean(counts)), "active_cell_coverage_fraction": float(np.mean(coverage)), "case_wall_runtime_seconds": wall})
-        stations.extend(item | {"method": label, "scenario_id": row.scenario_id} for item in station_summary(predicted, teacher, transects))
-        parts.append({"method": label, "case_wall_runtime_seconds": wall, **{f"{key}_steps_ms": value for key, value in timings.items()}})
-    return cases, stations, timeline, {"method": label, "parts": parts}
+    _, row = next(rows.iterrows())
+    store_index = int(np.where(store.rows.scenario_id.eq(row.scenario_id))[0][0])
+    previous, current, _, params, time0, _ = store.sample(store_index, 0)
+    previous, current, params = tensor(previous, device), tensor(current, device), tensor(params, device)
+    metric = StreamingMetrics(metadata.active, route, delta.change_threshold); predicted, teacher = [], []
+    append_station(predicted, 0, station_row(current, z0, transects)); append_station(teacher, 0, station_row(current, z0, transects))
+    temporal_state = initial_temporal_state(); timings = {key: [] for key in TIMING_STEP_KEYS}; counts, coverage, timeline = [], [], []
+    started = time.perf_counter()
+    for step in range(144):
+        provisional, global_seconds = timed_cuda(lambda: predict(global_model, previous, current, static, params, time0 + step / 144.0, transform, normalizer, metadata.active), device)
+        encoded_current, encoded_provisional = transform.encode(current), transform.encode(provisional)
+        corrected, selected, temporal_state, telemetry, transition_timing = v2_transition(
+            previous, current, provisional, encoded_current, encoded_provisional, metadata, config, budget,
+            temporal_state, method, local, layout, delta, normalization, static, params, time0 + step / 144.0,
+            transform, normalizer, global_model, device,
+        )
+        # The transition is entirely complete before teacher frames are materialized.
+        truth_current = tensor(store.frame(row, step * 10), device); truth_next = tensor(store.frame(row, (step + 1) * 10), device)
+        metric.add(corrected, truth_current, truth_next, transform)
+        append_station(predicted, (step + 1) * 10, station_row(corrected, z0, transects)); append_station(teacher, (step + 1) * 10, station_row(truth_next, z0, transects))
+        timing = {"global_forward_runtime_ms": 1000 * global_seconds, **transition_timing}
+        timeline.append(telemetry | timing | {"method": label, "scenario_id": row.scenario_id, "time_s": (step + 1) * 10, "budget": f"B{int(budget * 100):02d}", "selected_patch_ids": ";".join(str(p.patch_id) for p in selected)})
+        timings["global_steps_ms"].append(timing["global_forward_runtime_ms"])
+        timings["roi_steps_ms"].append(timing["roi_scoring_runtime_ms"])
+        timings["local_steps_ms"].append(timing["local_correction_runtime_ms"])
+        timings["support_steps_ms"].append(timing["support_guard_runtime_ms"])
+        timings["depth_steps_ms"].append(timing["depth_guard_runtime_ms"])
+        counts.append(len(selected)); coverage.append(telemetry["actual_active_fraction"]); previous, current = current, corrected
+    wall = time.perf_counter() - started
+    case = metric.result() | {"method": label, "scenario_id": row.scenario_id, "budget_fraction": budget, "budget_max_count": layout.count_for_budget(budget), "selected_patch_count": float(np.mean(counts)), "active_cell_coverage_fraction": float(np.mean(coverage)), "case_wall_runtime_seconds": wall}
+    stations = [item | {"method": label, "scenario_id": row.scenario_id} for item in station_summary(predicted, teacher, transects)]
+    timing_record = validate_case_timing_record({"method": label, "scenario_id": str(row.scenario_id), "case_wall_runtime_seconds": wall, **timings})
+    return [case], stations, timeline, timing_record
 
 
 def write_method_outputs(run_out, label, cases, stations, timeline, timing_parts, manifest):
+    if not isinstance(timing_parts, list):
+        raise RuntimeError("V2_TIMING_CACHE_SCHEMA_INVALID")
+    parts = [validate_case_timing_record(part) for part in timing_parts]
+    if len(parts) != len(cases):
+        raise RuntimeError("V2_TIMING_CACHE_SCHEMA_INVALID")
     cleaned = [{key: value for key, value in row.items() if key != "_global_case_index"} for row in cases]
     frame = pd.DataFrame(timeline, columns=TIMELINE_COLUMNS).sort_values(["scenario_id", "time_s"])
     summary = summarize(cleaned, stations)
-    parts = timing_parts.get("parts", []) if isinstance(timing_parts, dict) else timing_parts
-    runtime = {"total_worker_wall_runtime_seconds": float(sum(p["case_wall_runtime_seconds"] for p in parts)), "mean_selected_patch_count": float(frame.selected_count.mean()), "mean_active_coverage": float(frame.actual_active_fraction.mean()), "mean_consecutive_overlap": float(frame.selected_patch_consecutive_overlap_fraction.mean()), "mean_depth_guard_activation": float(frame.depth_guard_activation_fraction.mean())}
+    all_steps = {key: [value for part in parts for value in part[key]] for key in TIMING_STEP_KEYS}
+    mean_p95 = lambda values: (float(np.mean(values)), float(np.quantile(values, .95)))
+    runtime = {
+        "total_worker_wall_runtime_seconds": float(sum(p["case_wall_runtime_seconds"] for p in parts)),
+        "mean_case_wall_runtime_seconds": float(np.mean([p["case_wall_runtime_seconds"] for p in parts])),
+        "mean_selected_patch_count": float(frame.selected_count.mean()), "mean_active_coverage": float(frame.actual_active_fraction.mean()),
+        "mean_consecutive_overlap": float(frame.selected_patch_consecutive_overlap_fraction.mean()),
+        "mean_depth_guard_activation": float(frame.depth_guard_activation_fraction.mean()),
+        "mean_support_fraction": float(frame.support_fraction.mean()), "mean_blocked_local_change_fraction": float(frame.blocked_local_change_fraction.mean()),
+        "mean_blocked_wet_creation_count": float(frame.blocked_wet_creation_count.mean()), "mean_raw_local_new_wet_fraction": float(frame.raw_local_new_wet_fraction.mean()),
+        "mean_depth_guard_activation_fraction": float(frame.depth_guard_activation_fraction.mean()),
+        "mean_depth_guard_abs_clip_m": float(frame.depth_guard_mean_abs_clip_m.mean()), "max_depth_guard_abs_clip_m": float(frame.depth_guard_max_abs_clip_m.max()),
+    }
+    for prefix, key in (("global_forward", "global_steps_ms"), ("roi_scoring", "roi_steps_ms"), ("local_correction", "local_steps_ms"), ("support_guard", "support_steps_ms"), ("depth_guard", "depth_steps_ms")):
+        runtime[f"{prefix}_mean_ms_step"], runtime[f"{prefix}_p95_ms_step"] = mean_p95(all_steps[key])
     run_out.mkdir(parents=True, exist_ok=True)
     pd.DataFrame([{ "method": label, **summary }]).to_csv(run_out / "final_method_summary.csv", index=False)
     pd.DataFrame(cleaned).sort_values("scenario_id").to_csv(run_out / "final_case_metrics.csv", index=False)

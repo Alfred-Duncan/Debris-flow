@@ -3,9 +3,11 @@ from __future__ import annotations
 
 import inspect
 import sys
+import tempfile
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 import torch
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,7 +18,8 @@ from src.global_operator_v2.oracle_refinement import PatchLayout
 from src.local_corrector.depth_envelope_guard import apply_depth_envelope_guard
 from src.local_corrector.engineering_roi import build_roi_static_metadata, compute_support_risk_component
 from src.local_corrector.engineering_roi_v2 import initial_temporal_state, load_engineering_roi_v2_config, select_engineering_roi_v2
-from scripts.audit_engineering_roi_v1_failure_mechanism import persistence
+from scripts import evaluate_engineering_roi_v2 as evaluator
+from scripts.audit_engineering_roi_v1_failure_mechanism import _associations, persistence
 
 
 def metadata_for(active_np, rows=4, cols=4):
@@ -62,6 +65,9 @@ def test_selection_temporal_and_diversity(config):
                 assert max(abs(left.row_id-right.row_id), abs(left.col_id-right.col_id)) >= 2
     reset, _, _ = select_engineering_roi_v2(current, provisional, metadata, config, .10, initial_temporal_state())
     assert selected_ids(reset) == selected_ids(first)
+    base_first, base_state, _ = select_engineering_roi_v2(current, provisional, metadata, config, .10, initial_temporal_state(), temporal_refresh=False)
+    base_second, _, _ = select_engineering_roi_v2(current, provisional, metadata, config, .10, base_state, temporal_refresh=False)
+    assert selected_ids(base_first).intersection(selected_ids(base_second)), "refresh-off ablations may repeat patches"
     one_active = np.zeros((4, 4), bool); one_active[0, 0] = True; one = metadata_for(one_active)
     c1 = torch.zeros(1, 6, 4, 4); p1 = c1.clone(); p1[:, 0, 0, 0] = .10
     chosen, state, _ = select_engineering_roi_v2(c1, p1, one, config, .10, initial_temporal_state())
@@ -91,16 +97,67 @@ def test_depth_envelope():
 
 
 def test_persistence_fixture():
-    result = persistence([{1, 2, 3}, {2, 3, 4}, {3, 5}])
-    assert result["total_selections"] == 8 and result["consecutive_reselection_fraction"] == .375
+    result = persistence([{1, 2, 3}, {2, 3, 4}, {3, 5}], eligible_patch_count=10)
+    assert result["total_selections"] == 8 and result["unique_patch_fraction"] == .5
+    assert result["consecutive_overlap_count"] == 3 and result["consecutive_denominator_count"] == 5 and result["consecutive_reselection_fraction"] == .6
     assert result["top1_selection_share"] == .375 and result["maximum_selection_count"] == 3
     assert result["mean_revisit_gap_steps"] > 0 and result["mean_longest_consecutive_streak"] > 1
+    coverage = persistence([set(range(4)) for _ in range(25)], eligible_patch_count=10)
+    assert coverage["total_selections"] == 100 and coverage["unique_patch_fraction"] == .4
+
+
+def test_timing_contract_and_telemetry_schema():
+    timing = {"method": "EngineeringROI_v2_B10", "scenario_id": "case", "case_wall_runtime_seconds": 1.0, **{key: [1.0] * 144 for key in evaluator.TIMING_STEP_KEYS}}
+    assert evaluator.validate_case_timing_record(timing) == timing
+    for malformed, expected in (({"parts": []}, "V2_TIMING_CACHE_SCHEMA_INVALID"), ({**timing, "scenario_id": ""}, "V2_CASE_TIMING_INVALID"), ({**timing, "roi_steps_ms": [1.0]}, "V2_CASE_TIMING_INVALID")):
+        try: evaluator.validate_case_timing_record(malformed)
+        except RuntimeError as error: assert str(error) == expected
+        else: raise AssertionError("malformed timing accepted")
+    row = {column: 0.0 for column in evaluator.TIMELINE_COLUMNS}; row.update({"method": "x", "scenario_id": "y", "selected_patch_ids": "", "support_fraction": .7, "blocked_local_change_fraction": .2})
+    with tempfile.TemporaryDirectory() as directory:
+        path = Path(directory) / "timeline.csv"; pd.DataFrame([row], columns=evaluator.TIMELINE_COLUMNS).to_csv(path, index=False)
+        restored = pd.read_csv(path); assert np.isclose(restored.support_fraction.iloc[0], .7) and np.isclose(restored.blocked_local_change_fraction.iloc[0], .2)
+
+
+def test_association_and_single_source_contract():
+    frame = pd.DataFrame({"method": ["A", "A", "B", "B"], "trajectory_h_rel_l2": [1., 2., 3., 4.], "top10_share": [.1, .2, .3, .4], "consecutive_reselection_fraction": [.1, .2, .3, .4], "mean_selection_count_per_used_patch": [1., 2., 3., 4.], "mean_longest_consecutive_streak": [1., 2., 3., 4.]})
+    pooled = _associations(frame); within = [record for method, group in frame.groupby("method") for record in _associations(group, method)]
+    assert pooled and within and all("method" in record for record in within)
+    source = inspect.getsource(evaluator.execute_cases)
+    assert "v2_transition(" in source
+    assert not any(name in source for name in ("apply_learned_correction(", "apply_support_guard(", "apply_momentum_state_guard(", "apply_depth_envelope_guard("))
+
+
+def test_cuda_timing_and_transition_order():
+    calls = []; original_sync = evaluator.torch.cuda.synchronize
+    evaluator.torch.cuda.synchronize = lambda device: calls.append("sync")
+    try: evaluator.timed_cuda(lambda: calls.append("fn"), torch.device("cuda"))
+    finally: evaluator.torch.cuda.synchronize = original_sync
+    assert calls == ["sync", "fn", "sync"]
+    order = []; originals = {name: getattr(evaluator, name) for name in ("select_engineering_roi_v2", "build_features", "apply_learned_correction", "apply_support_guard", "apply_momentum_state_guard", "apply_depth_envelope_guard", "project_physical")}
+    class Transform:
+        def decode(self, value): order.append("decode"); return value
+    metadata = type("Metadata", (), {"active": torch.ones(1, 1, 1, 1, dtype=torch.bool)})()
+    try:
+        evaluator.select_engineering_roi_v2 = lambda *args, **kwargs: (("patch",), "next", {"selected_count": 1}) if not order.append("select") else None
+        evaluator.build_features = lambda *args, **kwargs: "features"
+        evaluator.apply_learned_correction = lambda *args, **kwargs: (order.append("local") or args[2], None, None)
+        evaluator.apply_support_guard = lambda *args, **kwargs: (order.append("support") or args[0], {"support_fraction": 0., "support_cell_count": 0, "blocked_local_change_fraction": 0., "blocked_local_change_cell_count": 0, "blocked_wet_creation_count": 0, "raw_local_new_wet_fraction": 0.})
+        evaluator.apply_momentum_state_guard = lambda value, *args: order.append("momentum") or value
+        evaluator.apply_depth_envelope_guard = lambda *args: (order.append("depth") or args[2], {"depth_guard_activation_fraction": 0., "depth_guard_mean_abs_clip_m": 0., "depth_guard_max_abs_clip_m": 0.})
+        evaluator.project_physical = lambda value, *args: order.append("project") or value
+        value = torch.zeros(1, 6, 1, 1); delta = type("Delta", (), {"scales": [1.] * 6})()
+        evaluator.v2_transition(value, value, value, value, value, metadata, {}, .1, None, "EngineeringROI_v2", None, None, delta, {"scales": [1.] * 6, "bounds": [1.] * 6}, None, None, 0., Transform(), None, None, torch.device("cpu"))
+    finally:
+        for name, value in originals.items(): setattr(evaluator, name, value)
+    assert order == ["select", "local", "support", "momentum", "decode", "depth", "project"]
 
 
 def main():
     config, _ = load_engineering_roi_v2_config(ROOT / "configs/engineering_roi_v2.json")
     test_config_and_signature(config); test_support_risk_boundaries(config)
     test_selection_temporal_and_diversity(config); test_depth_envelope(); test_persistence_fixture()
+    test_timing_contract_and_telemetry_schema(); test_association_and_single_source_contract(); test_cuda_timing_and_transition_order()
     print("PASS EngineeringROI-v2 synthetic selector, refresh, envelope, and audit tests")
 
 

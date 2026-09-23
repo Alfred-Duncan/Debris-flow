@@ -14,10 +14,10 @@ METHODS = (
 )
 CASE_METRICS = ("trajectory_h_rel_l2", "mixture_volume_relative_error", "debris_front_mae_km")
 STATION_METRICS = ("peak_hmax_relative_error", "peak_stage_absolute_error", "peak_Q_relative_error", "arrival_error_s")
-SIGNALS = ("top10_share", "consecutive_reselection_fraction", "mean_selection_count_per_used_patch")
+SIGNALS = ("top10_share", "consecutive_reselection_fraction", "mean_selection_count_per_used_patch", "mean_longest_consecutive_streak")
 
 
-def persistence(sets):
+def persistence(sets, eligible_patch_count):
     """Compute per-scenario patch persistence without touching model artifacts."""
     flat = [patch for selected in sets for patch in selected]
     counts = pd.Series(flat, dtype="int64").value_counts() if flat else pd.Series(dtype="int64")
@@ -31,14 +31,17 @@ def persistence(sets):
             runs.append(run)
         streaks.append(max(runs))
     overlap = sum(len(previous & selected) for previous, selected in zip(sets, sets[1:]))
+    overlap_denominator = sum(len(selected) for selected in sets[1:])
     total = max(len(flat), 1)
     return {
         "total_selections": len(flat), "unique_selected_patches": len(counts),
-        "unique_patch_fraction": len(counts) / total,
+        "unique_patch_fraction": len(counts) / int(eligible_patch_count),
+        "unique_to_selection_ratio": len(counts) / total,
         "top1_selection_share": counts.head(1).sum() / total,
         "top5_share": counts.head(5).sum() / total,
         "top10_share": counts.head(10).sum() / total,
-        "consecutive_reselection_fraction": overlap / total,
+        "consecutive_overlap_count": int(overlap), "consecutive_denominator_count": int(overlap_denominator),
+        "consecutive_reselection_fraction": overlap / max(overlap_denominator, 1),
         "revisit_fraction": float((counts > 1).mean()) if len(counts) else 0.0,
         "mean_selection_count_per_used_patch": float(counts.mean()) if len(counts) else 0.0,
         "maximum_selection_count": int(counts.max()) if len(counts) else 0,
@@ -55,7 +58,7 @@ def _station_case_metrics(stations):
     return stations.groupby(["method", "scenario_id"], as_index=False)[list(STATION_METRICS)].mean(numeric_only=True)
 
 
-def _associations(frame):
+def _associations(frame, method=None):
     records = []
     for metric in CASE_METRICS + STATION_METRICS:
         if metric not in frame:
@@ -63,11 +66,19 @@ def _associations(frame):
         for signal in SIGNALS:
             pair = frame[[metric, signal]].dropna()
             records.append({
-                "metric": metric, "signal": signal, "n_cases": int(len(pair)),
+                **({"method": method} if method is not None else {}), "metric": metric, "signal": signal, "n_cases": int(len(pair)),
                 "pearson": float(pair.corr(method="pearson").iloc[0, 1]) if len(pair) > 1 else float("nan"),
                 "spearman": float(pair.corr(method="spearman").iloc[0, 1]) if len(pair) > 1 else float("nan"),
             })
     return records
+
+
+def eligible_patch_count():
+    manifests = list((ROOT / "results/engineering_roi_v1/runs").glob("*/run_manifest.json"))
+    counts = {int(json.loads(path.read_text())["eligible_patch_count"]) for path in manifests}
+    if len(counts) != 1:
+        raise RuntimeError("V1_ELIGIBLE_PATCH_COUNT_MISMATCH")
+    return counts.pop()
 
 
 def _method_observations(per_case):
@@ -76,7 +87,7 @@ def _method_observations(per_case):
         total = float(group.total_selections.sum())
         observations[method] = {
             "cases": int(len(group)), "total_selections": int(total),
-            "mean_top10_selection_share": float(group.top10_share.mean()),
+            "mean_unique_patch_fraction": float(group.unique_patch_fraction.mean()), "mean_top10_selection_share": float(group.top10_share.mean()),
             "mean_consecutive_reselection_fraction": float(group.consecutive_reselection_fraction.mean()),
             "mean_revisit_fraction": float(group.revisit_fraction.mean()),
             "mean_longest_consecutive_streak": float(group.mean_longest_consecutive_streak.mean()),
@@ -85,10 +96,11 @@ def _method_observations(per_case):
 
 
 def main():
+    eligible_count = eligible_patch_count()
     timeline = pd.read_csv(ROOT / "results/engineering_roi_v1/selection_timeline.csv")
     rows = []
     for (method, scenario), group in timeline[timeline.method.isin(METHODS)].groupby(["method", "scenario_id"], sort=True):
-        rows.append({"method": method, "scenario_id": scenario, **persistence(_parse_sets(group.sort_values("time_s").selected_patch_ids))})
+        rows.append({"method": method, "scenario_id": scenario, "eligible_patch_count": eligible_count, **persistence(_parse_sets(group.sort_values("time_s").selected_patch_ids), eligible_count)})
     per_selection = pd.DataFrame(rows)
     cases = pd.read_csv(ROOT / "results/engineering_roi_v1/final_case_metrics.csv")
     stations = pd.read_csv(ROOT / "results/engineering_roi_v1/final_station_metrics.csv")
@@ -109,8 +121,9 @@ def main():
     observations = _method_observations(per_case)
     report = {
         "status": "PASS", "no_new_model_execution": True, "read_only_input_root": "results/engineering_roi_v1",
-        "methods": list(METHODS), "selection_persistence_metrics": list(persistence([])),
-        "method_observations": observations, "descriptive_associations": _associations(per_case),
+        "methods": list(METHODS), "eligible_patch_count": eligible_count, "selection_persistence_metrics": list(persistence([], eligible_count)),
+        "method_observations": observations, "pooled_descriptive_associations": _associations(per_case),
+        "within_method_associations": [record for method, group in per_case.groupby("method") for record in _associations(group, method)],
         "amplitude_accumulation": "NOT DIRECTLY OBSERVABLE FROM EXISTING V1 ARTIFACTS",
         "interpretation": "Persistence/error correlations are descriptive associations only and do not establish causation.",
     }
@@ -119,14 +132,15 @@ def main():
         "# EngineeringROI-v1 failure-mechanism audit", "",
         "Status: PASS. Input artifacts were read only; no model execution occurred.", "",
         "## Observed facts", "",
-        "| Method | Mean top-10 share | Mean consecutive reselection | Mean revisit fraction |",
-        "|---|---:|---:|---:|",
+        "| Method | Unique patch fraction | Mean top-10 share | Mean consecutive reselection | Mean longest streak |",
+        "|---|---:|---:|---:|---:|",
     ]
     for method in METHODS:
         value = observations.get(method, {})
-        lines.append(f"| {method} | {value.get('mean_top10_selection_share', float('nan')):.4f} | {value.get('mean_consecutive_reselection_fraction', float('nan')):.4f} | {value.get('mean_revisit_fraction', float('nan')):.4f} |")
+        lines.append(f"| {method} | {value.get('mean_unique_patch_fraction', float('nan')):.4f} | {value.get('mean_top10_selection_share', float('nan')):.4f} | {value.get('mean_consecutive_reselection_fraction', float('nan')):.4f} | {value.get('mean_longest_consecutive_streak', float('nan')):.4f} |")
     lines.extend([
         "", "## Interpretation boundary", "",
+        "Pooled correlations combine between-method and within-method variation, so large pooled Spearman values are not within-method causal evidence. "
         "The correlations in the CSV/JSON outputs are descriptive associations, not causal proof. "
         "Raw local correction amplitude is **NOT DIRECTLY OBSERVABLE FROM EXISTING V1 ARTIFACTS**; "
         "therefore amplitude accumulation cannot be directly proven by retained V1 telemetry alone.",
