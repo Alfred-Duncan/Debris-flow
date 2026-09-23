@@ -1,0 +1,17 @@
+{
+  "FINAL_RISK_TEMPORAL_VAL_AUDIT": "PASS",
+  "b10_max_case_metric_abs_diff": 0.0,
+  "b10_max_station_metric_abs_diff": 0.0,
+  "b10_reference": "SupportRisk_Temporal_B10",
+  "b10_selection_exact_equal": true,
+  "depth_guard_activation": 0.0,
+  "final_code_sha": "146184d1fbbf366c0c9c40066a56753b398b10f4",
+  "methods": [
+    "RiskTemporal_B05",
+    "RiskTemporal_B10",
+    "RiskTemporal_B20"
+  ],
+  "required_artifacts_present": true,
+  "temporal_overlap": 0.0,
+  "val_cases_per_budget": 20
+}
