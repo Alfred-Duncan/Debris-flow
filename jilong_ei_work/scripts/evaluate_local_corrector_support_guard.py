@@ -155,6 +155,38 @@ def merge_shards(args):
     report=write_outputs(out,methods,cases.to_dict('records'),stations.to_dict('records'),telemetry,timings,{'update':4000})
     (ROOT/'reports/LOCAL_CORRECTOR_SUPPORT_GUARD.json').write_text(json.dumps(report,indent=2,allow_nan=True));print(json.dumps({'status':'PASS','merged_shards':args.shard_count,'SUPPORT_GUARD_EFFECT':report['SUPPORT_GUARD_EFFECT']},indent=2))
 
+def _read_records(path):
+    if not path.exists():return []
+    try:return pd.read_csv(path).to_dict('records')
+    except pd.errors.EmptyDataError:return []
+
+def _atomic_records(path, records):
+    """Replace a small progress CSV atomically after a fully completed case."""
+    path.parent.mkdir(parents=True,exist_ok=True);temporary=path.with_suffix(path.suffix+'.tmp')
+    pd.DataFrame(records).to_csv(temporary,index=False);temporary.replace(path)
+
+def cached_method(label, rows, progress_root, runner):
+    """Run only missing cases and persist each completed case before advancing."""
+    root=progress_root/label;case_path=root/'case_metrics.csv';station_path=root/'station_metrics.csv';telemetry_path=root/'telemetry.csv'
+    cases=_read_records(case_path);stations=_read_records(station_path);telemetry=_read_records(telemetry_path)
+    complete={str(row['scenario_id']) for row in cases};timings=[]
+    for _,row in rows.iterrows():
+        scenario=str(row.scenario_id)
+        if scenario in complete:
+            print(f'{label} {scenario} resume-skip',flush=True);continue
+        one=row.to_frame().T.reset_index(drop=True);new_cases,new_stations,new_telemetry,timing=runner(one)
+        if len(new_cases)!=1 or str(new_cases[0]['scenario_id'])!=scenario:raise RuntimeError('CASE_CHECKPOINT_SCOPE_FAILED')
+        cases.extend(new_cases);stations.extend(new_stations);telemetry.extend(new_telemetry)
+        _atomic_records(case_path,cases);_atomic_records(station_path,stations)
+        if telemetry:_atomic_records(telemetry_path,telemetry)
+        timings.append(timing);complete.add(scenario)
+    if len(complete)!=len(rows):raise RuntimeError('CASE_CHECKPOINT_INCOMPLETE')
+    return cases,stations,telemetry,timings
+
+def combine_timings(label, parts):
+    seconds=sum(float(part.get('runtime_seconds',0.)) for part in parts);guard=sum(float(part.get('guard_seconds',0.)) for part in parts);steps=sum(int(part.get('steps',0)) for part in parts)
+    return {'method':label,'runtime_seconds':seconds,'guard_seconds':guard,'steps':steps,'guard_overhead_ms_per_step':1000.*guard/max(steps,1)}
+
 def main(args):
     if args.merge_shards:return merge_shards(args)
     if not torch.cuda.is_available():raise RuntimeError('CUDA_REQUIRED')
@@ -173,14 +205,22 @@ def main(args):
     local=JilongLocalCorrector(47).to(device);local.load_state_dict(checkpoint['model']);local.eval()
     with np.load(INPUT) as data:route=np.asarray(data['route_chainage_m'],np.float32)
     z0=static_np[0];transects=load_transects(ROOT/'data/downloads/park_v2/inputs/upper30h_transects.json')
-    methods={};all_cases=[];all_stations=[];telemetry=[];timings=[]
-    t=time.perf_counter();frozen_cases,frozen_stations,_,_=execute_method('FrozenGlobal',0.,'FrozenGlobal',rows,layout,global_model,transform,normalizer,delta,static,active,route,z0,transects,device);timings.append({'method':'FrozenGlobal','runtime_seconds':time.perf_counter()-t,'guard_overhead_ms_per_step':0.});methods['FrozenGlobal']=summarize(frozen_cases,frozen_stations);all_cases+=frozen_cases;all_stations+=frozen_stations
+    out=ROOT/'results'/args.output_dir;progress_root=out/'progress';methods={};all_cases=[];all_stations=[];telemetry=[];timings=[]
+    def frozen_runner(one):
+        started=time.perf_counter();cases,stations,_,_=execute_method('FrozenGlobal',0.,'FrozenGlobal',one,layout,global_model,transform,normalizer,delta,static,active,route,z0,transects,device,case_index_column='__global_case_index')
+        return cases,stations,[],{'method':'FrozenGlobal','runtime_seconds':time.perf_counter()-started,'guard_seconds':0.,'steps':144}
+    frozen_cases,frozen_stations,_,parts=cached_method('FrozenGlobal',rows,progress_root,frozen_runner);timings.append(combine_timings('FrozenGlobal',parts));methods['FrozenGlobal']=summarize(frozen_cases,frozen_stations);all_cases+=frozen_cases;all_stations+=frozen_stations
     for budget in (.10,.20):
         code=f'B{int(budget*100):02d}';raw=f'LearnedRandom_{code}';guard=f'LearnedSupportGuard_{code}'
-        cases,stations,_,timing=local_execute(raw,budget,False,rows,layout,global_model,local,transform,normalizer,delta,normalization,static,active,route,z0,transects,device);methods[raw]=summarize(cases,stations);all_cases+=cases;all_stations+=stations;timings.append(timing)
-        cases,stations,tel,timing=local_execute(guard,budget,True,rows,layout,global_model,local,transform,normalizer,delta,normalization,static,active,route,z0,transects,device);methods[guard]=summarize(cases,stations);all_cases+=cases;all_stations+=stations;telemetry+=tel;timings.append(timing)
-        perfect=f'RandomPerfect_{code}';t=time.perf_counter();cases,stations,_,_=execute_method(perfect,budget,'RandomPerfect',rows,layout,global_model,transform,normalizer,delta,static,active,route,z0,transects,device,case_index_column='__global_case_index');timings.append({'method':perfect,'runtime_seconds':time.perf_counter()-t,'guard_overhead_ms_per_step':0.});methods[perfect]=summarize(cases,stations);all_cases+=cases;all_stations+=stations
-    out=ROOT/'results'/args.output_dir
+        runner=lambda one, label=raw, value=budget: local_execute(label,value,False,one,layout,global_model,local,transform,normalizer,delta,normalization,static,active,route,z0,transects,device)
+        cases,stations,_,parts=cached_method(raw,rows,progress_root,runner);methods[raw]=summarize(cases,stations);all_cases+=cases;all_stations+=stations;timings.append(combine_timings(raw,parts))
+        runner=lambda one, label=guard, value=budget: local_execute(label,value,True,one,layout,global_model,local,transform,normalizer,delta,normalization,static,active,route,z0,transects,device)
+        cases,stations,tel,parts=cached_method(guard,rows,progress_root,runner);methods[guard]=summarize(cases,stations);all_cases+=cases;all_stations+=stations;telemetry+=tel;timings.append(combine_timings(guard,parts))
+        perfect=f'RandomPerfect_{code}'
+        def perfect_runner(one, label=perfect, value=budget):
+            started=time.perf_counter();cases,stations,_,_=execute_method(label,value,'RandomPerfect',one,layout,global_model,transform,normalizer,delta,static,active,route,z0,transects,device,case_index_column='__global_case_index')
+            return cases,stations,[],{'method':label,'runtime_seconds':time.perf_counter()-started,'guard_seconds':0.,'steps':144}
+        cases,stations,_,parts=cached_method(perfect,rows,progress_root,perfect_runner);timings.append(combine_timings(perfect,parts));methods[perfect]=summarize(cases,stations);all_cases+=cases;all_stations+=stations
     report=write_outputs(out,methods,all_cases,all_stations,telemetry,timings,checkpoint)
     if not args.shard_count:(ROOT/'reports/LOCAL_CORRECTOR_SUPPORT_GUARD.json').write_text(json.dumps(report,indent=2,allow_nan=True))
     print(json.dumps({'status':'PASS','SUPPORT_GUARD_EFFECT':report['SUPPORT_GUARD_EFFECT'],'LOCAL_CORRECTOR_READY_TO_FREEZE':report['LOCAL_CORRECTOR_READY_TO_FREEZE'],'output':str(out)},indent=2))

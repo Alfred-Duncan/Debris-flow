@@ -1,8 +1,9 @@
 """Small deterministic regression tests for the inference-only SupportGuard."""
 from __future__ import annotations
-import inspect,sys
+import inspect,sys,tempfile
 from pathlib import Path
 import numpy as np
+import pandas as pd
 import torch
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from src.global_operator_v2.losses import project_physical
@@ -10,6 +11,7 @@ from src.global_operator_v2.oracle_refinement import PatchLayout,select_random
 from src.local_corrector.patches import apply_core
 from src.local_corrector.support_guard import apply_support_guard,support_mask
 from src.local_corrector.trainer import apply_momentum_state_guard
+from scripts.evaluate_local_corrector_support_guard import cached_method
 
 def main():
     active=torch.tensor([[[[1,1,1,0]]]],dtype=torch.bool);current=torch.zeros(1,6,1,4);provisional=torch.zeros_like(current);raw=torch.arange(24,dtype=torch.float32).reshape(1,6,1,4)
@@ -31,5 +33,13 @@ def main():
     ids=lambda: [p.patch_id for p in select_random(layout,layout.count_for_budget(.5),20260920+1000+17)]
     assert ids()==ids()==ids()
     source=(ROOT/'scripts/evaluate_local_corrector_support_guard.py').read_text();assert 'optimizer' not in source and '.backward(' not in source and "scenario_rows('VAL')" in source
-    print('PASS SupportGuard dry/wet, six-channel, core, guard, projection, B0, IDs, inference-only VAL')
+    # A completed case is atomically cached and skipped when the evaluator resumes.
+    calls=[]
+    def runner(one):
+        scenario=str(one.iloc[0].scenario_id);calls.append(scenario)
+        return ([{'method':'Unit','scenario_id':scenario,'value':1.}],[],[],{'method':'Unit','runtime_seconds':0.,'guard_seconds':0.,'steps':1})
+    with tempfile.TemporaryDirectory() as temporary:
+        rows=pd.DataFrame({'scenario_id':['VAL_A','VAL_B']});cached_method('Unit',rows,Path(temporary),runner);cached_method('Unit',rows,Path(temporary),runner)
+    assert calls==['VAL_A','VAL_B']
+    print('PASS SupportGuard dry/wet, six-channel, core, guard, projection, B0, IDs, inference-only VAL, resume')
 if __name__=='__main__':main()
