@@ -1,0 +1,2 @@
+method,total_worker_wall_runtime_seconds,mean_case_wall_runtime_seconds,total_runtime_seconds,trajectory_runtime_mean_seconds,global_forward_mean_ms_step,roi_scoring_mean_ms_step,roi_scoring_median_ms_step,roi_scoring_p95_ms_step,local_correction_mean_ms_step,support_guard_mean_ms_step,mean_selected_patch_count,mean_active_coverage
+FrozenGlobal,263.4774376999703,13.173871884998515,263.4774376999703,13.173871884998515,54.803184965344876,0.0,0.0,0.0,0.0,0.0,0.0,0.0

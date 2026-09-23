@@ -1,0 +1,26 @@
+{
+  "config_sha256": "3aa64247a4667cf7d738dc0950955a8dfef5552bdf0551d7cdd5934136c1d6b4",
+  "formal_code_sha": "fbb6bdef1140f9faf755cc8e2318780686c4a177",
+  "global_checkpoint_sha256": "a23d243628124a7259ee68c400fd277e2804a08ce086b508f503f42f47841745",
+  "local_checkpoint_sha256": "906c49c9c2a21e453c029ceaba54a3a2cf176bd874a47e1927ab09347f2c389b",
+  "local_normalization_sha256": "5616b023ed75fe30dfb040f11d03e121c92558de6fe93c9d5a8aabff61217f31",
+  "methods": [
+    "FrozenGlobal",
+    "RandomAll_B05",
+    "RandomAll_B10",
+    "RandomAll_B20",
+    "RandomSupport_B05",
+    "RandomSupport_B10",
+    "RandomSupport_B20",
+    "EngineeringROI_B05",
+    "EngineeringROI_B10",
+    "EngineeringROI_B20",
+    "DynamicOnly_B10",
+    "FrontOnly_B10",
+    "SupportRiskOnly_B10",
+    "SectionOnly_B10",
+    "EngineeringROI_NoDiversity_B10"
+  ],
+  "scientific_definition": "EngineeringROI-v1",
+  "support_guard_version": "SupportGuard-v1"
+}

@@ -1,0 +1,33 @@
+{
+  "code_sha": "fbb6bdef1140f9faf755cc8e2318780686c4a177",
+  "completed_at_result_schema_version": 1,
+  "config_sha256": "3aa64247a4667cf7d738dc0950955a8dfef5552bdf0551d7cdd5934136c1d6b4",
+  "global_checkpoint_sha256": "a23d243628124a7259ee68c400fd277e2804a08ce086b508f503f42f47841745",
+  "local_checkpoint_sha256": "906c49c9c2a21e453c029ceaba54a3a2cf176bd874a47e1927ab09347f2c389b",
+  "local_normalization_sha256": "5616b023ed75fe30dfb040f11d03e121c92558de6fe93c9d5a8aabff61217f31",
+  "method_label": "SupportRiskOnly_B10",
+  "scenario_count": 20,
+  "scenario_ids": [
+    "JILONG_EI_0009",
+    "JILONG_EI_0019",
+    "JILONG_EI_0029",
+    "JILONG_EI_0039",
+    "JILONG_EI_0049",
+    "JILONG_EI_0059",
+    "JILONG_EI_0069",
+    "JILONG_EI_0079",
+    "JILONG_EI_0089",
+    "JILONG_EI_0099",
+    "JILONG_EI_0109",
+    "JILONG_EI_0119",
+    "JILONG_EI_0129",
+    "JILONG_EI_0139",
+    "JILONG_EI_0149",
+    "JILONG_EI_0159",
+    "JILONG_EI_0169",
+    "JILONG_EI_0179",
+    "JILONG_EI_0189",
+    "JILONG_EI_0199"
+  ],
+  "scope": "VAL_ONLY"
+}
