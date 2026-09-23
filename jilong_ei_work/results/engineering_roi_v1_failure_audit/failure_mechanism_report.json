@@ -1,0 +1,14 @@
+{
+  "no_new_model_execution": true,
+  "amplitude_accumulation": "NOT DIRECTLY OBSERVABLE FROM EXISTING V1 ARTIFACTS",
+  "methods": [
+    "RandomAll_B10",
+    "RandomSupport_B10",
+    "EngineeringROI_B05",
+    "EngineeringROI_B10",
+    "EngineeringROI_B20",
+    "DynamicOnly_B10",
+    "SupportRiskOnly_B10",
+    "EngineeringROI_NoDiversity_B10"
+  ]
+}
