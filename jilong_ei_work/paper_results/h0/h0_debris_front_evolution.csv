@@ -1,0 +1,19 @@
+time_s,method,debris_front_km
+240,Reference,nan
+240,FrozenGlobal,15.39000034
+240,RiskTemporal B10,15.30000019
+480,Reference,3.66000009
+480,FrozenGlobal,22.40999985
+480,RiskTemporal B10,16.88999939
+720,Reference,8.57999992
+720,FrozenGlobal,22.26000023
+720,RiskTemporal B10,16.95000076
+960,Reference,12.47999954
+960,FrozenGlobal,22.20000076
+960,RiskTemporal B10,20.52000046
+1200,Reference,15.39000034
+1200,FrozenGlobal,22.20000076
+1200,RiskTemporal B10,20.70000076
+1440,Reference,18.18000031
+1440,FrozenGlobal,22.20000076
+1440,RiskTemporal B10,20.72999954

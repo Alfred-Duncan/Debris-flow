@@ -1,3 +1,3 @@
 # Final release audit
 
-PASS. Static artifact-only compilation; no model/evaluator/training/inference run. RiskTemporal-v1 source and B10 are frozen.
+PASS. The paper package contains only RiskTemporal-v1 B10 evidence. H0 Figure 07 uses the formal debris-front definition with route chainage in km. No model, evaluator, rollout, training, or inference task was run during this static cleanup.
