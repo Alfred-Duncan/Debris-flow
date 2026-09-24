@@ -26,5 +26,18 @@
   ],
   "claim_audit_unsupported_claims_absent": true,
   "algorithm_development": "CLOSED",
-  "further_experiment_required": "NO"
+  "further_experiment_required": "NO",
+  "figure_05_completed_artifacts_only": true,
+  "figure_05_method_sources_verified": true,
+  "figure_05_sources": {
+    "EngineeringROI_B10": "results\\engineering_roi_v1\\runs\\EngineeringROI_B10\\final_method_summary.csv",
+    "DynamicOnly_B10": "results\\engineering_roi_v1\\runs\\DynamicOnly_B10\\final_method_summary.csv",
+    "SupportRiskOnly_B10": "results\\engineering_roi_v1\\runs\\SupportRiskOnly_B10\\final_method_summary.csv",
+    "RiskTemporal_B10": "results\\engineering_roi_v2\\runs\\RiskTemporal_B10\\final_method_summary.csv"
+  },
+  "engineering_use_case_facts_completed": true,
+  "h0_runtime_seconds": 27.0728646,
+  "h0_simulated_horizon_seconds": 1440,
+  "h0_simulated_to_wallclock_ratio": 53.18979063634072,
+  "no_new_experiment": true
 }

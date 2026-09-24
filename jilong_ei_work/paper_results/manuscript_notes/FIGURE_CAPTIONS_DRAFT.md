@@ -8,7 +8,7 @@ Figure 3. Case-paired untouched TEST improvements for completed frozen baselines
 
 Figure 4. Untouched TEST runtime and separate engineering-accuracy trade-offs.
 
-Figure 5. Completed VAL failure study: aggressive dynamically targeted correction can destabilize autoregressive closed-loop rollout.
+Figure 5. Completed VAL closed-loop failure mechanism using EngineeringROI B10, DynamicOnly B10, SupportRiskOnly B10, and RiskTemporal-v1 B10 from their completed frozen artifacts. Aggressive dynamically targeted local refinement can destabilize long-horizon autoregressive rollout; support-risk restriction improves stability, while one-step temporal refresh yields a more balanced operating point. The figure does not claim universal superiority of RiskTemporal.
 
 Figure 6. H0 field evolution against the documented high-fidelity numerical reference, with a shared depth color scale.
 

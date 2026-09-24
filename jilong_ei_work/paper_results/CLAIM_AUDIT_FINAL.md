@@ -8,6 +8,8 @@
 - Temporal Refresh mitigates several SupportRisk-only closed-loop errors; B20 shows more refinement is not uniformly better.
 - H0 provides field and sampled formal-front comparisons against a documented numerical reference.
 
+- RiskTemporal-v1 B10 completes the existing H0 24-min simulated rollout in approximately 27.1 s under the recorded runtime environment, corresponding to approximately 53.2 times simulated real-time progression; this is not a D-Claw speedup claim.
+
 ## Not supported
 
 - All metrics improve; universal superiority over RandomAll; global h improvement; mean wet-IoU improvement; consistent volume improvement; accurate operational station arrival; observational or real-world forecasting validation; or controlled D-Claw speedup.

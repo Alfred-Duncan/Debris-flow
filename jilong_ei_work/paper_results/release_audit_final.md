@@ -1,3 +1,3 @@
 # Final release audit
 
-PASS. The paper package contains only RiskTemporal-v1 B10 evidence. H0 Figure 07 uses the formal debris-front definition with route chainage in km. No model, evaluator, rollout, training, or inference task was run during this static cleanup.
+PASS. Figure 05 reads only the four verified completed VAL artifacts. Engineering use-case facts, H0 runtime context, captions, claim audit, and static audit are complete. No model, evaluator, rollout, training, inference, algorithm, checkpoint, TEST, VAL, or H0 result was run or modified.
