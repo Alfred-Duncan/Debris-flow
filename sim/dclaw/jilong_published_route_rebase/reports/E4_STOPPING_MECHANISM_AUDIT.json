@@ -1,0 +1,10 @@
+{
+  "dem_path_max_adverse_rise_m": 29.613037000000077,
+  "dem_path_max_lateral_offset_m": 45.46699184503083,
+  "mask_coverage_fraction": 1.0,
+  "longest_uncovered_m": 0,
+  "uncovered_cells": 0,
+  "z_saddle_dem": 2174.341797,
+  "conditional_maskfix_justified": false,
+  "classification": "MOBILITY_LIMIT_ON_OPEN_VALLEY_FLOOR"
+}

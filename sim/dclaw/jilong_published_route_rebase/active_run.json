@@ -1,0 +1,9 @@
+{
+  "case_id": "E4_published_sourcefix",
+  "V_m3": 2000000.0,
+  "T_s": 90.0,
+  "tfinal_s": 900.0,
+  "output_interval_s": 30.0,
+  "entrainment": 1,
+  "sourcefix": true
+}

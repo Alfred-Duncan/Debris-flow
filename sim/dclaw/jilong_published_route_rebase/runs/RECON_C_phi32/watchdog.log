@@ -1,0 +1,4 @@
+2026-09-20T17:32:07+08:00 START case=RECON_C_phi32 pid=15817 h_e=8 rate=0.40 phi=32 n=0.025
+2026-09-20T17:33:07+08:00 HEARTBEAT case=RECON_C_phi32 elapsed=60 pid=15817 ps=[15817 Sl+ 346 0.0] frames=22 latest_frame_mtime=1789896785 run_log_mtime=1789896785 fatal_patterns=0
+2026-09-20T17:34:07+08:00 HEARTBEAT case=RECON_C_phi32 elapsed=120 pid=15817 ps=[] frames=31 latest_frame_mtime=1789896809 run_log_mtime=1789896809 fatal_patterns=0
+2026-09-20T17:34:07+08:00 EXIT rc=0 frames=31

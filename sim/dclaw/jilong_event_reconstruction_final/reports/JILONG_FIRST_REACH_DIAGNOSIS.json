@@ -1,0 +1,7 @@
+{
+  "OLD_MAX_CHAINAGE_METRIC_ARTIFACT": "NO",
+  "SOURCE_SUPPORT_ELEVATED": "INCONCLUSIVE",
+  "POSSIBLE_LOCAL_TERRAIN_BOTTLENECK": "NO",
+  "primary_classification": "F_INCONCLUSIVE",
+  "recommended_next_action": "Human review of source support and stop-reach terrain before any new physics."
+}

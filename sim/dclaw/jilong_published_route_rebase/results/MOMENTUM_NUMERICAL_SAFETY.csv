@@ -1,0 +1,6 @@
+K_u,case,frames,finite_q_fields,solver_abort,global_max_speed_ms,HIGH_SPEED_SCENARIO_WARNING,maximum_observed_CFL,minimum_timestep_s,source_mass_relative_error
+1.0,E4_published_sourcefix,31,True,False,49.616415151456785,False,0.42724,,0.0
+1.5,E4_momentum_k1p5,31,True,False,50.16709350175499,False,0.42983,,0.0
+2.0,E4_momentum_k2,31,True,False,50.732562059825334,False,0.43205,,0.0
+3.0,E4_momentum_k3,31,True,False,51.28052049807373,False,0.43655,,0.0
+4.0,E4_momentum_k4,31,True,False,51.63994526834806,False,0.43828,,0.0

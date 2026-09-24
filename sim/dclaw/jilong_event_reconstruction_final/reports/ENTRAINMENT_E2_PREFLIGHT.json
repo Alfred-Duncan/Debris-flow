@@ -1,0 +1,28 @@
+{
+  "scenario": "C3_entrainment_E2",
+  "terrain": "jilong_copernicus_64m.tt3",
+  "terrain_shape": [
+    168,
+    248
+  ],
+  "terrain_modified": false,
+  "source_zone_v2_sha256": "c3cc89cf2431d82e1c8cf522c2c702510d75e4802e8eb2705feb52b8dbc2d8ea",
+  "source_cell_count": 11,
+  "mask_rule": "distance to continuous Gate-B robust-low track <= 256 m AND terrain_z <= robust_floor_z + 20 m AND chainage within S0-S4",
+  "h_e_aux_index_fortran": 7,
+  "h_e_m": 2.0,
+  "erodible_cell_count": 928,
+  "cell_area_m2": 4096.0,
+  "erodible_area_m2": 3801088.0,
+  "maximum_available_erodible_volume_m3": 7602176.0,
+  "finite": true,
+  "nonnegative": true,
+  "deterministic": true,
+  "entrainment": {
+    "enabled": 1,
+    "method": 0,
+    "rate": 0.2,
+    "me": 0.62,
+    "segregation": 0
+  }
+}

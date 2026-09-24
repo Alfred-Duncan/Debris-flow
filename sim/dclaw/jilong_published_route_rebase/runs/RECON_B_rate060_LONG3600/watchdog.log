@@ -1,0 +1,8 @@
+2026-09-20T17:57:11+08:00 START case=RECON_B_rate060_LONG3600 pid=17806 tfinal=3600
+2026-09-20T17:58:11+08:00 HEARTBEAT elapsed=60 solver_t=0.632000E+03 pid=17806 ps=[17806 Sl+ 338 0.0] frames=22 latest_output_mtime=1789898290 run_log_mtime=1789898290 fatal_patterns=0
+2026-09-20T17:59:11+08:00 HEARTBEAT elapsed=120 solver_t=0.133400E+04 pid=17806 ps=[17806 Rl+ 343 0.0] frames=46 latest_output_mtime=1789898351 run_log_mtime=1789898349 fatal_patterns=0
+2026-09-20T18:00:11+08:00 HEARTBEAT elapsed=180 solver_t=0.209000E+04 pid=17806 ps=[17806 Sl+ 347 0.0] frames=70 latest_output_mtime=1789898411 run_log_mtime=1789898410 fatal_patterns=0
+2026-09-20T18:01:11+08:00 HEARTBEAT elapsed=240 solver_t=0.281900E+04 pid=17806 ps=[17806 Sl+ 348 0.0] frames=95 latest_output_mtime=1789898471 run_log_mtime=1789898470 fatal_patterns=0
+2026-09-20T18:02:11+08:00 HEARTBEAT elapsed=300 solver_t=0.352100E+04 pid=17806 ps=[17806 Rl+ 348 0.0] frames=118 latest_output_mtime=1789898530 run_log_mtime=1789898530 fatal_patterns=0
+2026-09-20T18:03:11+08:00 HEARTBEAT elapsed=360 solver_t=NA pid=17806 ps=[] frames=121 latest_output_mtime=1789898537 run_log_mtime=1789898537 fatal_patterns=0
+2026-09-20T18:03:11+08:00 EXIT rc=0 frames=121

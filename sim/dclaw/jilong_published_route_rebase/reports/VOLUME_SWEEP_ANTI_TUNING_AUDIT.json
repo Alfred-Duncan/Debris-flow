@@ -1,0 +1,90 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "item": "terrain identical",
+      "status": "PASS",
+      "evidence": "6623682eda38d8f5aa0f331868a9be349cf77b01a110e3f6db36bb3577f33dd4"
+    },
+    {
+      "item": "route identical",
+      "status": "PASS",
+      "evidence": "corridor/published_s0_to_port_route.csv SHA256 26ffebd117894d31b91b9411199e86540afc6207249d83d7a58caa29ab233794"
+    },
+    {
+      "item": "S0 identical",
+      "status": "PASS",
+      "evidence": "model_geometry_sourcefix.json SHA256 145229ba49f18783d056ce67db9bb2b98ddfaa3b66de33ebbbcbffb33b2f1fe2"
+    },
+    {
+      "item": "source support identical",
+      "status": "PASS",
+      "evidence": "1cd82b2e5d7f5787e3dc5cf49f10b698ada711cc5fd4607826716d5dc50ccff4"
+    },
+    {
+      "item": "T identical",
+      "status": "PASS",
+      "evidence": "snapshots T_s=90"
+    },
+    {
+      "item": "W_ref identical",
+      "status": "PASS",
+      "evidence": "src2.f90 parameter 192 m"
+    },
+    {
+      "item": "K_u identical = 1",
+      "status": "PASS",
+      "evidence": "all snapshots momentum_factor=1.0"
+    },
+    {
+      "item": "material parameters identical",
+      "status": "PASS",
+      "evidence": "dclaw.data SHA256 290f64d710d578072c20f113fbc61c09b7a997ab044015995e3aa5727de95e4f"
+    },
+    {
+      "item": "Manning identical",
+      "status": "PASS",
+      "evidence": "dclaw.data SHA256 290f64d710d578072c20f113fbc61c09b7a997ab044015995e3aa5727de95e4f"
+    },
+    {
+      "item": "entrainment mask identical",
+      "status": "PASS",
+      "evidence": "ee3724cfeb57ad3787fc3066d1e2271dd77389eae3a67687357a8127a87d0193"
+    },
+    {
+      "item": "h_e identical",
+      "status": "PASS",
+      "evidence": "4.0 m frozen dclaw.data"
+    },
+    {
+      "item": "entrainment rate identical",
+      "status": "PASS",
+      "evidence": "all snapshots entrainment=1"
+    },
+    {
+      "item": "only source V changed",
+      "status": "PASS",
+      "evidence": "active_run snapshots V=4e6,6e6,1e7"
+    },
+    {
+      "item": "all prescribed V4/V6/V10 runs completed",
+      "status": "PASS",
+      "evidence": "VOLUME_NUMERICAL_SAFETY.csv"
+    },
+    {
+      "item": "no new V added after seeing results",
+      "status": "PASS",
+      "evidence": "only prescribed snapshots"
+    },
+    {
+      "item": "no terrain modification occurred",
+      "status": "PASS",
+      "evidence": "baseline/current terrain hashes equal"
+    },
+    {
+      "item": "no timing calibration against 420 s occurred",
+      "status": "PASS",
+      "evidence": "only prescribed V grid; no timing objective"
+    }
+  ]
+}

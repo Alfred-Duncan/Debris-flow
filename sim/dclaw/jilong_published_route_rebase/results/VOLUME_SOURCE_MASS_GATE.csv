@@ -1,0 +1,13 @@
+case,V_m3,time_s,expected_source_volume_m3,analytic_source_increment_integral_m3,relative_error,pass,evidence
+V2,2000000.0,30,500000.0,499999.9999999999,2.328306436538696e-16,True,src2.f90 analytic half-cosine integral
+V2,2000000.0,60,1500000.0,1499999.9999999998,1.5522042910257976e-16,True,src2.f90 analytic half-cosine integral
+V2,2000000.0,90,2000000.0,2000000.0,0.0,True,src2.f90 analytic half-cosine integral
+V4,4000000.0,30,1000000.0,999999.9999999998,2.328306436538696e-16,True,src2.f90 analytic half-cosine integral
+V4,4000000.0,60,3000000.0,2999999.9999999995,1.5522042910257976e-16,True,src2.f90 analytic half-cosine integral
+V4,4000000.0,90,4000000.0,4000000.0,0.0,True,src2.f90 analytic half-cosine integral
+V6,6000000.0,30,1500000.0,1499999.9999999998,1.5522042910257976e-16,True,src2.f90 analytic half-cosine integral
+V6,6000000.0,60,4500000.0,4499999.999999999,2.06960572136773e-16,True,src2.f90 analytic half-cosine integral
+V6,6000000.0,90,6000000.0,6000000.0,0.0,True,src2.f90 analytic half-cosine integral
+V10,10000000.0,30,2500000.0,2499999.9999999995,1.862645149230957e-16,True,src2.f90 analytic half-cosine integral
+V10,10000000.0,60,7500000.0,7499999.999999999,1.241763432820638e-16,True,src2.f90 analytic half-cosine integral
+V10,10000000.0,90,10000000.0,10000000.0,0.0,True,src2.f90 analytic half-cosine integral

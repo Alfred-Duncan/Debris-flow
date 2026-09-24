@@ -1,0 +1,5 @@
+case,V_m3,frames,finite_q_fields,NaN_count,Inf_count,solver_exit_code,maximum_observed_CFL,global_max_speed_ms,P99_wet_speed_ms,maximum_depth_m,HIGH_SPEED_SCENARIO_WARNING,HIGH_DEPTH_SCENARIO_WARNING,speed_warning_time_s,speed_warning_x,speed_warning_y,depth_warning_time_s,depth_warning_x,depth_warning_y
+V2,2000000.0,31,True,0,0,0,0.42724,49.616415151456785,48.87718005970258,49.55757718117341,False,False,,,,,,
+V4,4000000.0,31,True,0,0,0,0.45681,50.706734028074465,50.3510578367822,57.50882273705229,False,False,,,,,,
+V6,6000000.0,31,True,0,0,0,0.45612,51.832690947148876,51.56906063091054,63.11470740698305,False,False,,,,,,
+V10,10000000.0,31,True,0,0,0,0.45638,52.25213855650632,51.53420667911456,76.01547717464054,False,False,,,,,,

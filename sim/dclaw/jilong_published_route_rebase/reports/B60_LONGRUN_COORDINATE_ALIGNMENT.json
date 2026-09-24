@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "terrain_shape_row_col": [
+    161,
+    275
+  ],
+  "q_shape_x_y": [
+    275,
+    161
+  ],
+  "terrain_top_row_y": 3137468.0,
+  "terrain_bottom_row_y": 3127228.0,
+  "q_min_y": 3127228.0,
+  "q_max_y": 3137468.0,
+  "q_left_x": 338894.0,
+  "q_right_x": 356430.0,
+  "terrain_min_y": 3127228.0,
+  "terrain_max_y": 3137468.0,
+  "method": "All q-derived metrics use physical PyClaw X,Y centers and KD-tree mapping; no q.T-to-TT3-index alignment is used.",
+  "checks": {
+    "q_y_range_matches_terrain_centers": true,
+    "q_x_range_matches_terrain_centers": true
+  }
+}

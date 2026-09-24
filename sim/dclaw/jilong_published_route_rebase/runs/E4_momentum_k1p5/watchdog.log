@@ -1,0 +1,4 @@
+2026-09-20T15:36:43+08:00 START pid=6947 momentum_factor=1.5
+2026-09-20T15:37:43+08:00 HEARTBEAT elapsed=60 pid=6947 ps=[6947 Sl 332 0.0] frames=24 latest_frame_timestamp=1789889861 run_log_timestamp=1789889861 fatal_patterns=0
+2026-09-20T15:38:43+08:00 HEARTBEAT elapsed=120 pid=6947 ps=[] frames=31 latest_frame_timestamp=1789889880 run_log_timestamp=1789889880 fatal_patterns=0
+2026-09-20T15:38:43+08:00 EXIT rc=0 frames=31
