@@ -1,0 +1,19 @@
+time_s,method,front_grid_column
+240,Reference,833
+240,FrozenGlobal,837
+240,RiskTemporal B10,837
+480,Reference,830
+480,FrozenGlobal,835
+480,RiskTemporal B10,834
+720,Reference,830
+720,FrozenGlobal,833
+720,RiskTemporal B10,832
+960,Reference,830
+960,FrozenGlobal,832
+960,RiskTemporal B10,832
+1200,Reference,830
+1200,FrozenGlobal,831
+1200,RiskTemporal B10,831
+1440,Reference,830
+1440,FrozenGlobal,831
+1440,RiskTemporal B10,831
