@@ -2,13 +2,13 @@
 
 ## Supported
 
-- RiskTemporal-v1 B10 improves change-region h in 20/20 TEST cases and reduces false-positive wet predictions in 20/20 cases versus FrozenGlobal.
+- RiskTemporal B10 improves change-region h in 20/20 TEST cases and reduces false-positive wet predictions in 20/20 cases versus FrozenGlobal.
 - It improves front MAE in 19/20 cases, improves trajectory momentum on average, and improves final wet IoU.
 - Mean wet IoU declines over the rollout.
 - Temporal Refresh mitigates several SupportRisk-only closed-loop errors; B20 shows more refinement is not uniformly better.
 - H0 provides field and sampled formal-front comparisons against a documented numerical reference.
 
-- RiskTemporal-v1 B10 completes the existing H0 24-min simulated rollout in approximately 27.1 s under the recorded runtime environment, corresponding to approximately 53.2 times simulated real-time progression; this is not a D-Claw speedup claim.
+- RiskTemporal B10 completes the existing H0 24-min simulated rollout in approximately 27.1 s under the recorded runtime environment, corresponding to approximately 53.2 times simulated-time / wall-time progression; this is not a high-fidelity-solver speedup claim.
 
 ## Not supported
 

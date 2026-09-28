@@ -1,6 +1,6 @@
 # TEST paired statistical analysis
 
-RiskTemporal-v1 B10 is compared case-paired against each completed frozen baseline on the 20 untouched TEST scenarios. Positive improvement means lower error (or higher wet IoU). Two-sided Wilcoxon signed-rank p-values are Holm-adjusted within each baseline across eight predeclared metrics. Bootstrap intervals use 10,000 paired resamples and seed 20260924.
+RiskTemporal B10 is compared case-paired against each completed frozen baseline on the 20 untouched TEST scenarios. Positive improvement means lower error (or higher wet IoU). Two-sided Wilcoxon signed-rank p-values are Holm-adjusted within each baseline across eight predeclared metrics. Bootstrap intervals use 10,000 paired resamples and seed 20260924.
 
 | baseline             | metric                        |   mean_improvement |   median_improvement |   std_improvement |   wins |   ties |   losses |   bootstrap_ci95_low |   bootstrap_ci95_high |   wilcoxon_p_raw |   wilcoxon_p_holm_within_baseline |
 |:---------------------|:------------------------------|-------------------:|---------------------:|------------------:|-------:|-------:|---------:|---------------------:|----------------------:|-----------------:|----------------------------------:|

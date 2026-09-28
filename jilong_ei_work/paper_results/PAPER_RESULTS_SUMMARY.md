@@ -1,8 +1,8 @@
 # Paper results summary
 
-Final method: **RiskTemporal-v1 B10**. The global operator and final method implementation are frozen. The completed evidence package contains 20-case untouched TEST comparisons against FrozenGlobal, RandomAll B10, and SupportRisk Base B10; paired statistics; exploratory mechanism and stratified analysis; and H0 documented engineering results.
+Final method: **RiskTemporal B10**. The Global Operator and final method implementation are frozen. The completed evidence package contains 20-case untouched TEST comparisons against FrozenGlobal, RandomAll B10, and SupportRisk Base B10; paired statistics; mechanism and stratified analysis; and H0 documented engineering results.
 
-The TEST split was untouched for the development, selection, and freezing of RiskTemporal-v1 B10. Further algorithm experiment required: **NO**.
+The TEST split was untouched for the development, selection, and freezing of RiskTemporal B10. Further algorithm experiment required: **NO**.
 
 Key TEST summary:
 
