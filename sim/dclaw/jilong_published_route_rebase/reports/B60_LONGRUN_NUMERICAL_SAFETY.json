@@ -1,0 +1,18 @@
+{
+  "frames_expected": 121,
+  "frames_actual": 121,
+  "finite_q": true,
+  "NaN_count": 0,
+  "Inf_count": 0,
+  "solver_exit_code": 0,
+  "max_CFL": 0.45623,
+  "global_max_speed_ms": 175.21791478716975,
+  "global_max_speed_time_s": 1710.0,
+  "global_max_speed_x": 340302.0,
+  "global_max_speed_y": 3127228.0,
+  "global_max_speed_depth_m": 1.44349291066235,
+  "P99_speed_ms": 51.688584978745425,
+  "max_depth_m": 97.23032059627937,
+  "HIGH_SPEED_WARNING": true,
+  "HIGH_DEPTH_WARNING": false
+}

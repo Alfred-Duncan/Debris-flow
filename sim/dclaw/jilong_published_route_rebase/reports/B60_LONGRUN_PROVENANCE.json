@@ -1,0 +1,31 @@
+{
+  "reference_case": "RECON_B_rate060",
+  "native_checkpoint_found": false,
+  "continuation_method": "EXACT_B60_RERUN_FROM_ZERO",
+  "sha256": {
+    "runs/RECON_B_rate060/active_run_snapshot.json": "02b6be334325941337b665b2a36e6bcc7a8b3ee6301598c48d72bc6ba5dbe689",
+    "runs/RECON_B_rate060/claw.data": "823f84280eea750fdfc00404063e8c939d09794ebbbd00840b6d906dbdd9f4df",
+    "runs/RECON_B_rate060/dclaw.data": "22cfd451050238af236a939274de67d1de2c17ea5e79665621188773fff9bf29",
+    "terrain/published_route_domain_64m.tt3": "6623682eda38d8f5aa0f331868a9be349cf77b01a110e3f6db36bb3577f33dd4",
+    "entrainment/erodible_thickness_fullroute_8m.tt3": "e94ad901fcc2ad0dd74675eb143dfc207a4cdfb69fcd868eb3e92cfabecf90e8",
+    "model_geometry_sourcefix.json": "145229ba49f18783d056ce67db9bb2b98ddfaa3b66de33ebbbcbffb33b2f1fe2",
+    "source/source_support_published_s0_floorfix.json": "1cd82b2e5d7f5787e3dc5cf49f10b698ada711cc5fd4607826716d5dc50ccff4",
+    "src2.f90": "6d1cd3844c4cad814df7a6ba9aec928adb31ee9498c5f3dfda75227f17209cfe",
+    "xdclaw": "4d11cb483c6567715c711a80b729b57ffb74ac4792ad18023cfdafdce06dcc69"
+  },
+  "allowed_numerical_control_changes": {
+    "tfinal_s": [
+      900,
+      3600
+    ],
+    "num_output_times": [
+      30,
+      120
+    ],
+    "fgmax_tend_s": [
+      900,
+      3600
+    ]
+  },
+  "frozen_physics": "Reference B60 active snapshot and data files hashed before long run."
+}

@@ -1,0 +1,8 @@
+{
+  "compiler": "GNU Fortran (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "build_command": "make",
+  "binary_sha256": "4d11cb483c6567715c711a80b729b57ffb74ac4792ad18023cfdafdce06dcc69",
+  "src2_sha256": "6d1cd3844c4cad814df7a6ba9aec928adb31ee9498c5f3dfda75227f17209cfe",
+  "setrun_sha256": "f123dec0b3be67f323e037701fd5ba667375bb083a31b41d70c31bdac4713f7a",
+  "build_log": "build_momentum.log"
+}

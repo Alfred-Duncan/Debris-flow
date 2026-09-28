@@ -1,0 +1,54 @@
+{
+  "method": "deterministic_8_connected_valley_floor",
+  "terrain": "/root/autodl-tmp/Jilong_DClaw_Handoff/terrain/final/jilong_copernicus_64m_v1.tif",
+  "terrain_sha256": "53a7f882464eb0757bf24e45069f370c2f8198e145d0b281eacfccf660e55cfd",
+  "corridor": "/root/autodl-tmp/Jilong_DClaw_Handoff/geometry/jilong_canonical_corridor.geojson",
+  "crs": "EPSG:32645",
+  "dx_m": 64.0,
+  "source_targets_m": [
+    32.0,
+    96.0,
+    160.0
+  ],
+  "xlower": 331950.0,
+  "xupper": 342702.0,
+  "ylower": 3127516.0,
+  "yupper": 3143388.0,
+  "mx": 168,
+  "my": 248,
+  "cells": [
+    {
+      "i": 32,
+      "j": 248,
+      "center_x": 333966.0,
+      "center_y": 3143356.0,
+      "terrain_elevation": 2773.6123046875,
+      "corridor_chainage": 0.0,
+      "distance_to_corridor": 93.2323239863429,
+      "tangent_x": 0.6066159129416486,
+      "tangent_y": -0.79499505291918
+    },
+    {
+      "i": 33,
+      "j": 247,
+      "center_x": 334030.0,
+      "center_y": 3143292.0,
+      "terrain_elevation": 2783.94091796875,
+      "corridor_chainage": 66.67069015468125,
+      "distance_to_corridor": 78.28627346616683,
+      "tangent_x": 0.6066159129416486,
+      "tangent_y": -0.79499505291918
+    },
+    {
+      "i": 34,
+      "j": 246,
+      "center_x": 334094.0,
+      "center_y": 3143228.0,
+      "terrain_elevation": 2807.7353515625,
+      "corridor_chainage": 145.0632821962839,
+      "distance_to_corridor": 69.85318729655381,
+      "tangent_x": 0.7295372041400852,
+      "tangent_y": -0.6839411288813299
+    }
+  ]
+}

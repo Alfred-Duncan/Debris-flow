@@ -1,0 +1,95 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "item": "terrain never modified",
+      "status": "PASS",
+      "evidence": "frozen terrain SHA256 matches Phase 0"
+    },
+    {
+      "item": "route never modified",
+      "status": "PASS",
+      "evidence": "frozen route SHA256 matches Phase 0"
+    },
+    {
+      "item": "S0 never modified",
+      "status": "PASS",
+      "evidence": "S0 geometry SHA256 matches Phase 0"
+    },
+    {
+      "item": "source support never modified",
+      "status": "PASS",
+      "evidence": "source support SHA256 matches Phase 0"
+    },
+    {
+      "item": "V fixed at 10M for calibration ladder",
+      "status": "PASS",
+      "evidence": "all active snapshots"
+    },
+    {
+      "item": "T fixed at 90",
+      "status": "PASS",
+      "evidence": "all active snapshots"
+    },
+    {
+      "item": "K fixed at 1",
+      "status": "PASS",
+      "evidence": "all active snapshots"
+    },
+    {
+      "item": "no downstream material source added",
+      "status": "PASS",
+      "evidence": "only conservative source file; frozen S0 support"
+    },
+    {
+      "item": "no DEM carve/fill",
+      "status": "PASS",
+      "evidence": "terrain hash unchanged"
+    },
+    {
+      "item": "parameter families followed declared order",
+      "status": "PASS",
+      "evidence": "ordered completed case list"
+    },
+    {
+      "item": "parameter values limited to declared grids",
+      "status": "PASS",
+      "evidence": "see RECONSTRUCTION_PARAMETER_LADDER.csv"
+    },
+    {
+      "item": "no midpoint tuning",
+      "status": "PASS",
+      "evidence": "only h_e 6/8/12, rate .30/.40/.60, phi 36/34/32, n .020/.015"
+    },
+    {
+      "item": "R4 h>0.10 used as event constraint",
+      "status": "PASS",
+      "evidence": "explicit final report statement"
+    },
+    {
+      "item": "R4 not called independent validation",
+      "status": "PASS",
+      "evidence": "explicit final report statement"
+    },
+    {
+      "item": "only required cases were run",
+      "status": "PASS",
+      "evidence": "A-D complete exactly because no earlier R4 success"
+    },
+    {
+      "item": "immediate fail/success bracket exists if success achieved",
+      "status": "PASS",
+      "evidence": "no success; condition not applicable"
+    },
+    {
+      "item": "no tfinal extension beyond 900 s",
+      "status": "PASS",
+      "evidence": "all cases 31 frames t=0..900"
+    },
+    {
+      "item": "raw solver outputs preserved locally but not committed",
+      "status": "PASS",
+      "evidence": "runs/*/_output retained and excluded from git add"
+    }
+  ]
+}

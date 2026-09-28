@@ -1,0 +1,4 @@
+2026-09-20T17:34:45+08:00 START case=RECON_D_n020 pid=16203 h_e=8 rate=0.40 phi=34 n=0.020
+2026-09-20T17:35:45+08:00 HEARTBEAT case=RECON_D_n020 elapsed=60 pid=16203 ps=[16203 Rl+ 333 0.0] frames=21 latest_frame_mtime=1789896945 run_log_mtime=1789896944 fatal_patterns=0
+2026-09-20T17:36:45+08:00 HEARTBEAT case=RECON_D_n020 elapsed=120 pid=16203 ps=[] frames=31 latest_frame_mtime=1789896970 run_log_mtime=1789896970 fatal_patterns=0
+2026-09-20T17:36:45+08:00 EXIT rc=0 frames=31

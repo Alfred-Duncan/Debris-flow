@@ -1,0 +1,22 @@
+{
+  "scenario": "C3_entrainment_E4",
+  "e2_mask_sha256": "d364c67ea4e1cc29191f508dc80b4c9bee40bde2ded0349cfc9a708900355d83",
+  "erodible_cell_count": 928,
+  "cell_area_m2": 4096.0,
+  "erodible_area_m2": 3801088.0,
+  "available_layer_thickness_m": 4.0,
+  "maximum_available_erodible_volume_m3": 15204352.0,
+  "h_e_aux_index_fortran": 7,
+  "h_e_all_finite": true,
+  "h_e_nonnegative": true,
+  "h_e_max_m": 4.0,
+  "same_mask_as_E2": true,
+  "terrain_modified": false,
+  "source_support_cells": 11,
+  "source_V_m3": 2000000.0,
+  "source_T_s": 90.0,
+  "entrainment_rate": 0.2,
+  "entrainment_method": 0,
+  "me": 0.62,
+  "segregation": 0
+}

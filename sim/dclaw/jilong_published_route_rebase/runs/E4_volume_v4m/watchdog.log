@@ -1,0 +1,4 @@
+2026-09-20T16:39:53+08:00 START case=E4_volume_v4m pid=10076 V_m3=4000000 K_u=1
+2026-09-20T16:40:53+08:00 HEARTBEAT case=E4_volume_v4m elapsed=60 pid=10076 ps=[10076 Sl 326 0.0] frames=23 latest_frame_timestamp=1789893653 run_log_timestamp=1789893653 fatal_patterns=0
+2026-09-20T16:41:53+08:00 HEARTBEAT case=E4_volume_v4m elapsed=120 pid=10076 ps=[] frames=31 latest_frame_timestamp=1789893673 run_log_timestamp=1789893673 fatal_patterns=0
+2026-09-20T16:41:53+08:00 EXIT rc=0 frames=31

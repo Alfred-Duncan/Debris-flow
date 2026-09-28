@@ -1,0 +1,13 @@
+{
+  "file": "entrainment/erodible_thickness_e4_published.tt3",
+  "sha256": "ee3724cfeb57ad3787fc3066d1e2271dd77389eae3a67687357a8127a87d0193",
+  "ncols": 275,
+  "nrows": 161,
+  "cellsize_m": 64.0,
+  "number_erodible_cells": 768,
+  "erodible_physical_area_m2": 3145728.0,
+  "h_e_m": 4.0,
+  "initial_available_erodible_material_volume_m3": 12582912.0,
+  "mask_positive_thickness_min_m": 4.0,
+  "mask_positive_thickness_max_m": 4.0
+}

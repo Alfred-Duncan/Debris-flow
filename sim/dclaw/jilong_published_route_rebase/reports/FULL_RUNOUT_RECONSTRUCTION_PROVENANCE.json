@@ -1,0 +1,18 @@
+{
+  "baseline_commit": "f635b6499e3610e00e94159c9f5f03d495b30aa6",
+  "sha256": {
+    "terrain/published_route_domain_64m.tt3": "6623682eda38d8f5aa0f331868a9be349cf77b01a110e3f6db36bb3577f33dd4",
+    "corridor/published_s0_to_port_route.csv": "26ffebd117894d31b91b9411199e86540afc6207249d83d7a58caa29ab233794",
+    "model_geometry_sourcefix.json": "145229ba49f18783d056ce67db9bb2b98ddfaa3b66de33ebbbcbffb33b2f1fe2",
+    "source/source_support_published_s0_floorfix.json": "1cd82b2e5d7f5787e3dc5cf49f10b698ada711cc5fd4607826716d5dc50ccff4",
+    "entrainment/erodible_thickness_e4_published.tt3": "ee3724cfeb57ad3787fc3066d1e2271dd77389eae3a67687357a8127a87d0193",
+    "src2.f90": "6d1cd3844c4cad814df7a6ba9aec928adb31ee9498c5f3dfda75227f17209cfe",
+    "setrun.py": "f123dec0b3be67f323e037701fd5ba667375bb083a31b41d70c31bdac4713f7a",
+    "xdclaw": "4d11cb483c6567715c711a80b729b57ffb74ac4792ad18023cfdafdce06dcc69"
+  },
+  "frozen": {
+    "T_s": 90,
+    "W_ref_m": 192,
+    "K_u": 1
+  }
+}

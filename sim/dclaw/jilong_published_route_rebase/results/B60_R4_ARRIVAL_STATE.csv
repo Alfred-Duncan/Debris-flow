@@ -1,0 +1,2 @@
+arrival_time_s,median_depth_m,P90_depth_m,max_depth_m,median_speed_ms,P90_speed_ms,max_speed_ms,wet_area_m2,mean_flow_velocity_x_ms,mean_flow_velocity_y_ms,mean_flow_direction_unit_x,mean_flow_direction_unit_y
+1200.0,1.751114151980816,2.6460472608558883,2.861173816869468,3.5580564067215956,8.62851281371338,9.508338904070351,20480.0,-2.9797587182283936,-2.718706220609457,-0.7387253083336368,-0.674006616308307

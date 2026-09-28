@@ -1,0 +1,21 @@
+{
+  "baseline_commit": "95efb01e105891eb08bd7a9183e65192d05e6d7b",
+  "hash_algorithm": "SHA256",
+  "pre_implementation_hashes": {
+    "src2.f90": "b518b2c34da676ed4de45869e9cc97f2a53636f476324cb473798fb4755d9c65",
+    "setrun.py": "9aaf924f21a7b09a822f9cf05e1dcf022c429e93943f040fcfbb6cdef981d39f",
+    "model_geometry_sourcefix.json": "145229ba49f18783d056ce67db9bb2b98ddfaa3b66de33ebbbcbffb33b2f1fe2",
+    "terrain/published_route_domain_64m.tt3": "6623682eda38d8f5aa0f331868a9be349cf77b01a110e3f6db36bb3577f33dd4",
+    "entrainment/erodible_thickness_e4_published.tt3": "ee3724cfeb57ad3787fc3066d1e2271dd77389eae3a67687357a8127a87d0193",
+    "source/source_support_published_s0_floorfix.json": "1cd82b2e5d7f5787e3dc5cf49f10b698ada711cc5fd4607826716d5dc50ccff4"
+  },
+  "frozen_inputs": {
+    "V_m3": 2000000.0,
+    "T_s": 90.0,
+    "W_ref_m": 192.0,
+    "source_cells": 12,
+    "source_area_m2": 49152.0,
+    "m0": 0.62,
+    "entrainment": "E4, frozen existing TT3"
+  }
+}

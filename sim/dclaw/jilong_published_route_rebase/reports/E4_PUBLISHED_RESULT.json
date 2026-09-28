@@ -1,0 +1,28 @@
+{
+  "completed_to_s": 900.0,
+  "frames": 31,
+  "final": {
+    "time_s": 900.0,
+    "route_front_chainage_m": 14435.312244148674,
+    "front_x": 344398.0,
+    "front_y": 3132796.0,
+    "front_distance_to_route_m": 8.055063266670512,
+    "max_depth_m": 43.75355555892029,
+    "max_speed_ms": 28.940112634088642,
+    "p99_wet_speed_ms": 20.207836158803865,
+    "wet_volume_m3": 6934553.596809343,
+    "bdif_state_integral_m3": 6536389.743187168
+  },
+  "finite": true,
+  "watchdog_heartbeats": 2,
+  "stalls": 0,
+  "runtime_failures": 0,
+  "repair_reruns": 0,
+  "arrivals_h010": {
+    "R0": 30.0,
+    "R1": 240.0,
+    "R2": 390.0,
+    "R3": null,
+    "R4": null
+  }
+}

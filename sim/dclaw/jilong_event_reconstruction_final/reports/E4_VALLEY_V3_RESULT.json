@@ -1,0 +1,41 @@
+{
+  "classification": "LOCAL_VALLEY_GEOMETRY_DOES_NOT_RESOLVE_MOBILITY",
+  "recommended_next_action": "STOP_DCLAW_CALIBRATION_AND_USE_EVENT_CONSTRAINED_SCENARIO_FRAMING",
+  "completed_to_s": 900.0,
+  "frame_count": 31,
+  "numerical_gate": {
+    "finite": true,
+    "max_depth_lt_100": true,
+    "max_speed_lt_40": true
+  },
+  "final": {
+    "time_s": 900.0,
+    "front_x": 333902.0,
+    "front_y": 3143356.0,
+    "front_nearest_axis_distance_m": 2955.9042609665153,
+    "max_local_axis_progress_m": 0.0,
+    "local_axis_fraction": 0.0,
+    "max_depth_m": 23.90063773022884,
+    "max_speed_ms": 13.623585756519935,
+    "p99_wet_speed_ms": 11.924109665923275,
+    "total_wet_volume_m3": 2944927.012190648,
+    "bdif_integral_m3": 946524.3844723396
+  },
+  "local_axis_length_m": 2104.6298679765187,
+  "arrivals_h_gt_010m": {
+    "M25": null,
+    "M50": null,
+    "M75": null,
+    "M90": null,
+    "M100": null
+  },
+  "physics_modified": false,
+  "terrain_modified": false,
+  "source_modified": false,
+  "entrainment_rate_modified": false,
+  "watchdog_heartbeat_count": 2,
+  "watchdog_detected_stalls": 0,
+  "watchdog_detected_runtime_failures": 0,
+  "watchdog_false_positive_pattern": "normal solver termination text matched stopping",
+  "finite_check_note": "All saved q fields were processed without NaN/Inf; non-finite front coordinates denote no source-connected wet cell mapped to the local axis, not numerical non-finiteness."
+}

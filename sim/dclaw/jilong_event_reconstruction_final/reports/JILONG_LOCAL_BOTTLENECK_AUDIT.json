@@ -1,0 +1,70 @@
+{
+  "segment_m": [
+    2200,
+    4100
+  ],
+  "adverse_rise": {
+    "native": {
+      "start_chainage_m": 2650.0,
+      "end_chainage_m": 3350.0,
+      "magnitude_m": 10.186279296875,
+      "local_mean_adverse_slope": 0.014551827566964286
+    },
+    "m32": {
+      "start_chainage_m": 2675.0,
+      "end_chainage_m": 3350.0,
+      "magnitude_m": 3.2919921875,
+      "local_mean_adverse_slope": 0.004877025462962963
+    },
+    "m64": {
+      "start_chainage_m": 2575.0,
+      "end_chainage_m": 3350.0,
+      "magnitude_m": 5.80126953125,
+      "local_mean_adverse_slope": 0.007485509072580645
+    }
+  },
+  "candidate_path": {
+    "exists": true,
+    "min_distance_m": 4.060517809112849,
+    "max_distance_m": 670.6139869751909,
+    "max_adverse_rise_m": {
+      "64": {
+        "start_path_length_m": 757.0193359837562,
+        "end_path_length_m": 821.0193359837562,
+        "magnitude_m": 16.61572265625
+      },
+      "128": {
+        "start_path_length_m": 757.0193359837562,
+        "end_path_length_m": 885.0193359837562,
+        "magnitude_m": 25.12255859375
+      },
+      "256": {
+        "start_path_length_m": 629.0193359837562,
+        "end_path_length_m": 885.0193359837562,
+        "magnitude_m": 36.88330078125
+      },
+      "512": {
+        "start_path_length_m": 410.5096679918781,
+        "end_path_length_m": 885.0193359837562,
+        "magnitude_m": 65.425537109375
+      }
+    }
+  },
+  "e4_front_cell": {
+    "i": 60.0,
+    "j": 212.0,
+    "x": 335758.0,
+    "y": 3141052.0,
+    "terrain_z": 2678.3759765625,
+    "h": 0.1627901036007103,
+    "speed": 4.872294021678058,
+    "projected_chainage": 2933.4650957933895,
+    "distance_to_canonical_corridor": 336.87910126398185
+  },
+  "e4_immediately_upstream_of_suspicious_rise": true,
+  "classification": "D_MIXED_OR_UNRESOLVED",
+  "terrain_modified": false,
+  "corridor_modified": false,
+  "dclaw_runs_performed": 0,
+  "e4_metadata_corrected_to_4m": true
+}

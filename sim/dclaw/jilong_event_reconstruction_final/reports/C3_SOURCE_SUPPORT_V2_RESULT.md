@@ -1,0 +1,68 @@
+# C3 source support v2 result
+
+{
+  "frames": [
+    {
+      "time_s": 90.0,
+      "first500": 1445825.7508756884,
+      "fraction": 0.7229128754378442,
+      "supportmax": 49.20079135143487,
+      "outside300": 15.76724643826944,
+      "front": 1090.6707086934255,
+      "front_x": 334862.0,
+      "front_y": 3142652.0,
+      "front_h": 0.01705543403676044,
+      "front_speed": 0.8919892876953371,
+      "front_dist": 73.08932056386764
+    },
+    {
+      "time_s": 180.0,
+      "first500": 1123428.6541787004,
+      "fraction": 0.5617143270893502,
+      "supportmax": 49.20079135143487,
+      "outside300": 12.51246923170965,
+      "front": 1540.9274661863296,
+      "front_x": 334798.0,
+      "front_y": 3142012.0,
+      "front_h": 0.1263675614119665,
+      "front_speed": 3.6147008739441837,
+      "front_dist": 369.0094849729475
+    },
+    {
+      "time_s": 300.0,
+      "first500": 1087958.1616971581,
+      "fraction": 0.543979080848579,
+      "supportmax": 49.20079135143487,
+      "outside300": 13.55996253258774,
+      "front": 1866.953715847865,
+      "front_x": 335118.0,
+      "front_y": 3141756.0,
+      "front_h": 0.007484996350177783,
+      "front_speed": 0.3986178084274511,
+      "front_dist": 343.3775003111418
+    },
+    {
+      "time_s": 600.0,
+      "first500": 1087283.894075057,
+      "fraction": 0.5436419470375286,
+      "supportmax": 49.20079135143487,
+      "outside300": 14.23611827912838,
+      "front": 2350.5078441555133,
+      "front_x": 335438.0,
+      "front_y": 3141500.0,
+      "front_h": 1.934133365568909,
+      "front_speed": 0.0,
+      "front_dist": 318.90079293730304
+    }
+  ],
+  "mass_gate_pass": true,
+  "SOURCE_SUPPORT_V2_GATE": "FAIL",
+  "S1_arrival_h001": false,
+  "S1_arrival_h005": false,
+  "S1_arrival_h010": false,
+  "classification": "SOURCE_SUPPORT_V2_NUMERICALLY_UNACCEPTABLE",
+  "next_action": "STOP_SOURCE_GEOMETRY_WORK",
+  "finalization_rerun_performed": false
+}
+
+No additional D-Claw run was performed during finalization.

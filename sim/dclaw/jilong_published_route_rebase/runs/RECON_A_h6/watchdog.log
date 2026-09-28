@@ -1,0 +1,4 @@
+2026-09-20T17:10:18+08:00 START case=RECON_A_h6 pid=12561 h_e=6 rate=0.20 phi=38 n=0.025
+2026-09-20T17:11:18+08:00 HEARTBEAT case=RECON_A_h6 elapsed=60 pid=12561 ps=[12561 Sl+ 333 0.0] frames=22 latest_frame_mtime=1789895477 run_log_mtime=1789895476 fatal_patterns=0
+2026-09-20T17:12:18+08:00 HEARTBEAT case=RECON_A_h6 elapsed=120 pid=12561 ps=[] frames=31 latest_frame_mtime=1789895501 run_log_mtime=1789895501 fatal_patterns=0
+2026-09-20T17:12:18+08:00 EXIT rc=0 frames=31

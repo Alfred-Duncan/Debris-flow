@@ -1,0 +1,114 @@
+# Local valley axis v3 preflight
+
+{
+  "authoritative_e4_front_xy": [
+    335758.0,
+    3141052.0
+  ],
+  "global_downstream_unit_vector": [
+    0.4284115857664243,
+    -0.9035837056859192
+  ],
+  "terrain_modified": false,
+  "source_modified": false,
+  "native": {
+    "start_elevation_m": 2676.365234375,
+    "target_elevation_m": 2560.497802734375,
+    "highest_path_elevation_m": 2773.445556640625,
+    "minimum_saddle_above_start_m": 97.080322265625,
+    "maximum_adverse_rise_m": 98.9697265625,
+    "path_length_m": 2104.6298679765205,
+    "straight_line_displacement_m": 1847.6200908195385,
+    "tortuosity": 1.1391031513642946,
+    "final_downstream_progress_m": 1834.473786103632,
+    "target_count": 257,
+    "expanded_once": false
+  },
+  "32m": {
+    "start_elevation_m": 2677.519775390625,
+    "target_elevation_m": 2567.552734375,
+    "highest_path_elevation_m": 2775.18359375,
+    "minimum_saddle_above_start_m": 97.663818359375,
+    "maximum_adverse_rise_m": 98.24169921875,
+    "path_length_m": 2013.1740238538055,
+    "straight_line_displacement_m": 1811.324377354868,
+    "tortuosity": 1.1114376027963058,
+    "final_downstream_progress_m": 1820.4916189325768,
+    "target_count": 232,
+    "expanded_once": false
+  },
+  "64m": {
+    "start_elevation_m": 2678.3759765625,
+    "target_elevation_m": 2571.863525390625,
+    "highest_path_elevation_m": 2775.650390625,
+    "minimum_saddle_above_start_m": 97.2744140625,
+    "maximum_adverse_rise_m": 97.2744140625,
+    "path_length_m": 2050.664355861927,
+    "straight_line_displacement_m": 1865.9046063504961,
+    "tortuosity": 1.0990188613515461,
+    "final_downstream_progress_m": 1857.009051433238,
+    "target_count": 55,
+    "expanded_once": false
+  },
+  "separation_native_32m": {
+    "median_m": 10.510547664738564,
+    "p90_m": 42.42408684636116,
+    "maximum_m": 58.65532951355121
+  },
+  "separation_native_64m": {
+    "median_m": 10.510547664738564,
+    "p90_m": 49.69704708348416,
+    "maximum_m": 76.5482532829564
+  },
+  "priority_flood_native": {
+    "max_fill_depth_m": 16.024169921875,
+    "p95_fill_depth_m": 12.614697265624994,
+    "total_filled_cells": 17
+  },
+  "priority_flood_32m": {
+    "max_fill_depth_m": 15.7255859375,
+    "p95_fill_depth_m": 7.692431640624994,
+    "total_filled_cells": 14
+  },
+  "priority_flood_64m": {
+    "max_fill_depth_m": 15.698486328125,
+    "p95_fill_depth_m": 10.001708984375,
+    "total_filled_cells": 5
+  },
+  "priority_flood_separation_native_32m": {
+    "median_m": 10.510547664738564,
+    "p90_m": 37.7494295962956,
+    "maximum_m": 58.65532951355121
+  },
+  "priority_flood_separation_native_64m": {
+    "median_m": 10.510547664738564,
+    "p90_m": 55.25638601946624,
+    "maximum_m": 76.5482532829564
+  },
+  "original_dem_valley_axis_pass": false,
+  "method": "PRIORITY_FLOOD_ROUTING_ONLY",
+  "axis_64m_adverse_rise_windows_m": {
+    "64": 0.0,
+    "128": 29.86865234375,
+    "256": 68.257568359375,
+    "512": 133.141845703125
+  },
+  "local_axis_length_m": 2104.6298679765187,
+  "local_axis_outlet_xy": [
+    336735.0,
+    3139485.0
+  ],
+  "axis_64m_start_elevation_m": 2678.3759765625,
+  "axis_64m_minimum_elevation_m": 2581.05322265625,
+  "axis_64m_end_elevation_m": 2581.05322265625,
+  "mask": {
+    "old_total_mask_cells": 928,
+    "new_total_mask_cells": 919,
+    "old_local_cells_removed": 157,
+    "new_local_cells_added": 148,
+    "unchanged_cells_outside_replacement_region": 46194
+  },
+  "classification": "AXIS_ACCEPTED_FOR_FINAL_E4",
+  "source_support_cells": 11,
+  "h_e_max_m": 4.0
+}
